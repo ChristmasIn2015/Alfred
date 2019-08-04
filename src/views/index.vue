@@ -9,7 +9,8 @@
         <div class="down" v-for='i in downs' :key='i.name'>
             <div class="down-btn">{{i.name}}</div>
             <div class="menu">
-                <a v-for='m in i.menus' :key= m >{{ m }}</a>
+                <router-link :to="{name:'good',params:{name:i.belone,good:m}}" 
+                    v-for='m in i.menus' :key= m >{{ m }}</router-link>
             </div>
         </div>
     </div>
@@ -31,7 +32,7 @@
             <div class="content" v-show="index==current">
                 <!-- 一级商品简略表 -->
                 <div class="item" v-for='(goodVal,goodKey,valueIndex) in value' :key='valueIndex'>
-                    <a @click.prevent>
+                    <a>
                         <router-link :to="{name:'good',params:{name:key,good:goodKey}}">
                             <img :src='goodVal[1]'>
                         </router-link>
@@ -58,8 +59,8 @@
         <div class="blank"></div>
         <div class="footer0">
             <a>我的github: https://github.com/ChrismasIn2015</a>
-            <a>我的邮箱: 974879409@qq.com</a>
-            <a>我的电话: 132 6391 1023</a>
+            <a>我的邮箱: wqao1023@qq.com</a>
+            <a>我的电话<label style="color:green;font-weight:bold;">( 微信 )</label> : 132 6391 1023 (黄文强)</a>
         </div>
     </div>
   </div>
@@ -76,10 +77,24 @@
                 downs:[
                     {
                         name:"今日推荐",
-                        menus:['12','2s','33','a33']},
+                        belone:'Adidas',
+                        menus:['Adiads365','Adiadsfly','Adiads0020','Adiads0010']},
                     {
                         name:"女子",
-                        menus:['a3','bb','cc','dddd']},
+                        belone:'nike',
+                        menus:['Nike365','Nikefly','Nike0020','Nike0010']},
+                    {
+                        name:"男子",
+                        belone:'NewBee',
+                        menus:['NewBee365','NewBeefly','NewBee0020','NewBee0010']},
+                    {
+                        name:"成人",
+                        belone:'Converse',
+                        menus:['Converse365','Conversefly','Converse0020','Converse0010']},
+                    {
+                        name:"儿童",
+                        belone:'Adidas',
+                        menus:['Adidas365','Adidasfly','Adidas0020','Adidas0010']},
                 ],
                 //右侧轮播图数据
                 mark:0,
