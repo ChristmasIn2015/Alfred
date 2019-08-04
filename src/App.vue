@@ -19,6 +19,7 @@
     created(){
       //默认页面开启时候不保存登录数据
       localStorage.club1023User="";
+      window.alert('由于图片质量过高/服务器速度慢/请耐心等待加载 (=^･ω･^=)')
     },
   }
 </script>
