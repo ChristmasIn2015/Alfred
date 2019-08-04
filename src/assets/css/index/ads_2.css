@@ -1,0 +1,26 @@
+
+.adImgs{
+	margin-top:20px;
+	margin-left: 40px;
+	/* padding:0px 2%; */
+	width:900px;
+	height:400px;
+	display:inline-block;
+	text-align: center;
+	border: 1px solid white;
+}
+@keyframes aa{
+	0%{
+		opacity:0.4;
+	}
+	100%{
+		opacity:1;
+
+	}
+}
+.adImgs img{
+	/* width:100%;*/
+	/* display: inline-block; */
+	height:100%; 
+	animation: aa 0.05s linear;
+}

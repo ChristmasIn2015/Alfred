@@ -1,0 +1,23 @@
+
+    .blank{
+        height:400px;
+    }
+    .footer0{
+        height:100px;
+        margin-bottom: 0px;
+        background-color: black;
+        border: 1.5px solid white;
+        border-radius: 10px;
+        padding-top:20px;
+        margin-bottom:20px;
+    }
+    .footer0 a{
+        display:block;
+        color: white;
+        cursor: pointer;
+        line-height:30px;
+        padding-left: 20px;
+    }
+    .footer0 a:hover{
+        text-decoration:underline;
+    }
