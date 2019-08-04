@@ -8,11 +8,7 @@
         </div>
         <!-- 已登录 -->
         <div class="loginBtns_05" v-show='view1'>
-            <router-link 
-                :to="{name:'orders',params:{name:this.userName}}"
-                class="btn" 
-                @click="sendOrder()">我的订单
-              </router-link>
+            <a class="btn" @click='toOrderVue()'>我的订单</a>
             <a class='btn' @click='showCar()'>购物车</a>
             <a to='login' class='btn' @click="logout()">注销</a>
             <a href='#main' class='btn'>▲</a>
@@ -42,6 +38,11 @@
             }
         },
         methods:{
+            toOrderVue(){
+                if(this.userName!=""){
+                    this.$router.push({ name:'orders',params:{ name:this.userName } });
+                }
+            },
             viewsOn:function(){// 切换视图
                 this.view0 = !this.view0;
                 this.view1 = !this.view1;
@@ -62,7 +63,7 @@
         created(){
             this.userName = localStorage.club1023User;//登录后会获得用户名
             if(this.userName != ""){ this.viewsOn() }
-            window.console.log('btns - 此时的用户是:  '+localStorage.club1023User);
+            window.console.log('btns组件运行 - 此时的用户是:  '+localStorage.club1023User);
         }
     }
 </script>

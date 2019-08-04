@@ -17,7 +17,7 @@
 
 /* 信息栏 */
 .orderMsg{
-    width:30%;
+    width:20%;
     height: 90px;
     float:left;
     text-align:right;
@@ -40,7 +40,7 @@
 .orderBtn div{
     width:30%;
     height:40%;
-    margin-right:6%;
+    margin-right:10px;
     color:white;
     border-radius: 5px;
 }

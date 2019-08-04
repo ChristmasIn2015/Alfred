@@ -6,10 +6,11 @@ import good from '../views/good.vue'
 import orders from '../views/orders.vue'
 // 2.  创建路由明细
 const myRoutes = {
-    mode:'history',
+    // mode:'history',
     routes:[
         {
             path:'/',
+            name:'index',
             component:index,
         },
         {

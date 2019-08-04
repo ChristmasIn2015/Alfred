@@ -16,7 +16,7 @@
             <ul>
                 <li v-for='i in items' :key="i.name">
                     <a>
-                        <router-link :to='{path:i.links}'>{{ i.name }}</router-link>
+                        <router-link :to="{ name:'index',params:{path:i.links} }">{{ i.name }}</router-link>
                     </a>
                 </li>
             </ul>

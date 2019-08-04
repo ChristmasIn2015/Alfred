@@ -19,11 +19,7 @@
               <div class="btns">-</div>
               <div class="num">1</div>
               <div class="btns">+</div>
-              <router-link 
-                :to="{name:'orders',params:{name:this.userName}}"
-                class="carBtns"
-                @click.native="sendOrder()">购买
-              </router-link>
+              <a class="carBtns" @click="sendOrder()" >购买</a>
           </div>
       </div>
   </div>
@@ -41,6 +37,8 @@
       props:['DBfromApp'],//使用父组件App的DB数据
       methods:{
           sendOrder(){
+            //bug : router-link 会直接跳转页面/再执行购物车组件的销毁-函数执行等等
+            //bug : 所以需要先执行函数，再进行页面跳转
             //0.订单数据库添加数据
             this.DBfromApp.getOrdersDB().addOrder(localStorage.club1023User,this.ordersData);
             //1.删除购物车数据 - 重新渲染购物车
@@ -48,6 +46,9 @@
               this.DBfromApp.getCarDB().delOrderItem(localStorage.club1023User,this.ordersData[i][0]);
             }
             this.updataCar();//渲染
+
+            //2.页面跳转
+            this.$router.push({ name:'orders',params:{ name:this.userName } });
           },
           closeCar:function(){//调用父组件方法隐藏购物车
               this.$parent.showCar();
@@ -85,23 +86,17 @@
           updataCar(){
             let temp = this.DBfromApp.getCarDB().queryUserCar([localStorage.club1023User]);//查询数据库
 
-            // window.console.log(temp)
             if(JSON.stringify(temp) == "{}"){//如果没有当前单品，就直接返回
               // window.console.log('test1')
               this.carData = {};
-              // this.carData = Object.assign({}, temp);//对象合并
             }else{
-              // window.console.log(this.carData)
               this.carData = Object.assign({}, temp);//对象合并
-              // window.console.log(this.carData)
-              // window.console.log('test2')
             }
-            // window.console.log(this.carData)
           },
         },
         created(){
           //需要每次组件启动时会自动加载数据库数据
-          window.console.log('购物车组件启动')
+          // window.console.log('购物车组件启动')
           this.updataCar();
         },
     }
