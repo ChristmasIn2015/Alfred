@@ -1,25 +1,22 @@
+.clearfix:before,.clearfix:after{
+	/* 清除导航条浮动 */
+	content:"";
+	display:table;
+	clear:both;
+}
 /* ******************************************************动画部分 */
-/* ******************************************************动画部分 */
-/* ******************************************************动画部分 */
-/* ******************************************************动画部分 */
-/* ******************************************************动画部分 */
-/* ******************************************************动画部分 */
-	/* 包裹整个部分 */
+@media (min-width:500px) {
+	/* ↑↑ PC ↑↑ */
 	.sports{
-		position: absolute;
-		top:40px;
-		left:150px;
-		/* display: inline-block; */
-		z-index:-1;
 		height:100px;
 		width:100px;
-		/* background-color: red; */
+		top:-50px;
+		position: absolute;
+		z-index:-1;
 	}
-
 	/* 包裹小图标 */
 	.spotr_round{
 		position: relative;
-		/* 动画部分 */
 		transform-origin:100px 100px;
 		animation: rotate 8s linear infinite;
 	}
@@ -28,8 +25,8 @@
 			transform: rotate(360deg);
 		}
 	}
-
-	/* 小图标围绕主体,小图标是根据200x200中心为旋转坐标 */
+	/* 小图标围绕主体,小图标是
+	根据200x200中心为旋转坐标 */
 	.sport{
 		width: 100px;
 		height: 100px;
@@ -76,46 +73,71 @@
 		margin-left: 180px;
 		margin-top:50px;
 		background-image: url(../../image/sport/vans.jpg);
-        transform: rotate(90deg);}
-
-/* ******************************************************导航条部分 */
-/* ******************************************************导航条部分 */
-/* ******************************************************导航条部分 */
-/* ******************************************************导航条部分 */
-/* ******************************************************导航条部分 */
-
-        *{
-            margin: 0px;
-            padding: 0px;
-        }
-        .level{
-            background-color: rgb(36, 35, 35);
-            /* border-radius: 5px;    */
-            /* 位置设置 */
-            margin-top:100px;
-        }
-        .level ul{
-            list-style:none; /*清楚inline-block相距*/
-            font-size:0px;
-        }
-        .level li{
-            float:right; /* 需要解决高度塌陷问题 */
-            width:10%;
-            cursor: pointer;
-            padding:2px 2px;
-        }
-        .level ul li a{
-            color: white;
-            display: block;
-            /*a文字样式*/
-            font-size: 20px;
-            text-align: center;
-            text-decoration: none;
-            line-height: 50px;
-            border-radius: 5px;   
-        }
-        .level a:hover{
-            color: black;
-            background-color: white;
-            transition: all 0.2s ease-in-out;
-        }
+		transform: rotate(90deg);}
+	/* ******************************************************导航条部分 */
+	.level{
+		background-color: rgb(36, 35, 35);
+		margin-top:100px;
+		position: relative;
+	}
+	.level ul{
+		list-style:none; /*清除inline-block相距*/
+		font-size:0px;
+	}
+	.level li{
+		float:right; /* 需要解决高度塌陷问题 */
+		width:10%;
+		cursor: pointer;
+		padding:2px 2px;
+	}
+	.level ul li a{
+		color: white;
+		display: block;
+		/*a文字样式*/
+		font-size: 20px;
+		text-align: center;
+		text-decoration: none;
+		line-height: 50px;
+		border-radius: 5px;   
+	}
+	.level a:hover{
+		color: black;
+		background-color: white;
+	}
+}
+/******************************************************  PC端结束 */
+/******************************************************  下面是移动端 */
+@media (max-width:500px) {
+	.level{
+		width:100%;
+		position:fixed;
+		top:0px;
+		left: 0px;
+		background-color: rgb(36, 35, 35);
+		z-index: 1;
+		/* background-color: red; */
+	}
+	.level ul{
+		list-style:none; /*清除inline-block相距*/
+		font-size:0px;
+	}
+	.level li{
+		float:right; /* 需要解决高度塌陷问题 */
+		width:20%;
+		cursor: pointer;
+	}
+	.level ul li a{
+		color: white;
+		display: block;
+		/*a文字样式*/
+		font-size: 20px;
+		line-height: 300%;/*以字体为基准*/
+		text-align: center;
+		text-decoration: none;
+	}
+	.level a:active{
+		color: black;
+		background-color: white;
+		transition: all 0.2s ease-in-out;
+	}
+}

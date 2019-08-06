@@ -8,7 +8,22 @@
         line-height: 40px;
         color:white;
         padding-left: 20px;
-        padding-top:30px;
+        padding-top:5%;
+    }
+    @media (max-width:500px){
+        .items{
+            min-width: 400px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            margin-top:13%;
+        }
+        .items .head{
+            display: block;
+            width:100%;
+        }
     }
     /* 一个商品项目 */
     .itemCon{

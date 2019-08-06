@@ -3,15 +3,15 @@
     <div class="loginBtns">
         <!-- 未登录 -->
         <div class="loginBtns_05" v-show='view0'>
-            <router-link to='login' class='btn'>登录</router-link>
-            <a href='#main' class='btn'>▲</a>
+            <router-link to='login' class='btn' v-show="viewBtns">登录</router-link>
+            <a class='btn' @click="showBtns()">▲</a>
         </div>
         <!-- 已登录 -->
         <div class="loginBtns_05" v-show='view1'>
-            <a class="btn" @click='toOrderVue()'>我的订单</a>
-            <a class='btn' @click='showCar()'>购物车</a>
-            <a to='login' class='btn' @click="logout()">注销</a>
-            <a href='#main' class='btn'>▲</a>
+            <a class="btn" @click='toOrderVue()' v-show="viewBtns">我的订单</a>
+            <a class='btn' @click='showCar()' v-show="viewBtns">购物车</a>
+            <a to='login' class='btn' @click="logout()" v-show="viewBtns">注销</a>
+            <a class='btn' @click="showBtns()">{{ viewBtns?'隐藏按钮':'展开按钮' }}</a>
         </div>
 
         <!-- 购物车 -->
@@ -29,6 +29,7 @@
                 view0:true,//控制视图
                 view1:false,
                 carView:false,
+                viewBtns:true,//控制按钮
             }
         },
         props:['DBfromApp'],//使用父组件App的DB数据
@@ -38,6 +39,9 @@
             }
         },
         methods:{
+            showBtns(){
+                this.viewBtns = !this.viewBtns;
+            },
             toOrderVue(){
                 if(this.userName!=""){
                     this.$router.push({ name:'orders',params:{ name:this.userName } });

@@ -1,9 +1,9 @@
 
 .loginBtns_05{
-    width:200px;
-    height:200px;
+    width:130px;
+    margin-bottom:20px;
+
     position: fixed;
-    /* border:white 2px solid; */
     right: 20px;
     bottom:0px;
     z-index: 1;

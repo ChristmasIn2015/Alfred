@@ -2,8 +2,8 @@
   <div class='myCar'>
       <div class="car">
           <!-- 关闭按钮 -->
-          <div class="close" @click='closeCar()'>
-              <img :src="require('../assets/image/detail/close.jpg')">
+          <div class="close" >
+              <img :src="require('../assets/image/detail/close.jpg')" @click='closeCar()'>
           </div>
           <!-- 购物车 -->
           <div class="orders" v-for='(goods,goodKey) in carData' :key='goodKey'>

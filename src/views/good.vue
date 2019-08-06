@@ -10,10 +10,14 @@
         <div class="goodMsg block" :style="imgSizeRight">
             <img src='../assets/image/detail/timg.jpg'>
         </div>
+        <!-- 移动端信息页 -->
+        <div class="goodMsg block mobileGMS">
+            <img src='../assets/image/detail/timg.jpg'>
+        </div>
 
         <!-- 按钮 -->
         <div class="goodBtns">
-            <div @click='widthChange' class='divbtn'>{{ imgMsg }}</div>
+            <div @click='widthChange' class='divbtn no'>{{ imgMsg }}</div>
             <router-link :to="{ name:'items', params:{ name:name }}" class='divbtn'>返回</router-link>
             <div class='divbtn' v-show="btnView" @click="addGood()">加入购物车</div>
             <div class='divbtn' v-show="btnView" @click="showCar()">查看购物车</div>

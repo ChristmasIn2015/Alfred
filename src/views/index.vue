@@ -5,6 +5,8 @@
     <myNav></myNav>
 
     <!-- 左菜单 -->
+    <label for='downShowBtn' class='downShow'>菜单</label>
+    <input type='checkbox' id='downShowBtn'>
     <div class="down_container">
         <div class="down" v-for='i in downs' :key='i.name'>
             <div class="down-btn">{{i.name}}</div>
@@ -25,6 +27,7 @@
         <div v-for='(value,key,index) in goods' :key="index" class="goodsbox">
             <!-- value是商品数据汇总中的大分类对象 -->
             <!-- key是商品数据汇总中的大分类对象名称 -->
+            
             <!-- 导航条 -->
             <a id="nav_a" @mouseenter='mouseIn(index)' :class="{active:index==current}">{{ key }}</a>
             
@@ -42,11 +45,19 @@
                         </div>
                     </a>
                 </div>
-                <!-- 进入一级商品明细表 -->
-                <a @click='routesAdd(key)' class="moreItem"> 
-                    查看更多 {{ key }} 系列
-                    <router-link to='/items'></router-link>
-                </a>
+                <div class="footerPos">
+                    <!-- 进入一级商品明细表 -->
+                    <a @click='routesAdd(key)' class="moreItem"> 
+                        查看更多 {{ key }} 系列
+                        <router-link to='/items'></router-link>
+                    </a>
+                    <!-- 底部 -->
+                    <div class="footer">
+                        <a>我的github: https://github.com/ChrismasIn2015</a>
+                        <a>我的邮箱: wqao1023@qq.com</a>
+                        <a>我的电话<label style="color:green;font-weight:bold;">( 微信 )</label> : 132 6391 1023 (黄文强)</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -54,15 +65,6 @@
     <!-- 按钮 -->
     <loginBtns :DBfromApp='DBfromApp'></loginBtns>
 
-    <!-- 底部 -->
-    <div class="footer">
-        <div class="blank"></div>
-        <div class="footer0">
-            <a>我的github: https://github.com/ChrismasIn2015</a>
-            <a>我的邮箱: wqao1023@qq.com</a>
-            <a>我的电话<label style="color:green;font-weight:bold;">( 微信 )</label> : 132 6391 1023 (黄文强)</a>
-        </div>
-    </div>
   </div>
 </template>
 
