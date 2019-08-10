@@ -9,7 +9,8 @@ body{
 @media (min-width:500px){
   /* 如果宽度超过500px */
   #main{
-    width:1200px;
+    width:80%;
+    max-width:1200px;
     margin:auto;
   }
 }
@@ -18,8 +19,8 @@ body{
 @media (max-width:500px){
   /* 如果宽度不超过500px */
   #main{
-    /* 那整个网站最宽就1200 */
     width:100%;
+    min-width:375px;
     margin:auto;
   }
 }

@@ -94,10 +94,10 @@
 		color: white;
 		display: block;
 		/*a文字样式*/
-		font-size: 20px;
+		font-size: 1.2rem;
 		text-align: center;
 		text-decoration: none;
-		line-height: 50px;
+		line-height: 2.4rem;
 		border-radius: 5px;   
 	}
 	.level a:hover{
@@ -109,6 +109,7 @@
 /******************************************************  下面是移动端 */
 @media (max-width:500px) {
 	.level{
+		min-width: 375px;
 		width:100%;
 		position:fixed;
 		top:0px;
@@ -130,8 +131,8 @@
 		color: white;
 		display: block;
 		/*a文字样式*/
-		font-size: 20px;
-		line-height: 300%;/*以字体为基准*/
+		font-size: 2rem;
+		line-height: 4rem;/*以字体为基准*/
 		text-align: center;
 		text-decoration: none;
 	}

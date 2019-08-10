@@ -4,22 +4,25 @@
     <!-- 顶部导航条 -->
     <myNav></myNav>
 
-    <!-- 左菜单 -->
+    <!-- 移动端按钮 -->
     <label for='downShowBtn' class='downShow'>菜单</label>
-    <input type='checkbox' id='downShowBtn'>
-    <div class="down_container">
-        <div class="down" v-for='i in downs' :key='i.name'>
-            <div class="down-btn">{{i.name}}</div>
-            <div class="menu">
-                <router-link :to="{name:'good',params:{name:i.belone,good:m}}" 
-                    v-for='m in i.menus' :key= m >{{ m }}</router-link>
+    <!-- 左菜单 -->
+    <div class="layout2">
+        <input type='checkbox' id='downShowBtn'>
+        <div class="down_container">
+            <div class="down" v-for='i in downs' :key='i.name'>
+                <div class="down-btn">{{i.name}}</div>
+                <div class="menu">
+                    <router-link :to="{name:'good',params:{name:i.belone,good:m}}" 
+                        v-for='m in i.menus' :key= m >{{ m }}</router-link>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- 右轮播图 -->
-    <div class="adImgs">
-		<img v-for="(i,index) in images" :key=index :src='i.src' v-show="mark===index" @click.prevent>
+        <!-- 右轮播图 -->
+        <div class="adImgs">
+            <img v-for="(i,index) in images" :key=index :src='i.src' v-show="mark===index" @click.prevent>
+        </div>
     </div>
 
     <!-- 商品汇总 -->

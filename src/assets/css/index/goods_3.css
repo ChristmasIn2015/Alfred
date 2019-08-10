@@ -1,6 +1,5 @@
 
     .indexGoods{
-        min-width:400px;
         background-color: rgb(36, 35, 35);
         color:white;
         position: relative;
@@ -8,11 +7,12 @@
     .goodsbox{
         display: inline-block;
     }
+    /* 导航条 */
     #nav_a{
-        width:100px;
-        height:50px;
+        width:5rem;
+        height:2.5rem;
+        line-height: 2.5rem;
         display: block;
-        line-height: 50px;
         cursor:pointer;
         text-align: center;
     }
@@ -24,8 +24,7 @@
     /*难点：选项卡内容/相对于导航条的位置设置*/
     .content{
         width: 100%;
-        min-width:400px;
-        top:50px;
+        top:3rem;
         left:0px;
         position: absolute;
         background-color: rgb(36, 35, 35);

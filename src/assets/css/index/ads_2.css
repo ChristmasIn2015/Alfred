@@ -1,14 +1,11 @@
 @media (min-width:500px){
 	.adImgs{
-		margin-top:20px;
-		margin-left: 40px;
-		margin-bottom:60px;
 		/* padding:0px 2%; */
-		width:900px;
-		height:400px;
+		width:75%;
+		height:20rem;
 		display:inline-block;
 		text-align: center;
-		background-color: rgb(36,35,35);
+		/* background-color: rgb(36,35,35); */
 	}
 	@keyframes aa{
 		0%{
@@ -30,8 +27,8 @@
 /******************************************************  下面是移动端 */
 @media (max-width:500px) {
 	.adImgs{
-		margin-top:90px;
-		margin-bottom:30px;
+		margin-top:4rem;
+		margin-bottom:4rem;
 		/* padding:0px 2%; */
 		width:100%;
 		height:200px;

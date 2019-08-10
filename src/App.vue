@@ -9,8 +9,6 @@
   export default {
     data:function(){
       return {
-        //ifUser用于保存已经登录的用户名,这样全局都能根据这个数据来确定是否加载获取到的数据
-        ifUser:'none',
         DB:DB,//注册暴露的数据库
       }
     },
@@ -19,7 +17,6 @@
     created(){
       //默认页面开启时候不保存登录数据
       localStorage.club1023User="";
-      window.alert('服务器速度慢/请耐心等待 (=^･ω･^=)')
     },
   }
 </script>
