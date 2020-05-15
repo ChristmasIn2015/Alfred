@@ -8,6 +8,7 @@
 
 <script>
 export default {
+  name: "optionalTitle",
   props: {
     config: {
       type: Object,
@@ -22,24 +23,24 @@ export default {
 };
 </script>
 
-<style lang='less' scoped>
-.my-title{
-  padding: 12PX;
-  position:relative;
-  .part{
-    width: 40%;
-    font-family: PingFangSC-Medium;
+<style lang="less" scoped>
+  .my-title {
+    padding: 12PX;
+    position: relative;
+    .part {
+      width: 40%;
+      font-family: PingFangSC-Medium;
+    }
+    .part-icon {
+      width: 4PX;
+      margin-right: 10PX;
+    }
+    .tip {
+      font-family: PingFangSC-Regular;
+      color: #999999;
+      letter-spacing: 0;
+      text-align: right;
+      margin-left: auto;
+    }
   }
-  .part-icon {
-    width: 4PX;
-    margin-right: 10px;
-  }
-  .tip{
-    font-family: PingFangSC-Regular;
-    color: #999999;
-    letter-spacing: 0;
-    text-align: right;
-    margin-left: auto;
-  }
-}
 </style>
