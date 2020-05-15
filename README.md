@@ -56,6 +56,7 @@ import "./yjyCmsUI.js"
 ```
 // ** compo 代表整个组件
 // ** style 会被全部设置为对应目标的行内样式，单位自定义，需要适配各屏幕（推荐rem）
+// ** @action 会触发每张图片广告的点击事件
 <optionalSwiper :option="target"/>
 
 <script>
@@ -66,7 +67,13 @@ import "./yjyCmsUI.js"
         swiper:{
             option: 见下方 swiperTypeMap
             style:{}
-            images:[]
+            images:[
+                {
+                    url // 必须
+                    title
+                    tip
+                }
+            ]
         }
     }
 </script>
