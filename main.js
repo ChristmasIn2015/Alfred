@@ -5,7 +5,7 @@ import optionalSwiper from './components/optionalSwiper.vue'
 import optionalTitle from './components/optionalTitle.vue'
 const components = [optionalSwiper, optionalTitle]
 
-// 1.始终在 Vue 上全局循环注册组件
+// // 1.始终在 Vue 上全局循环注册组件
 const install = function(Vue, opts = {}) {
   components.forEach((component) => {
     Vue.component(component.name, component)
@@ -15,11 +15,11 @@ if (typeof window !== 'undefined' && window.Vue) {
   install(window.Vue)
 }
 
-// 2.在 window 上暴露单个组件
-// let yjyCmsUI = {
-//   version: '0.0.1',
-//   install,
-//   optionalSwiper,
-//   optionalTitle,
-// }
-// window.yjyCmsUI = yjyCmsUI
+// // 2.在 window 上暴露单个组件
+// // let yjyCmsUI = {
+// //   version: '0.0.1',
+// //   install,
+// //   optionalSwiper,
+// //   optionalTitle,
+// // }
+// // window.yjyCmsUI = yjyCmsUI
