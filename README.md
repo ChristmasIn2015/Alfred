@@ -2,6 +2,9 @@
 
 ## yjyCmsUI 生成方法
 
+0.参考文章<br>
+[使用 webpack 打包自己的 Vue 组件](https://www.cnblogs.com/du-blog/p/10933748.html)
+
 1.根据 webpack.config.js 的入口文件 执行
 
 ```
