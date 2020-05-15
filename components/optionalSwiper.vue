@@ -1,29 +1,49 @@
 <template>
-  <div class="my-swiper" :style="config.compo.style">
-    <swiper :options="config.swiper.option">
-      <swiper-slide v-for="(item, index) in config.swiper.images" :key="index">
-        <div
-          class="swiper-block flex-middle"
-          :style="config.swiper.style"
-          @click.stop="swiperClick(item)"
-        >
-          <!-- 1.图片 -->
-          <img class="block-img" :src="item.url" />
-          <!-- 2.文字内容 -->
-          <div class="block-info flex-side">
-            <!-- 标题 -->
-            <div v-show="item.title" class="info-title">
-              <div class="text-cut">{{ item.title }}</div>
-              <div class="text-cut">{{ item.tip }}</div>
+  <div>
+    <!-- 1 -->
+    <div v-if="!config.swiper.option.threeAD">
+      <div class="my-swiper" :style="config.compo.style">
+        <swiper :options="config.swiper.option">
+          <swiper-slide v-for="(item, index) in config.swiper.images" :key="index">
+            <div
+              class="swiper-block flex-middle"
+              :style="config.swiper.style"
+              @click.stop="swiperClick(item)"
+            >
+              <!-- 1.图片 -->
+              <img class="block-img" :src="item.url" />
+              <!-- 2.文字内容 -->
+              <div class="block-info flex-side">
+                <!-- 标题 -->
+                <div v-show="item.title" class="info-title">
+                  <div class="text-cut">{{ item.title }}</div>
+                  <div class="text-cut">{{ item.tip }}</div>
+                </div>
+                <!-- 右侧图标：一般是播放按钮 -->
+                <!-- <div v-show="swiperMediaIcon" class="info-icon">
+                  <img src="../../../assets/images/mediaPlay.png" alt />
+                </div>-->
+              </div>
             </div>
-            <!-- 右侧图标：一般是播放按钮 -->
-            <!-- <div v-show="swiperMediaIcon" class="info-icon">
-              <img src="../../../assets/images/mediaPlay.png" alt />
-            </div>-->
+          </swiper-slide>
+        </swiper>
+      </div>
+    </div>
+    <!-- 2 -->
+    <div v-else>
+      <div class="threeAD" :style="config.compo.style">
+        <div class="ad-content flex-side">
+          <div
+            class="ad"
+            v-for="(item, index) in imagesHandled"
+            :key="index"
+            @click.stop="swiperClick(item)"
+          >
+            <img :src="item.url" alt />
           </div>
         </div>
-      </swiper-slide>
-    </swiper>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -41,11 +61,29 @@ export default {
     }
   },
   data() {
-    return {};
+    return {
+      imagesHandled: []
+    };
+  },
+  watch: {
+    config: {
+      handler(obj, old) {
+        if (!obj.swiper.option.threeAD) return;
+        let list = obj.swiper.images;
+        let tempList = [{}, {}, {}];
+        for (let i = 0; i < 3; i++) {
+          if (!list[i]) break;
+          tempList[i] = list[i];
+        }
+        this.imagesHandled = Object.assign([], tempList);
+      },
+      immediate: true
+    }
   },
   methods: {
     swiperClick(item) {
-      this.$emit("action", item);
+      console.log("swiper get params:", item);
+      this.$emit("actionSwiper", item);
     }
   }
 };
@@ -93,6 +131,23 @@ export default {
           width: 100%;
           height: 100%;
         }
+      }
+    }
+  }
+  // AD three
+  .threeAD {
+    padding: 6PX;
+    position: relative;
+  }
+  .ad-content {
+    align-items: flex-start;
+    .ad {
+      width: 107PX;
+      height: 126PX;
+      overflow: hidden;
+      border: 1PX solid rgb(241, 241, 241);
+      img {
+        width: 100%;
       }
     }
   }

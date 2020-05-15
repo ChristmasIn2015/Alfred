@@ -59,7 +59,7 @@ import "./yjyCmsUI.js"
 ```
 // ** compo 代表整个组件
 // ** style 会被全部设置为对应目标的行内样式，单位自定义，需要适配各屏幕（推荐rem）
-// ** @action 会触发每张图片广告的点击事件
+// ** @actionSwiper 会触发每张图片广告的点击事件
 <optionalSwiper :option="target"/>
 
 <script>
@@ -86,45 +86,49 @@ import "./yjyCmsUI.js"
 
 <script>
     const swiperTypeMap = {
-    // N张铺满平铺
-    0: {
-        // centeredSlides: true, // 居中
-        slidesPerView: 1, // 每个轮播块的图片数量
-        autoplay: true, // 自动播放
-        speed: 500, // 左右滑动速度，越大越慢
-    },
-    // 1.5张3D轮播
-    1: {
-        effect: 'coverflow',
-        coverflowEffect: {
-        rotate: 0,
-        stretch: 0,
-        depth: 100,
-        modifier: 2,
-        slideShadows: false,
+        // N张铺满平铺
+        0: {
+            // centeredSlides: true, // 居中
+            slidesPerView: 1, // 每个轮播块的图片数量
+            autoplay: true, // 自动播放
+            speed: 500, // 左右滑动速度，越大越慢
         },
-        spaceBetween: 40,
-        slidesPerView: 1.3,
-        autoplay: true,
-    },
-    // 1.3 张滑动平铺
-    2: {
-        spaceBetween: 15,
-        slidesPerView: 1.3,
-        autoplay: true,
-    },
-    // 2.5 张平铺
-    3: {
-        spaceBetween: 10,
-        slidesPerView: 2.5,
-        autoplay: true,
-    },
-    // 1.5 张平铺
-    4: {
-        spaceBetween: 15,
-        slidesPerView: 1.5,
-        autoplay: true,
-    },
+        // 1.5张3D轮播
+        1: {
+            effect: 'coverflow',
+            coverflowEffect: {
+            rotate: 0,
+            stretch: 0,
+            depth: 100,
+            modifier: 2,
+            slideShadows: false,
+            },
+            spaceBetween: 40,
+            slidesPerView: 1.3,
+            autoplay: true,
+        },
+        // 1.3 张滑动平铺
+        2: {
+            spaceBetween: 15,
+            slidesPerView: 1.3,
+            autoplay: true,
+        },
+        // 2.5 张平铺
+        3: {
+            spaceBetween: 10,
+            slidesPerView: 2.5,
+            autoplay: true,
+        },
+        // 1.5 张平铺
+        4: {
+            spaceBetween: 15,
+            slidesPerView: 1.5,
+            autoplay: true,
+        },
+        // 3 张静止广告图
+        5: {
+            threeAD: true
+        },
     }
 </script>
 ```
