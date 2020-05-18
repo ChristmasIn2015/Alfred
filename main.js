@@ -3,7 +3,14 @@
 // ******** 20/05/15 根据 vant/cubeUI 发现只能导出JS方式的模板语法 由于时间原因暂时放弃局部导入 ********
 import optionalSwiper from './components/optionalSwiper.vue'
 import optionalTitle from './components/optionalTitle.vue'
-const components = [optionalSwiper, optionalTitle]
+import optionSearchBar from './components/optionSearchBar.vue'
+import optionalEntry from './components/optionalEntry.vue'
+const components = [
+  optionalSwiper,
+  optionalTitle,
+  optionSearchBar,
+  optionalEntry,
+]
 
 // // 1.始终在 Vue 上全局循环注册组件
 const install = function(Vue, opts = {}) {

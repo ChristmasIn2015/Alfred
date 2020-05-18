@@ -132,3 +132,54 @@ import "./yjyCmsUI.js"
     }
 </script>
 ```
+
+- optionalSearchBar：搜索框
+
+```
+// ** compo 代表整个组件
+// ** style 会被全部设置为对应目标的行内样式，单位自定义，需要适配各屏幕（推荐rem）
+// ** @leftAction / @centerAction / @rightAction 会触发左方/中央/右方置物点击事件
+<optionalTitle :option="target"/>
+
+<script>
+    let target = {
+        compo: {
+            style:{}
+        },
+        left:{
+            url // 必须
+        },
+        center:{
+            message
+            style:{}
+        },
+        right:{
+            url // 必须
+        }
+    }
+</script>
+```
+
+- optionalEntry：功能入口栏
+
+```
+// ** compo 代表整个组件
+// ** style 会被全部设置为对应目标的行内样式，单位自定义，需要适配各屏幕（推荐rem）
+// ** @entryAction 会触发入口点击事件
+<optionalTitle :option="target"/>
+
+<script>
+    let target = {
+        compo: {
+            style:{}
+        },
+        list:[
+            {
+                url // 必须
+                tip // 必须
+            }
+        ...
+        ]
+    }
+</script>
+```

@@ -82,7 +82,6 @@ export default {
   },
   methods: {
     swiperClick(item) {
-      console.log("swiper get params:", item);
       this.$emit("actionSwiper", item);
     }
   }

@@ -18,6 +18,13 @@ module.exports = {
         loader: 'css-loader',
       },
       {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: [
+          { loader: 'url-loader?limit=8192&name=images/[hash:8].[name].[ext]' },
+          { loader: 'file-loader?name=images/[hash:8].[name].[ext]' },
+        ],
+      },
+      {
         test: /\.less$/,
         loader: 'style-loader!css-loader!less-loader',
       },
