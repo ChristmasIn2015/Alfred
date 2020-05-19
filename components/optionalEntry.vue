@@ -5,10 +5,10 @@
         class="entry-card flex-y flex-middle"
         v-for="(item, index) in config.list"
         :key="index"
-        @click.stop="entryAction"
+        @click.stop="entryAction(item)"
       >
-        <img :src="item.url" alt />
-        <div class="card-tip">{{ item.tip }}</div>
+        <img :src="item.icon" alt />
+        <div class="card-tip">{{ item.title }}</div>
       </div>
     </div>
   </div>
@@ -47,7 +47,7 @@ export default {
         margin: 2%;
         img {
           width: 100%;
-          height: 56px;
+          height: 56PX;
         }
         .card-tip {
           width: 100%;
@@ -59,7 +59,7 @@ export default {
           margin-top: 8PX;
         }
         &:nth-child(5n) {
-          margin-right: 0px;
+          margin-right: 0PX;
         }
       }
     }

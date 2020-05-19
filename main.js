@@ -5,11 +5,13 @@ import optionalSwiper from './components/optionalSwiper.vue'
 import optionalTitle from './components/optionalTitle.vue'
 import optionSearchBar from './components/optionSearchBar.vue'
 import optionalEntry from './components/optionalEntry.vue'
+import optionalMsg from './components/optionalMsg.vue'
 const components = [
   optionalSwiper,
   optionalTitle,
   optionSearchBar,
   optionalEntry,
+  optionalMsg,
 ]
 
 // // 1.始终在 Vue 上全局循环注册组件
@@ -22,11 +24,6 @@ if (typeof window !== 'undefined' && window.Vue) {
   install(window.Vue)
 }
 
-// // 2.在 window 上暴露单个组件
-// // let yjyCmsUI = {
-// //   version: '0.0.1',
-// //   install,
-// //   optionalSwiper,
-// //   optionalTitle,
-// // }
-// // window.yjyCmsUI = yjyCmsUI
+// 2.在 window 上暴露控制层
+import configLib from './components/compoControl.js'
+window.$configLib = configLib

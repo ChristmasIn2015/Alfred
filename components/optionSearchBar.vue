@@ -2,14 +2,19 @@
   <div class="my-search" :style="config.compo.style">
     <div class="nail flex-side flex-middle-y" :class="{ reFixed: reFixed }">
       <div v-show="config.left.url" class="search-icon">
-        <img :src="config.left.url" alt @click.stop="leftAction" />
+        <img :src="config.left.url" alt @click.stop="leftAction(config.left)" />
       </div>
-      <div class="search-bar flex-middle" :style="config.center.style" @click.stop="centerAction">
+      <div
+        v-show="config.center.message"
+        class="search-bar flex-middle"
+        :style="config.center.style"
+        @click.stop="centerAction(config.center)"
+      >
         <img class="bar-image" :src="searchIcon" alt />
         <span>{{ config.center.message }}</span>
       </div>
       <div v-show="config.right.url" class="search-icon">
-        <img :src="config.right.url" alt @click.stop="rightAction" />
+        <img :src="config.right.url" alt @click.stop="rightAction(config.right)" />
       </div>
     </div>
   </div>
@@ -39,9 +44,17 @@ export default {
       searchIcon: ""
     };
   },
-  mounted() {
-    this.searchIcon = icons.search_icon;
-    window.addEventListener("scroll", this.setBarTop);
+  watch: {
+    config: {
+      handler(newConfig, old) {
+        this.searchIcon = icons.search_icon;
+        if (newConfig.compo.fixed) {
+          window.removeEventListener("scroll", this.setBarTop);
+          window.addEventListener("scroll", this.setBarTop);
+        }
+      },
+      immediate: true
+    }
   },
   beforeRouteLeave() {
     // 清除监听器
@@ -86,11 +99,12 @@ export default {
     position: relative;
     z-index: 2; // * 由于固定需求 这里需要再次提升层级
     .nail {
+      width: 100%;
       transition: all 1s;
       .search-icon {
         width: 20PX;
         height: 20PX;
-        margin: 0PX 12PX;
+        margin: 12PX;
         img {
           width: 20PX;
           height: 20PX;

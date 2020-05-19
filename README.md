@@ -1,51 +1,56 @@
 # 这是 YJY 项目 CMS 系统的，基于 Vue 的公共组件库
 
-## yjyCmsUI 生成方法
+# 目录
 
-0.参考文章<br>
-[使用 webpack 打包自己的 Vue 组件](https://www.cnblogs.com/du-blog/p/10933748.html)
+[1.使用方法](#使用方法)<br>
+[2.组件配置明细](#组件配置明细)
 
-1.根据 webpack.config.js 的入口文件 执行
+# <span style="color:red;">1.使用方法</span>
 
-```
-npm run build
-```
-
-2.在 dist 目录下会生成构建文件 yjyCmsUI.js<br>
-
-- 接下来在需要使用的 Vue 项目中导入这个文件 (位置自定义)
+1.1 导入 yjyCmsUI.js 文件，使其自动在 Vue 上全局注册所有组件
 
 ```
-import "./yjyCmsUI.js"
+<script src="https://pics.lvjs.com.cn//appcache/h5/cms/yjyCmsUI.js"></script>
 ```
 
-- 或者在 html 模板中从第三方导入 (位置自定义)
+1.2 所有组件需要在标签传递 :config 配置才能正常渲染展示
 
 ```
-<script src="yjyCmsUI.js"></script>
+· 例如中台配置了一个页面标题，其数据为 data，只需要
+    let myconfig = window.$configLib.configTitle(data)
+    <optionalTitle :config="myconfig"/>
+    就能在希望的地方展示CMS页面标题组件
+
+· 自动挂载的 window.$configLib 方法包中
+    已含有将中台组件配置 转为 :config 配置的方法
+
+· 目前含有
+    页面标题：configTitle
+    广告图片：configSwiper
 ```
 
-3.目前 UI 使用介绍
+# <span style="color:red;">2.组件配置明细</span>
 
-- optionalTitle：组件标题
+[2.1 页面标题](#optionalTitle：页面标题)<br>
+[2.2 图片广告](#optionalSwiper：图片广告)
+
+## optionalTitle：页面标题
 
 ```
-// ** compo 代表整个组件
-// ** style 会被全部设置为对应目标的行内样式，单位自定义，需要适配各屏幕（推荐rem）
-<optionalTitle :option="target"/>
+<optionalTitle :option="myconfig"/>
 
 <script>
     let target = {
         compo: {
-            style:{}
+            style:{} // 整个组件的行内样式
         },
         title:{
-            value:String,
             style:{}
+            value:'', // 主标题
         },
         tip:{
-            value:String,
             style:{}
+            value:'', // 副标题
             },
         icon:{
             style:{}
@@ -54,86 +59,85 @@ import "./yjyCmsUI.js"
 </script>
 ```
 
-- optionalSwiper：图片广告
+[返回目录](#目录)
+
+## optionalSwiper：图片广告
 
 ```
-// ** compo 代表整个组件
-// ** style 会被全部设置为对应目标的行内样式，单位自定义，需要适配各屏幕（推荐rem）
-// ** @actionSwiper 会触发每张图片广告的点击事件
-<optionalSwiper :option="target"/>
+<optionalSwiper :option="myconfig" @actionSwiper/>
 
-<script>
-    let target = {
-        compo: {
-            style:{}
-        },
-        swiper:{
-            option: 见下方 swiperTypeMap
-            style:{}
-            images:[
-                {
-                    url // 必须
-                    title
-                    tip
-                }
-            ]
-        }
+· @actionSwiper 表示轮播图点击事件的回调
+· myconfig = {
+    compo: {
+        style:{} // 整个组件的行内样式
+    },
+    swiper:{
+        style: {},
+        option: 见下方 swiperTypeMap
+        images:[
+            {
+                url: '', // 必须
+                title: '',
+                tip: ''
+            }
+        ]
     }
-</script>
+}
 ```
 
+[返回目录](#目录)
+
+```
+· swiperTypeMap = {
+    // N张铺满平铺
+    0: {
+        // centeredSlides: true, // 居中
+        slidesPerView: 1, // 每个轮播块的图片数量
+        autoplay: true, // 自动播放
+        speed: 500, // 左右滑动速度，越大越慢
+    },
+    // 1.5张3D轮播
+    1: {
+        effect: 'coverflow',
+        coverflowEffect: {
+        rotate: 0,
+        stretch: 0,
+        depth: 100,
+        modifier: 2,
+        slideShadows: false,
+        },
+        spaceBetween: 40,
+        slidesPerView: 1.3,
+        autoplay: true,
+    },
+    // 1.3 张滑动平铺
+    2: {
+        spaceBetween: 15,
+        slidesPerView: 1.3,
+        autoplay: true,
+    },
+    // 2.5 张平铺
+    3: {
+        spaceBetween: 10,
+        slidesPerView: 2.5,
+        autoplay: true,
+    },
+    // 1.5 张平铺
+    4: {
+        spaceBetween: 15,
+        slidesPerView: 1.5,
+        autoplay: true,
+    },
+    // 3 张静止广告图
+    5: {
+        threeAD: true
+    },
+}
 ```
 
-<script>
-    const swiperTypeMap = {
-        // N张铺满平铺
-        0: {
-            // centeredSlides: true, // 居中
-            slidesPerView: 1, // 每个轮播块的图片数量
-            autoplay: true, // 自动播放
-            speed: 500, // 左右滑动速度，越大越慢
-        },
-        // 1.5张3D轮播
-        1: {
-            effect: 'coverflow',
-            coverflowEffect: {
-            rotate: 0,
-            stretch: 0,
-            depth: 100,
-            modifier: 2,
-            slideShadows: false,
-            },
-            spaceBetween: 40,
-            slidesPerView: 1.3,
-            autoplay: true,
-        },
-        // 1.3 张滑动平铺
-        2: {
-            spaceBetween: 15,
-            slidesPerView: 1.3,
-            autoplay: true,
-        },
-        // 2.5 张平铺
-        3: {
-            spaceBetween: 10,
-            slidesPerView: 2.5,
-            autoplay: true,
-        },
-        // 1.5 张平铺
-        4: {
-            spaceBetween: 15,
-            slidesPerView: 1.5,
-            autoplay: true,
-        },
-        // 3 张静止广告图
-        5: {
-            threeAD: true
-        },
-    }
-</script>
-```
+[返回目录](#目录)
 
-- optionalSearchBar：搜索框
+## optionalSearchBar：搜索框
 
 ```
 // ** compo 代表整个组件
@@ -147,20 +151,22 @@ import "./yjyCmsUI.js"
             style:{}
         },
         left:{
-            url // 必须
+            url
         },
         center:{
             message
             style:{}
         },
         right:{
-            url // 必须
+            url
         }
     }
 </script>
 ```
 
-- optionalEntry：功能入口栏
+[返回目录](#目录)
+
+## optionalEntry：图文导航
 
 ```
 // ** compo 代表整个组件
@@ -183,3 +189,7 @@ import "./yjyCmsUI.js"
     }
 </script>
 ```
+
+## 参考文章
+
+[1.使用 webpack 打包自己的 Vue 组件](https://www.cnblogs.com/du-blog/p/10933748.html)
