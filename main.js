@@ -6,12 +6,14 @@ import optionalTitle from './components/optionalTitle.vue'
 import optionSearchBar from './components/optionSearchBar.vue'
 import optionalEntry from './components/optionalEntry.vue'
 import optionalMsg from './components/optionalMsg.vue'
+import optionalTab from './components/optionalTab.vue'
 const components = [
   optionalSwiper,
   optionalTitle,
   optionSearchBar,
   optionalEntry,
   optionalMsg,
+  optionalTab,
 ]
 
 // // 1.始终在 Vue 上全局循环注册组件

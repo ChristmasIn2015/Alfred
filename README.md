@@ -2,8 +2,8 @@
 
 # 目录
 
-[1.使用方法](#使用方法)<br>
-[2.组件配置明细](#组件配置明细)
+[1.使用方法](#1.使用方法)<br>
+[2.组件配置明细](#2.组件配置明细)
 
 # <span style="color:red;">1.使用方法</span>
 
@@ -31,37 +31,35 @@
 
 # <span style="color:red;">2.组件配置明细</span>
 
-[2.1 页面标题](#optionalTitle：页面标题)<br>
-[2.2 图片广告](#optionalSwiper：图片广告)
+[2.1 页面标题](#optionalTitle)<br>
+[2.2 图片广告](#optionalSwiper)
 
-## optionalTitle：页面标题
+## optionalTitle
 
 ```
 <optionalTitle :option="myconfig"/>
 
-<script>
-    let target = {
-        compo: {
-            style:{} // 整个组件的行内样式
+· myconfig = {
+    compo: {
+        style:{} // 整个组件的行内样式
+    },
+    title:{
+        style:{}
+        value:'', // 主标题
+    },
+    tip:{
+        style:{}
+        value:'', // 副标题
         },
-        title:{
-            style:{}
-            value:'', // 主标题
-        },
-        tip:{
-            style:{}
-            value:'', // 副标题
-            },
-        icon:{
-            style:{}
-        }
+    icon:{
+        style:{}
     }
-</script>
+}
 ```
 
 [返回目录](#目录)
 
-## optionalSwiper：图片广告
+## optionalSwiper
 
 ```
 <optionalSwiper :option="myconfig" @actionSwiper/>
@@ -137,57 +135,49 @@
 
 [返回目录](#目录)
 
-## optionalSearchBar：搜索框
+## optionalSearchBar
 
 ```
-// ** compo 代表整个组件
-// ** style 会被全部设置为对应目标的行内样式，单位自定义，需要适配各屏幕（推荐rem）
-// ** @leftAction / @centerAction / @rightAction 会触发左方/中央/右方置物点击事件
-<optionalTitle :option="target"/>
+<optionalTitle :option="myConfig" @leftAction / @centerAction / @rightAction/>
 
-<script>
-    let target = {
-        compo: {
-            style:{}
-        },
-        left:{
-            url
-        },
-        center:{
-            message
-            style:{}
-        },
-        right:{
-            url
-        }
+· @leftAction / @centerAction / @rightAction 会触发左方/中央/右方置物点击事件
+· myConfig = {
+    compo: {
+        style:{}
+    },
+    left:{
+        url
+    },
+    center:{
+        message
+        style:{}
+    },
+    right:{
+        url
     }
-</script>
+}
 ```
 
 [返回目录](#目录)
 
-## optionalEntry：图文导航
+## optionalEntry
 
 ```
-// ** compo 代表整个组件
-// ** style 会被全部设置为对应目标的行内样式，单位自定义，需要适配各屏幕（推荐rem）
-// ** @entryAction 会触发入口点击事件
-<optionalTitle :option="target"/>
+<optionalTitle :option="myConfig" @entryAction/>
 
-<script>
-    let target = {
-        compo: {
-            style:{}
-        },
-        list:[
-            {
-                url // 必须
-                tip // 必须
-            }
+· @entryAction 会触发入口点击事件
+· myConfig = {
+    compo: {
+        style:{}
+    },
+    list:[
+        {
+            url // 必须
+            tip // 必须
+        }
         ...
-        ]
-    }
-</script>
+    ]
+}
 ```
 
 ## 参考文章

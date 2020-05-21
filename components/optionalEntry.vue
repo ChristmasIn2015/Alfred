@@ -15,39 +15,40 @@
 </template>
 
 <script>
-export default {
-  name: "optionalEntry",
-  props: {
-    config: {
-      type: Object,
-      default: {
-        compo: {},
-        list: []
-      }
-    }
-  },
-  data() {
-    return {};
-  },
-  methods: {
-    entryAction(params) {
-      this.$emit("entryAction", params);
-    }
+  export default {
+    name: 'optionalEntry',
+    props: {
+      config: {
+        type: Object,
+        default: {
+          compo: {},
+          list: [],
+        },
+      },
+    },
+    data() {
+      return {}
+    },
+    methods: {
+      entryAction(params) {
+        this.$emit('entryAction', params)
+      },
+    },
   }
-};
 </script>
 
 <style lang="less" scoped>
+  @import './public.less';
   .my-entry {
     position: relative;
     .entry {
       .entry-card {
         width: 16%;
-        max-width: 56PX;
+        max-width: 56px;
         margin: 2%;
         img {
           width: 100%;
-          height: 56PX;
+          height: 56px;
         }
         .card-tip {
           width: 100%;
@@ -56,10 +57,10 @@ export default {
           color: #303133;
           letter-spacing: 0;
           text-align: center;
-          margin-top: 8PX;
+          margin-top: 8px;
         }
         &:nth-child(5n) {
-          margin-right: 0PX;
+          margin-right: 0px;
         }
       }
     }

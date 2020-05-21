@@ -45,6 +45,7 @@
 </script>
 
 <style lang="less" scoped>
+  @import './public.less';
   .my-msg {
     height: 50px;
     .msg-title {

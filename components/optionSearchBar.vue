@@ -94,6 +94,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+  @import "./public.less";
   .my-search {
     min-height: 60PX;
     position: relative;

@@ -24,6 +24,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+  @import "./public.less";
   .my-title {
     padding: 12PX;
     position: relative;

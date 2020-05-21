@@ -4,28 +4,32 @@
     <div v-if="!config.swiper.option.threeAD">
       <div class="my-swiper" :style="config.compo.style">
         <swiper :options="config.swiper.option">
-          <swiper-slide v-for="(item, index) in config.swiper.images" :key="index">
+          <swiper-slide
+            v-for="(item, index) in config.swiper.images"
+            :key="index"
+          >
             <div
               class="swiper-block flex-middle"
               :style="config.swiper.style"
               @click.stop="swiperClick(item)"
             >
-              <!-- 1.图片 -->
               <img class="block-img" :src="item.url" />
-              <!-- 2.文字内容 -->
               <div class="block-info flex-side">
-                <!-- 标题 -->
                 <div v-show="item.title" class="info-title">
                   <div class="text-cut">{{ item.title }}</div>
                   <div class="text-cut">{{ item.tip }}</div>
                 </div>
-                <!-- 右侧图标：一般是播放按钮 -->
-                <!-- <div v-show="swiperMediaIcon" class="info-icon">
-                  <img src="../../../assets/images/mediaPlay.png" alt />
-                </div>-->
+                <div v-show="item.linkType === 'video'" class="info-icon">
+                  <img :src="mediaIcon" alt />
+                </div>
               </div>
             </div>
           </swiper-slide>
+          <div
+            v-show="config.swiper.option.pagination"
+            class="swiper-pagination"
+            slot="pagination"
+          ></div>
         </swiper>
       </div>
     </div>
@@ -48,54 +52,58 @@
 </template>
 
 <script>
-export default {
-  name: "optionalSwiper",
-  props: {
-    config: {
-      type: Object,
-      default: {
-        swiper: {
-          option: {}
-        }
-      }
-    }
-  },
-  data() {
-    return {
-      imagesHandled: []
-    };
-  },
-  watch: {
-    config: {
-      handler(obj, old) {
-        if (!obj.swiper.option.threeAD) return;
-        let list = obj.swiper.images;
-        let tempList = [{}, {}, {}];
-        for (let i = 0; i < 3; i++) {
-          if (!list[i]) break;
-          tempList[i] = list[i];
-        }
-        this.imagesHandled = Object.assign([], tempList);
+  import icons from './icon.js'
+  export default {
+    name: 'optionalSwiper',
+    props: {
+      config: {
+        type: Object,
+        default: {
+          swiper: {
+            option: {},
+          },
+        },
       },
-      immediate: true
-    }
-  },
-  methods: {
-    swiperClick(item) {
-      this.$emit("actionSwiper", item);
-    }
+    },
+    data() {
+      return {
+        imagesHandled: [],
+        mediaIcon: icons.media_icon,
+      }
+    },
+    watch: {
+      config: {
+        handler(obj, old) {
+          if (!obj.swiper.option.threeAD) return
+          let list = obj.swiper.images
+          let tempList = [{}, {}, {}]
+          for (let i = 0; i < 3; i++) {
+            if (!list[i]) break
+            tempList[i] = list[i]
+          }
+          this.imagesHandled = Object.assign([], tempList)
+        },
+        immediate: true,
+      },
+    },
+    methods: {
+      swiperClick(item) {
+        console.log('swiper emit')
+        this.$emit('actionSwiper', item)
+      },
+    },
   }
-};
 </script>
 
 <style lang="less" scoped>
+  @import './public.less';
   .my-swiper {
     position: relative;
   }
   // 轮播图块
   .swiper-block {
     overflow: hidden;
-    background-color: rgba(235, 235, 235, 0.5);
+    background-color: rgba(175, 175, 175, 0.5);
     // 轮播图片
     .block-img {
       height: 100%;
@@ -103,29 +111,29 @@ export default {
     // 轮播图片信息
     .block-info {
       position: absolute;
-      bottom: 0PX;
-      left: 0PX;
+      bottom: 0px;
+      left: 0px;
       width: 100%;
-      padding: 0PX 16.13PX 16.13PX;
+      padding: 0px 16.13px 16.13px;
       align-items: flex-end;
       .info-title {
         width: 70%;
         div {
           color: #ffffff;
-          font-size: 12PX;
+          font-size: 12px;
           opacity: 0.8;
           font-family: PingFangSC-Regular;
           &:first-child {
             opacity: 1;
-            margin-bottom: 3PX;
+            margin-bottom: 3px;
             font-family: PingFangSC-Semibold;
-            font-size: 20PX;
+            font-size: 20px;
           }
         }
       }
       .info-icon {
-        width: 28.875PX;
-        height: 28.875PX;
+        width: 28.875px;
+        height: 28.875px;
         img {
           width: 100%;
           height: 100%;
@@ -135,16 +143,16 @@ export default {
   }
   // AD three
   .threeAD {
-    padding: 6PX;
+    padding: 6px;
     position: relative;
   }
   .ad-content {
     align-items: flex-start;
     .ad {
-      width: 107PX;
-      height: 126PX;
+      width: 107px;
+      height: 126px;
       overflow: hidden;
-      border: 1PX solid rgb(241, 241, 241);
+      border: 1px solid rgb(241, 241, 241);
       img {
         width: 100%;
       }
