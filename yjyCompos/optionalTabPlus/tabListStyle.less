@@ -1,0 +1,240 @@
+.my-tab {
+  /* prettier-ignore */
+  .tab-content {
+    // A 列表样式
+    .list-items {
+      .block {
+        display: flex;
+        flex-direction: row-reverse;
+        width: 100%;
+        border-radius: 6PX;
+        margin-bottom: 24PX;
+        .img-block {
+          min-width: 108PX;
+          min-height: 72PX;
+          max-width: 108PX;
+          max-height: 72PX;
+          border-radius: 6PX;
+          overflow: hidden;
+          text-align: center;
+          background-color: rgb(233, 233, 233);
+          position: relative;
+          img {
+            width: 100%;
+            height: 72PX;
+            object-fit: cover;
+          }
+        }
+        .info-block {
+          width: 100%;
+          padding-right: 12PX;
+          .info-title {
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            text-overflow: ellipsis;
+            -webkit-box-orient: vertical;
+            font-family: PingFangSC-Regular;
+            font-size: 16PX;
+            line-height: 22PX;
+            height: 44PX;
+            color: #333333;
+          }
+          .info-tip {
+            margin-top: auto;
+            div {
+              color: #999999;
+              font-size: 12PX;
+            }
+          }
+        }
+      }
+    }
+    // B 小图样式
+    .mini-items {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      .block {
+        width: 48%;
+        border-radius: 6PX;
+        overflow: hidden;
+        margin-bottom: 32PX;
+        display: flex;
+        flex-direction: column;
+        .img-block {
+          width: 100%;
+          min-height: 120PX;
+          max-height: 120PX;
+          border-radius: 6PX;
+          overflow: hidden;
+          text-align: center;
+          position: relative;
+          display: flex;
+          align-items: center;
+          img {
+            width: 100%;
+            height: 120PX;
+            object-fit: cover;
+          }
+        }
+        .info-block {
+          width: 100%;
+          height: 100%;
+          .info-title {
+            overflow: hidden;
+            font-family: PingFangSC-Medium;
+            font-size: 14PX;
+            color: #222222;
+            line-height: 18PX;
+            max-height: 36PX;
+            margin: 6PX 0PX;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            text-overflow: ellipsis;
+            -webkit-box-orient: vertical;
+          }
+          .info-tip {
+            align-items: flex-end;
+            margin-top: auto;
+            div {
+              color: rgb(102, 102, 102);
+              font-size: 12PX;
+            }
+          }
+        }
+      }
+    }
+    // C 大图样式
+    .large-items {
+      .block {
+        width: 100%;
+        border-radius: 6PX;
+        overflow: hidden;
+        margin: 12PX 0PX;
+        .img-block {
+          width: 100%;
+          height: 150PX;
+          border-radius: 6PX 6PX 0PX 0PX;
+          overflow: hidden;
+          text-align: center;
+          background-color: rgb(233, 233, 233);
+          position: relative;
+          display: flex;
+          align-items: center;
+          img {
+            width: 100%;
+            height: 150PX;
+            object-fit: cover;
+          }
+        }
+        .info-block {
+          width: 100%;
+          padding: 6PX;
+          .info-title {
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            text-overflow: ellipsis;
+            font-size: 18PX;
+            line-height: 22PX;
+            max-height: 44PX;
+            -webkit-box-orient: vertical;
+          }
+          .info-tip {
+            padding: 12PX 0PX 0PX;
+            div {
+              color: rgb(102, 102, 102);
+              font-size: 12PX;
+            }
+          }
+        }
+      }
+    }
+    // D 瀑布样式
+    .fall-items {
+      column-count: 2;
+      .block {
+        break-inside: avoid;
+        width: 100%;
+        border-radius: 6PX;
+        overflow: hidden;
+        margin: 0PX 3PX 12PX;
+        .img-block {
+          width: 100%;
+          min-height: 50PX;
+          border-radius: 6PX 6PX 0PX 0PX;
+          overflow: hidden;
+          text-align: center;
+          background-color: rgb(233, 233, 233);
+          position: relative;
+          display: flex;
+          align-items: center;
+          img {
+            width: 100%;
+          }
+        }
+        .info-block {
+          padding: 6PX;
+          width: 100%;
+          .info-title {
+            overflow: hidden;
+            word-break: break-all;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            text-overflow: ellipsis;
+            -webkit-box-orient: vertical;
+          }
+          .info-tip {
+            padding: 12PX 0PX 0PX;
+            div {
+              color: rgb(102, 102, 102);
+              font-size: 12PX;
+            }
+          }
+        }
+      }
+    }
+    // E 推荐切换/图片排列
+    .round-items{
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      .block {
+        width: 105PX;
+        height: 105PX;
+        border-radius: 6PX;
+        margin: 4PX 0PX;
+        overflow: hidden;
+        .image-block{
+          width: 100%;
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: relative;
+          img{
+            width: 100%;
+            height: 105PX;
+            object-fit: cover;
+          }
+          .title{
+            width: 100%;
+            font-size: 16PX;
+            line-height: 16PX;
+            padding: 0PX 8PX;
+            position: absolute;
+            bottom: 8PX;
+            left: 0PX;
+            color: white;
+          }
+          .tag{
+            position: absolute;
+            top: 0PX;
+            left: 0PX;
+          }
+        }
+      }
+    }
+  }
+}

@@ -3,15 +3,14 @@
   padding: 0px;
   box-sizing: border-box;
 }
-// html,
-// body,
-// #app {
-//     -moz-user-select: none; /* 火狐 */
-//     -webkit-user-select: none; /* 谷歌 */
-//     -ms-user-select: none; /* IE */
-//     user-select: none;
-//     height: 100%;
-// }
+html,
+body,
+#app {
+  -moz-user-select: none; /* 火狐 */
+  -webkit-user-select: none; /* 谷歌 */
+  -ms-user-select: none; /* IE */
+  user-select: none;
+}
 
 // ################################################ 布局
 .flex {
@@ -24,6 +23,10 @@
 .flex-y {
   display: flex;
   flex-direction: column;
+}
+.flex-y-reverse {
+  display: flex;
+  flex-direction: column-reverse;
 }
 .flex-middle {
   display: flex;
@@ -60,4 +63,18 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+.text-cut-line2 {
+  overflow: hidden;
+  word-break: break-all;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+}
+.line-middle {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

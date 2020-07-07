@@ -15,7 +15,11 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: 'css-loader',
+        loader: 'style-loader!css-loader!postcss-loader!less-loader',
+      },
+      {
+        test: /\.less$/,
+        loader: 'style-loader!css-loader!postcss-loader!less-loader',
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
@@ -23,10 +27,6 @@ module.exports = {
           { loader: 'url-loader?limit=8192&name=images/[hash:8].[name].[ext]' },
           { loader: 'file-loader?name=images/[hash:8].[name].[ext]' },
         ],
-      },
-      {
-        test: /\.less$/,
-        loader: 'style-loader!css-loader!less-loader',
       },
     ],
   },

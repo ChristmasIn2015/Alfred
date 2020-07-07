@@ -5,43 +5,24 @@
   "main": "main.js",
   "scripts": {
     "build": "webpack main.js --config webpack.config.js",
-    "build2": "webpack main.js --config webpack.config.js && node ../setUI.js"
+    "build2": "webpack main.js --config webpack.config.js && node ../setUI.js",
+    "build3": "webpack main.js --config webpack.config.js && node ../setUI1920.js"
   },
   "author": "wqao",
   "license": "ISC",
-  "dependencies": {
-    "postcss-px-to-viewport": "^1.1.1",
-    "vue-awesome-swiper": "^4.1.1"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.5.3",
     "file-loader": "^6.0.0",
     "less": "^3.11.1",
     "less-loader": "^6.1.0",
+    "postcss-loader": "^3.0.0",
+    "postcss-px-to-viewport": "^1.1.1",
     "style-loader": "^1.2.1",
     "url-loader": "^4.1.0",
     "vue-loader": "^15.9.2",
     "vue-template-compiler": "^2.6.11",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11"
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {},
-      "postcss-px-to-viewport": {
-        "unitToConvert": "PX",
-        "viewportWidth": 375,
-        "viewportHeight": 667,
-        "unitPrecision": 3,
-        "viewportUnit": "vw",
-        "selectorBlackList": [
-          ".ignore",
-          ".hairlines"
-        ],
-        "minPixelValue": 1,
-        "mediaQuery": false
-      }
-    }
   }
 }
