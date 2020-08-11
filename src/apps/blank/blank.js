@@ -11,6 +11,12 @@ const myRouter = new VueRouter({
     routes,
 })
 
+// 2.缩放适配
+import '@/common/rem.js'
+
+// 3.使用全局UI
+import '@/common/sjUI.js'
+
 // *.创建实例
 new Vue({
     render: (h) => h(App),

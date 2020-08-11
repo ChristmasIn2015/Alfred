@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "serve": "vue-cli-service serve",
-        "build": "vue-cli-service build && node ./plugin/distMutiPack.js"
+        "build": "vue-cli-service build && node ./bats/distMutiPack.js"
     },
     "dependencies": {
         "axios": "^0.19.2",

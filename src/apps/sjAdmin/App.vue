@@ -1,7 +1,13 @@
 <template>
-  <div id="app">
+  <div id="app" class="flex">
+    <ASD />
+    <div>1233333</div>
+    <div class="tt">321321</div>
     <router-view />
   </div>
-</template>
+</template> 
 
-<style lang="scss"></style>
+<style lang="scss">
+.tt{
+  color: $sj-main;
+}</style>

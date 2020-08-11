@@ -32,11 +32,8 @@ module.exports = {
     // ** 导入的scss公共变量 **
     css: {
         loaderOptions: {
-            sass: {
-                prependData: `@import "~@/common/sjUI/const.scss";`,
-            },
             scss: {
-                prependData: `@import "~@/common/sjUI/const.scss";`,
+                prependData: `@import "@/common/sj-ui.scss";`,
             },
         },
     },
