@@ -1,11 +1,11 @@
 <template>
-  <div>I am Index 2</div>
+  <div>I am oooIndex</div>
 </template>
 
 <script>
 export default {
   created() {
-    console.log("component index2 created !");
+    console.log("component index created !");
   },
 };
 </script>
@@ -13,6 +13,6 @@ export default {
 
 <style lang="scss">
 .div {
-  font-size: 3rem;
+  font-size: 2rem;
 }
 </style>

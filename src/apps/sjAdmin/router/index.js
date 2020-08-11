@@ -1,12 +1,12 @@
 // 1.构建路由路径
-const routes = [
+let routes = [
     {
-        path: '/sjAdmin/index',
+        path: '/index',
         name: 'other',
         component: () => import('../views/index.vue'),
     },
     {
-        path: '/sjAdmin/index2',
+        path: '/index2',
         name: 'other2',
         component: () => import('../views/index2.vue'),
     },

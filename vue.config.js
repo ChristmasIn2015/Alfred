@@ -14,6 +14,7 @@ function getPages() {
             entry: `src/apps/${projectName}/${projectName}.js`,
             // Html-webpack-plugin 插件的模板来源
             template: `src/apps/${projectName}/${projectName}.html`,
+            // template: `./public/index.html`,
             // 在 dist/index.html 的输出
             filename: `${projectName}.html`,
             // 提取出来的通用 chunk 和 vendor chunk。
@@ -22,9 +23,10 @@ function getPages() {
     })
     return viewsMap
 }
-
 module.exports = {
     // ** 多页模式 **
+    // ** 200811 本地通过 file:// 加载单页成功 **
+    // ** 200811 本地通过 file:// 加载多页不成功, 暂时不使用 **
     pages: getPages(),
 
     // ** 导入的scss公共变量 **
