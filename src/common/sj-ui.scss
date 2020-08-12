@@ -1,17 +1,21 @@
 // * 全局
+// * 布局
+// * 按钮
+// * 动画
+// * 其他
+//      * sj-shadow
+//      * text-cut
+//      * no-scroll-bar
+//      * sj-modal-back
+//      * sj-board
 
-// # 提示
-$sj-tip-higher: rgb(177, 177, 177);
+// *************************************************************** 全局
+$sj-main: #07c160;
+$sj-back: #eeeeee;
+$sj-white: #ffffff;
 $sj-tip: rgb(197, 197, 197);
 $sj-tip-lower: rgb(226, 226, 226);
-
-// # 通用
-$sj-white: #ffffff;
-$sj-black: #333333;
-
-// # 处处有码 - 全局颜色设置
-$sj-main: #07c160;
-$sj-back: rgb(241, 241, 241);
+$sj-tip-higher: rgb(177, 177, 177);
 
 * {
     margin: 0px;
@@ -22,6 +26,7 @@ html,
 body,
 #app {
     height: 100%;
+    min-height: 100%;
     background-color: $sj-back;
 
     // 输入框选中
@@ -37,7 +42,7 @@ body,
     }
 }
 
-// 布局
+// *************************************************************** 布局
 .flex {
     display: flex;
 }
@@ -75,8 +80,11 @@ body,
     flex-wrap: wrap;
 }
 
-// 按钮
-.common-btn {
+// *************************************************************** 按钮
+// 正常：取主色调
+// 正常和白色取反：toggle
+// 灰色：tip
+.sj-btn {
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -88,7 +96,7 @@ body,
     border: 1px solid transparent;
     background-color: $sj-main;
     &:hover {
-        background-color: #05ab55;
+        background-color: $sj-main;
     }
     img {
         width: 1rem !important;
@@ -96,15 +104,14 @@ body,
         margin-right: 0.5rem;
     }
 }
-.common-link {
+.sj-link {
     display: inline;
-    color: $sj-main !important;
+    color: $sj-main;
     cursor: pointer;
     &:hover {
         text-decoration: underline;
     }
 }
-// =====================================================
 .toggle {
     color: $sj-main;
     border: 1px solid $sj-main;
@@ -116,7 +123,7 @@ body,
 }
 .tip {
     color: $sj-tip;
-    border: 1px solid $sj-tip-lower;
+    border: 1px solid $sj-tip;
     background-color: $sj-white;
     &:hover {
         color: $sj-main;
@@ -240,6 +247,63 @@ body,
     }
 }
 
+// *************************************************************** 动画
+.fade-off {
+    transition: all 0.2s;
+    visibility: hidden;
+    width: 0%;
+    opacity: 0;
+}
+.fade-on {
+    visibility: visible;
+    opacity: 1;
+}
+.top-scroll-off {
+    transition: all 0.2s;
+    transform: translateY(-100%);
+    opacity: 0;
+}
+.top-scroll-on {
+    transform: translateY(100%);
+    opacity: 1;
+}
+.left-scroll-off {
+    transition: all 0.2s;
+    transform: translateX(-100%);
+    opacity: 0;
+}
+.left-scroll-on {
+    transform: translateX(0%);
+    opacity: 1;
+}
+
+// *************************************************************** 其他
+.sj-shadow {
+    box-shadow: 0px 0px 10px 2px #e2e2e2;
+    // 参数解释: left top 扩散程度 宽度 颜色
+}
+.text-cut {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.no-scroll-bar {
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+.grey-placeholder {
+    // 设置 placeholder
+    ::-webkit-input-placeholder, /* 使用webkit内核的浏览器 */
+      :-moz-placeholder, /* Firefox版本4-18 */
+      ::-moz-placeholder, /* Firefox版本19+ */
+      :-ms-input-placeholder /* IE浏览器 */ {
+        color: #b2b2b2;
+        font-size: 1rem;
+    }
+}
+
 // 弹窗
 .sj-modal-back {
     // 居中板 - 灰色背景层
@@ -260,9 +324,10 @@ body,
         width: 80%;
         max-height: 80%;
         border-radius: 0.2rem;
+        padding-bottom: 1rem;
+
         display: flex;
         flex-direction: column;
-        padding-bottom: 1rem;
         .title {
             // 1.内容层 - 顶部标题
             font-size: 1.2rem;
@@ -291,33 +356,51 @@ body,
     }
 }
 
-// 动画
-.fade-off {
-    transition: all 0.2s;
-    visibility: hidden;
-    opacity: 0;
-}
-.fade-on {
-    visibility: visible;
-    opacity: 1;
-}
-.top-scroll-off {
-    transition: all 0.2s;
-    transform: translateY(-100%);
-    opacity: 0;
-}
-.top-scroll-on {
-    transform: translateY(100%);
-    opacity: 1;
-}
-
-// * 其他
-.sj-shadow {
-    box-shadow: 0px 0px 10px 2px #e2e2e2;
-    // 参数解释: left top 扩散程度 宽度 颜色
-}
-.text-cut {
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
+// 管理界面
+.sj-board {
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    overflow-y: auto;
+    display: flex;
+    .side {
+        width: 10%;
+        height: 100%;
+        max-height: 100%;
+        overflow-y: auto;
+        background-color: $sj-tip-lower;
+        //
+        scrollbar-width: none;
+        &::-webkit-scrollbar {
+            display: none;
+        }
+        .side-ad {
+            background-color: $sj-main;
+            min-height: 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .side-item {
+            &:hover {
+                cursor: pointer;
+                background-color: $sj-tip;
+            }
+            padding: 1rem;
+            // 手风琴以后弄
+            .items {
+                background-color: $sj-tip;
+                padding-left: 2rem;
+            }
+        }
+        .side-item-on {
+            background-color: $sj-tip-higher;
+        }
+    }
+    .content {
+        width: 100%;
+        height: 100%;
+        max-height: 100%;
+        overflow-y: auto;
+    }
 }

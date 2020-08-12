@@ -7,8 +7,16 @@
         data() {
             return {}
         },
+        computed: {
+            userInfo() {
+                let info = this.$store.getters.getUserInfo
+                return info
+            },
+        },
         created() {},
-        method: {},
+        method: {
+            init() {},
+        },
     }
 </script>
 

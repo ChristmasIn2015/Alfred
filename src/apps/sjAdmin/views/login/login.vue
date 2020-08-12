@@ -1,5 +1,5 @@
 <template>
-    <div class="index"></div>
+    <div class="index">广告页面</div>
 </template>
 
 <script>
