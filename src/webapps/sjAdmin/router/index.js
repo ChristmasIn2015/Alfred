@@ -5,10 +5,5 @@ let routes = [
         name: 'board',
         component: () => import('../views/board/board.vue'),
     },
-    {
-        path: '/login',
-        name: 'login',
-        component: () => import('../views/login/login.vue'),
-    },
 ]
 export default routes

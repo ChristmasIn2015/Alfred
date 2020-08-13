@@ -23,16 +23,25 @@
                     <span>欢迎您: </span>
                     <span class="sj-link" @click.stop="reLogin">{{ userInfo.name }} </span>
                     <span>，当前店铺: </span>
-                    <span class="sj-link" @click.stop="showMyShop">{{ userInfo.nowShopInfo.name }} </span>
+                    <span class="sj-link" @click.stop="setSideIndex(0)">{{ userInfo.nowShopInfo.name }} </span>
                 </div>
             </div>
             <!-- 内容区 -->
             <div class="con-board ">
-                <div v-show="sideIndex === 0">
+                <div v-if="sideIndex === 0">
                     <boardOfShop ref="boardOfShop" />
                 </div>
-                <div v-show="sideIndex === 1">
+                <div v-if="sideIndex === 1">
                     <boardOfWareHouse ref="boardOfWareHouse" />
+                </div>
+                <div v-if="sideIndex === 3">
+                    <boardOfEmployee ref="boardOfEmployee" />
+                </div>
+                <div v-if="sideIndex === 4">
+                    <boardOfCommodity ref="boardOfCommodity" />
+                </div>
+                <div v-if="sideIndex === 5">
+                    <boardOfCustomer ref="boardOfCustomer" />
                 </div>
             </div>
         </div>
@@ -60,13 +69,23 @@
 
 <script>
     import boardOfShop from '../../components/boardOfShop.vue'
+    import boardOfEmployee from '../../components/boardOfEmployee.vue'
+    import boardOfCommodity from '../../components/boardOfCommodity.vue'
     import boardOfWareHouse from '../../components/boardOfWareHouse.vue'
+    import boardOfCustomer from '../../components/boardOfCustomer.vue'
     export default {
         data() {
             return {
                 // * 侧边栏相关
                 sideShow: true,
-                sideList: [{ name: '店铺' }, { name: '商品' }, { name: '仓库' }, { name: '销售系统' }],
+                sideList: [
+                    { name: '店铺列表', id: 0 },
+                    { name: '仓库', id: 3 },
+                    { name: '开单', id: 6 },
+                    { name: '员工管理', id: 1 },
+                    { name: '商品管理', id: 2 },
+                    { name: '客户管理', id: 5 },
+                ],
                 sideIndex: -1,
                 // * 弹窗相关
                 modalShopShow: false,
@@ -75,8 +94,12 @@
         },
         components: {
             boardOfShop,
+            boardOfEmployee,
+            boardOfCommodity,
             boardOfWareHouse,
+            boardOfCustomer,
         },
+        mounted() {},
         computed: {
             userInfo() {
                 // {
@@ -91,8 +114,22 @@
                 return info
             },
         },
-        mounted() {},
         methods: {
+            // ****************************************************** 全局 点击右侧 Side
+            setSideIndex(index) {
+                if (this.notLogin()) return
+                if (index !== 0 && index !== 5 && this.userInfo.nowShopInfo.name === '无') {
+                    this.$confirm({ title: '提示', content: '请选择店铺' }, (response) => {
+                        if (!response) return
+                        let item = this.sideList[0]
+                        this.sideIndex = 0
+                    })
+                    return
+                }
+                let item = this.sideList[index]
+                this.sideIndex = index
+            },
+            // ****************************************************** 用户登录
             // * 登录
             postLogin() {
                 this.$store.state.userInfo.name = 'test'
@@ -101,21 +138,15 @@
                 this.$tip('登录成功')
                 this.modalLoginShow = false
             },
-            // * 当前角色，注销登录
+            // * 注销登录
             reLogin() {
                 if (!this.notLogin()) {
                     this.$confirm({ title: '注销', content: '您确定要注销登录吗' }, (response) => {
                         if (!response) return
                         this.$store.commit('clearUserInfo')
                         this.sideIndex = -1
-                        console.log(this.userInfo)
                     })
                 }
-            },
-            // * 当前角色，查看当前店铺信息
-            showMyShop() {
-                if (this.notLogin()) return
-                this.sideIndex = 0 // 店铺
             },
             // * 判断是否登录，如果没有登录则唤起登录框
             notLogin() {
@@ -128,38 +159,11 @@
                 }
                 return notLogin
             },
-            // * 点击右侧 Side
-            setSideIndex(index) {
-                if (index === 0) {
-                    this.showMyShop()
-                    return
-                }
-                this.sideIndex = index
-            },
+            // ****************************************************** 店铺管理
         },
     }
 </script>
 
 <style lang="scss" scoped>
-    .index {
-        .side {
-        }
-        .content {
-            .con-nav {
-                background-color: $sj-white;
-                padding: 0.5rem;
-                div {
-                    &:last-child {
-                        margin-left: auto;
-                    }
-                }
-            }
-            .con-board {
-                height: 100%;
-                overflow-y: auto;
-                background-color: $sj-tip;
-                margin: 0.25rem 0rem;
-            }
-        }
-    }
+    @import 'board.scss';
 </style>

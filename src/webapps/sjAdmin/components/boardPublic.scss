@@ -1,0 +1,71 @@
+.title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+p {
+    font-size: 1.5rem;
+    margin: 1rem 0rem;
+    span {
+        margin-right: 1rem;
+    }
+}
+// 店铺卡片
+.cards {
+    .shop-card {
+        line-height: 4rem;
+        padding: 0rem 1rem;
+        margin: 1rem 0.5rem;
+        &:hover {
+            color: $sj-main;
+        }
+    }
+    .shop-card-on {
+        background-color: $sj-main;
+        color: $sj-white;
+        &:hover {
+            color: $sj-white;
+        }
+    }
+}
+// 表格
+.table {
+    margin: 1rem 0rem;
+    .row {
+        margin: 0.1rem 0rem;
+        background-color: $sj-tip-lower;
+        &:hover {
+            background-color: $sj-tip;
+        }
+        .column {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            width: 16rem;
+            min-height: 2rem;
+            padding: 0.5rem;
+            span {
+                word-break: break-all;
+            }
+        }
+        .commodity-tag-column {
+            text-align: left;
+            width: 100%;
+        }
+    }
+}
+.table-tag {
+    background-color: $sj-main;
+    color: white;
+    margin: 0.5rem 0.25rem;
+    margin-left: 0rem;
+    padding: 0.5rem;
+    cursor: pointer;
+    &:hover {
+        background-color: white;
+        color: $sj-main-lower;
+    }
+}
+.over-box {
+    max-height: 30rem;
+    overflow-y: auto;
+}

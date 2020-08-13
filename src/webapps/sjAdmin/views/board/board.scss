@@ -1,0 +1,21 @@
+.index {
+    .side {
+    }
+    .content {
+        .con-nav {
+            background-color: $sj-white;
+            padding: 0.5rem;
+            div {
+                &:last-child {
+                    margin-left: auto;
+                }
+            }
+        }
+        .con-board {
+            height: 100%;
+            overflow-y: auto;
+            background-color: $sj-tip;
+            margin: 0.25rem 0rem;
+        }
+    }
+}

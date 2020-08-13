@@ -5,15 +5,15 @@ const glob = require('glob')
 // * 这个方法用于获取多页项目下的所有Webpack入口文件
 function getPages() {
     let viewsMap = {}
-    let webpackJsEntryList = glob.sync('./src/apps/*/*.js')
+    let webpackJsEntryList = glob.sync('./src/webapps/*/*.js')
     webpackJsEntryList.forEach((filepath) => {
         let fileList = filepath.split('/')
         let projectName = fileList[fileList.length - 2]
         viewsMap[projectName] = {
             // Webpack 入口文件
-            entry: `src/apps/${projectName}/${projectName}.js`,
+            entry: `src/webapps/${projectName}/${projectName}.js`,
             // Html-webpack-plugin 插件的模板来源
-            template: `src/apps/${projectName}/${projectName}.html`,
+            template: `src/webapps/${projectName}/${projectName}.html`,
             // template: `./public/index.html`,
             // 在 dist/index.html 的输出
             filename: `${projectName}.html`,
@@ -24,9 +24,11 @@ function getPages() {
     return viewsMap
 }
 module.exports = {
-    // ** 多页模式 **
     // ** 200811 本地通过 file:// 加载单页成功 **
-    // ** 200811 本地通过 file:// 加载多页不成功, 暂时不使用 **
+    publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
+
+    // ** 多页模式 **
+    // ** 200811 本地通过 file:// 加载多页成功 **
     pages: getPages(),
 
     // ** 导入的scss公共变量 **
@@ -50,7 +52,4 @@ module.exports = {
     //         },
     //     },
     // },
-
-    // github page
-    publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
 }
