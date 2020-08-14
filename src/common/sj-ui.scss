@@ -10,6 +10,8 @@
 //      * sj-board
 
 // *************************************************************** 全局
+
+$sj-main-higher: #30bb73;
 $sj-main: #07c160;
 $sj-main-lower: #43eb94;
 $sj-back: #eeeeee;
@@ -85,6 +87,14 @@ body,
 // 正常：取主色调
 // 正常和白色取反：toggle
 // 灰色：tip
+.sj-link {
+    display: inline;
+    color: $sj-main;
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline;
+    }
+}
 .sj-btn {
     display: flex;
     align-items: center;
@@ -105,24 +115,15 @@ body,
         margin-right: 0.5rem;
     }
 }
-.sj-link {
-    display: inline;
-    color: $sj-main;
-    cursor: pointer;
-    &:hover {
-        text-decoration: underline;
-    }
-}
 .toggle {
     color: $sj-main;
-    border: 1px solid $sj-main;
     background-color: $sj-white;
     &:hover {
         color: $sj-white;
         background-color: $sj-main;
     }
 }
-.tip {
+.tip-on {
     color: $sj-tip;
     border: 1px solid $sj-tip;
     background-color: $sj-white;
@@ -132,18 +133,24 @@ body,
         background-color: $sj-white;
     }
 }
-.tip-on {
-    color: $sj-main;
+.tip {
+    color: $sj-white;
     border: 1px solid $sj-main;
+    background-color: $sj-main;
+    &:hover {
+        color: $sj-white;
+        border: 1px solid $sj-main-higher;
+        background-color: $sj-main-higher;
+    }
 }
 .red-on {
-    color: $sj-tip;
-    border: 1px solid $sj-tip;
-    background-color: $sj-white;
+    color: $sj-white;
+    border: 1px solid rgb(255, 0, 0);
+    background-color: rgb(255, 0, 0);
     &:hover {
-        color: rgb(255, 80, 0);
-        border: 1px solid rgb(255, 80, 0);
-        background-color: $sj-white;
+        color: $sj-white;
+        border: 1px solid rgb(199, 0, 0);
+        background-color: rgb(199, 0, 0);
     }
 }
 .red {
@@ -152,8 +159,8 @@ body,
     background-color: rgb(255, 0, 0);
     &:hover {
         color: $sj-white;
-        border: 1px solid rgb(255, 80, 0);
-        background-color: rgb(255, 80, 0);
+        border: 1px solid rgb(199, 0, 0);
+        background-color: rgb(199, 0, 0);
     }
 }
 .blue-on {
@@ -274,6 +281,15 @@ body,
     opacity: 0;
 }
 .left-scroll-on {
+    transform: translateX(0%);
+    opacity: 1;
+}
+.right-scroll-off {
+    transition: all 0.2s;
+    transform: translateX(100%);
+    opacity: 0;
+}
+.right-scroll-on {
     transform: translateX(0%);
     opacity: 1;
 }
