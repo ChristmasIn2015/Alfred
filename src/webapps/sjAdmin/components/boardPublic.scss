@@ -32,6 +32,9 @@ p {
             width: 12rem;
             min-height: 2rem;
             padding: 0.5rem;
+            &:first-child {
+                width: 4rem;
+            }
             span {
                 word-break: break-all;
             }
@@ -40,9 +43,6 @@ p {
                 padding: 0rem 0.5rem;
                 line-height: 2rem;
                 margin-right: 0.5rem;
-            }
-            .sj-btn {
-                margin-bottom: 0.25rem;
             }
         }
         .commodity-tag-column {

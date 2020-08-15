@@ -1,9 +1,6 @@
 <template>
   <div class="index">
-    <div class="board-title">选择您的店铺</div>
-    <p>
-      <span>我管理的店铺</span>
-    </p>
+    <div class="board-title">我管理的店铺</div>
     <div class="btn-line flex-wrap">
       <div
         class="sj-btn blue-on"
@@ -11,12 +8,13 @@
         :key="index"
         :class="{ 'blue': nowShopId === shop.id }"
         @click.stop="resetNowShop(shop)"
-      >{{ shop.name }}</div>
+      >
+        <span>{{ shop.name }}</span>
+        <span class="close"></span>
+      </div>
       <div class="sj-btn blue">新开店铺</div>
     </div>
-    <p>
-      <span>我加入的店铺</span>
-    </p>
+    <div class="board-title">我加入的店铺</div>
     <div class="btn-line flex-wrap">
       <div
         class="sj-btn blue-on"
@@ -24,13 +22,13 @@
         :key="index"
         :class="{ 'blue': nowShopId === shop.id }"
         @click.stop="resetNowShop(shop)"
-      >{{ shop.name }}</div>
+      >
+        <span>{{ shop.name }}</span>
+        <span class="close"></span>
+      </div>
       <div class="sj-btn blue">加入店铺</div>
     </div>
     <div class="board-title">员工列表</div>
-    <p>
-      <span>店内员工</span>
-    </p>
     <div class="table">
       <div class="row flex">
         <div class="column">Id</div>
@@ -39,12 +37,24 @@
         <div class="column" style="width: 100%;"></div>
         <div class="column"></div>
       </div>
+      <div class="row flex">
+        <div class="column">-1</div>
+        <div class="column">
+          <input />
+        </div>
+        <div class="column">
+          <input />
+        </div>
+        <div class="column" style="width: 100%;"></div>
+        <div class="column">
+          <div class="sj-btn blue">添加</div>
+        </div>
+      </div>
       <div class="row flex" v-for="(employee, index) in employeeList" :key="index">
         <div class="column" v-for="(value, key) in employee" :key="key">{{ value }}</div>
         <div class="column" style="width: 100%;"></div>
         <div class="column">
           <div class="sj-link" style="color: red;">删除</div>
-          <div class="sj-link">录用</div>
         </div>
       </div>
     </div>

@@ -96,16 +96,19 @@ body,
     }
 }
 .sj-btn {
+    position: relative;
+    padding: 0.5rem 1rem;
+    color: $sj-white;
+    background-color: $sj-main;
+    border: 1px solid transparent;
+    border-radius: 0.2rem;
+
     display: flex;
     align-items: center;
-    cursor: pointer;
     text-align: center;
-    padding: 0.5rem 1rem;
+
     transition: all 0.2s;
-    border-radius: 0.2rem;
-    color: $sj-white;
-    border: 1px solid transparent;
-    background-color: $sj-main;
+    cursor: pointer;
     &:hover {
         background-color: $sj-main;
     }
@@ -113,6 +116,22 @@ body,
         width: 1rem !important;
         height: 1rem !important;
         margin-right: 0.5rem;
+    }
+    .close {
+        width: 1rem;
+        line-height: 1rem;
+        font-size: 0.75rem;
+        color: $sj-white;
+        background-color: red;
+        border-radius: 1rem;
+
+        position: absolute;
+        right: 0rem;
+        top: 0rem;
+        transform: translate(50%, -50%);
+        &::after {
+            content: '✖';
+        }
     }
 }
 .toggle {
