@@ -41,15 +41,12 @@ module.exports = {
     },
 
     // ** 反向代理 **
-    // devServer: {
-    //     proxy: {
-    //         '/toProxy': {
-    //             target: 'http://192.168.1.111:62473',
-    //             changeOrigin: true,
-    //             pathRewrite: {
-    //                 '^/toProxy': '',
-    //             },
-    //         },
-    //     },
-    // },
+    devServer: {
+        proxy: {
+            '/sjShop': {
+                target: 'http://10.52.2.35:80',
+                changeOrigin: true,
+            },
+        },
+    },
 }

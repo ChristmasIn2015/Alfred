@@ -39,10 +39,25 @@ p {
                 word-break: break-all;
             }
             input {
-                width: 50%;
+                width: 100%;
+                min-width: 100%;
                 padding: 0rem 0.5rem;
                 line-height: 2rem;
                 margin-right: 0.5rem;
+            }
+            .sj-link {
+                margin-right: 0.5rem;
+                color: $sj-main;
+            }
+            .column-input {
+                display: flex;
+                input {
+                    width: 50%;
+                    min-width: 50%;
+                }
+                .sj-btn {
+                    width: 50%;
+                }
             }
         }
         .commodity-tag-column {

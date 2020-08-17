@@ -1,7 +1,6 @@
 <template>
     <div class="index sj-board">
         <!-- ** -->
-        <canvas id="myCanvas"></canvas>
         <div class="side left-scroll-off" :class="{ 'left-scroll-on': sideShow }" :style="{ width: !sideShow ? '0%' : '' }">
             <div class="side-ad"></div>
             <div
@@ -29,13 +28,13 @@
             </div>
             <!-- 内容区 -->
             <div class="con-board">
-                <div v-if="sideIndex === 0">
+                <div v-show="sideIndex === 0">
                     <boardOfShop ref="boardOfShop" />
                 </div>
-                <div v-if="sideIndex === 1">
+                <div v-show="sideIndex === 1">
                     <boardOfCustomer ref="boardOfCustomer" />
                 </div>
-                <div v-if="sideIndex === 2">
+                <div v-show="sideIndex === 2">
                     <boardOfWareHouse ref="boardOfWareHouse" />
                 </div>
             </div>
@@ -63,8 +62,6 @@
 </template>
 
 <script>
-    import Fingerprint from 'fingerprintjs'
-    import md5 from 'js-md5'
     import boardOfShop from '../../components/boardOfShop.vue'
     import boardOfWareHouse from '../../components/boardOfWareHouse.vue'
     import boardOfCustomer from '../../components/boardOfCustomer.vue'
@@ -75,7 +72,7 @@
                 sideShow: true,
                 sideList: [
                     { name: '店铺列表', id: 0 },
-                    { name: '开单', id: 1 },
+                    { name: '订单', id: 1 },
                     { name: '仓库', id: 2 },
                 ],
                 sideIndex: -1,
@@ -89,11 +86,7 @@
             boardOfWareHouse,
             boardOfCustomer,
         },
-        mounted() {
-            // this.getCanvasFingerprint()
-            var fingerprint = new Fingerprint({ canvas: true }).get()
-            alert(fingerprint)
-        },
+        mounted() {},
         computed: {
             userInfo() {
                 // {
@@ -104,21 +97,10 @@
                 //     nowWareHouseInfo: { name: '无', id: -1 }
                 // }
                 let info = this.$store.getters.getUserInfo
-                console.log(info.nowShopInfo)
                 return info
             },
         },
         methods: {
-            getCanvasFingerprint() {
-                let dd = document.getElementById('myCanvas')
-                let context = dd.getContext('2d')
-                context.font = '18pt Arial'
-                context.textBaseline = 'top'
-                context.fillText('Hello, user.', 2, 2)
-                let sign = dd.toDataURL('image/jpeg')
-                let temp = md5(sign).toUpperCase()
-                console.log(sign, temp)
-            },
             // ****************************************************** 全局 点击右侧 Side
             setSideIndex(index) {
                 // 任何 Side 都需要登录

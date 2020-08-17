@@ -9,17 +9,33 @@
 //      * sj-modal-back
 //      * sj-board
 
-// *************************************************************** 全局
-
+// *************************************************************** 颜色
 $sj-main-higher: #30bb73;
 $sj-main: #07c160;
 $sj-main-lower: #43eb94;
 $sj-back: #eeeeee;
 $sj-white: #ffffff;
+//
 $sj-tip: rgb(197, 197, 197);
 $sj-tip-lower: rgb(226, 226, 226);
 $sj-tip-higher: rgb(177, 177, 177);
+//
+$sj-red: rgb(255, 0, 0);
+$sj-red-higher: rgb(199, 0, 0);
+//
+$sj-blue: rgb(0, 112, 255);
+$sj-blue-higher: rgb(0, 94, 218);
+//
+$sj-purple: rgb(112, 0, 255);
+$sj-purple-higher: rgb(91, 0, 211);
+//
+$sj-orange: rgb(255, 170, 32);
+$sj-orange-higher: rgb(255, 128, 0);
+//
+$sj-pink: rgb(255, 0, 160);
+$sj-pink-higher: rgb(184, 0, 116);
 
+// *************************************************************** 全局
 * {
     margin: 0px;
     padding: 0px;
@@ -142,6 +158,17 @@ body,
         background-color: $sj-main;
     }
 }
+.disable {
+    color: $sj-tip;
+    border: 1px solid $sj-tip-lower;
+    background-color: $sj-white;
+    &:hover {
+        cursor: not-allowed;
+        color: $sj-tip;
+        border: 1px solid $sj-tip-lower;
+        background-color: $sj-white;
+    }
+}
 .tip-on {
     color: $sj-tip;
     border: 1px solid $sj-tip;
@@ -164,22 +191,22 @@ body,
 }
 .red-on {
     color: $sj-white;
-    border: 1px solid rgb(255, 0, 0);
-    background-color: rgb(255, 0, 0);
+    border: 1px solid $sj-red;
+    background-color: $sj-red;
     &:hover {
         color: $sj-white;
-        border: 1px solid rgb(199, 0, 0);
-        background-color: rgb(199, 0, 0);
+        border: 1px solid $sj-red-higher;
+        background-color: $sj-red-higher;
     }
 }
 .red {
     color: $sj-white;
-    border: 1px solid rgb(255, 0, 0);
-    background-color: rgb(255, 0, 0);
+    border: 1px solid $sj-red;
+    background-color: $sj-red;
     &:hover {
         color: $sj-white;
-        border: 1px solid rgb(199, 0, 0);
-        background-color: rgb(199, 0, 0);
+        border: 1px solid $sj-red-higher;
+        background-color: $sj-red-higher;
     }
 }
 .blue-on {
@@ -187,39 +214,39 @@ body,
     border: 1px solid $sj-tip;
     background-color: $sj-white;
     &:hover {
-        color: rgb(0, 112, 255);
-        border: 1px solid rgb(0, 112, 255);
+        color: $sj-blue;
+        border: 1px solid $sj-blue;
         background-color: $sj-white;
     }
 }
 .blue {
     color: $sj-white;
-    border: 1px solid rgb(0, 112, 255);
-    background-color: rgb(0, 112, 255);
+    border: 1px solid $sj-blue;
+    background-color: $sj-blue;
     &:hover {
         color: $sj-white;
-        border: 1px solid rgb(0, 94, 218);
-        background-color: rgb(0, 94, 218);
+        border: 1px solid $sj-blue-higher;
+        background-color: $sj-blue-higher;
     }
 }
-.deep-green-on {
+.purple-on {
     color: $sj-tip-higher;
     border: 1px solid $sj-tip;
     background-color: $sj-white;
     &:hover {
-        color: rgb(112, 0, 255);
-        border: 1px solid rgb(112, 0, 255);
+        color: $sj-purple;
+        border: 1px solid $sj-purple;
         background-color: $sj-white;
     }
 }
-.deep-green {
+.purple {
     color: $sj-white;
-    border: 1px solid rgb(112, 0, 255);
-    background-color: rgb(112, 0, 255);
+    border: 1px solid $sj-purple;
+    background-color: $sj-purple;
     &:hover {
         color: $sj-white;
-        border: 1px solid rgb(91, 0, 211);
-        background-color: rgb(91, 0, 211);
+        border: 1px solid $sj-purple-higher;
+        background-color: $sj-purple-higher;
     }
 }
 .orange-on {
@@ -227,19 +254,19 @@ body,
     border: 1px solid $sj-tip;
     background-color: $sj-white;
     &:hover {
-        color: rgb(255, 128, 0);
-        border: 1px solid rgb(255, 128, 0);
+        color: $sj-orange;
+        border: 1px solid $sj-orange;
         background-color: $sj-white;
     }
 }
 .orange {
     color: $sj-white;
-    border: 1px solid rgb(255, 170, 32);
-    background-color: rgb(255, 170, 32);
+    border: 1px solid $sj-orange;
+    background-color: $sj-orange;
     &:hover {
         color: $sj-white;
-        border: 1px solid rgb(255, 128, 0);
-        background-color: rgb(255, 128, 0);
+        border: 1px solid $sj-orange-higher;
+        background-color: $sj-orange-higher;
     }
 }
 .pink-on {
@@ -247,30 +274,19 @@ body,
     border: 1px solid $sj-tip;
     background-color: $sj-white;
     &:hover {
-        color: rgb(255, 0, 160);
-        border: 1px solid rgb(255, 0, 160);
+        color: $sj-pink;
+        border: 1px solid $sj-pink;
         background-color: $sj-white;
     }
 }
 .pink {
     color: $sj-white;
-    border: 1px solid rgb(255, 0, 160);
-    background-color: rgb(255, 0, 160);
+    border: 1px solid $sj-pink;
+    background-color: $sj-pink;
     &:hover {
         color: $sj-white;
-        border: 1px solid rgb(184, 0, 116);
-        background-color: rgb(184, 0, 116);
-    }
-}
-.disable {
-    color: $sj-tip;
-    border: 1px solid $sj-tip-lower;
-    background-color: $sj-white;
-    &:hover {
-        cursor: not-allowed;
-        color: $sj-tip;
-        border: 1px solid $sj-tip-lower;
-        background-color: $sj-white;
+        border: 1px solid $sj-pink-higher;
+        background-color: $sj-pink-higher;
     }
 }
 

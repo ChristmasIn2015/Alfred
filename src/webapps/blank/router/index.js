@@ -1,7 +1,7 @@
 // 1.构建路由路径
 let routes = [
     {
-        path: '/blank',
+        path: '/',
         name: 'blank',
         component: () => import('../views/blank.vue'),
     },
