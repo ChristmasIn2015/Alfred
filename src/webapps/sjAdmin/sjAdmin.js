@@ -23,6 +23,9 @@ import '@/common/rem.js'
 import '@/common/sj-ui.scss'
 import '@/common/sjUI.js'
 $sjUI.install(Vue)
+window.$warn = (message) => {
+    console.log(`%c ERROR: ${message}`, 'color: red;')
+}
 
 // *.创建实例
 new Vue({

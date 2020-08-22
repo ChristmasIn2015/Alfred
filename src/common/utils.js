@@ -275,15 +275,15 @@ export const longClick = {
 // **************** 从网上复制下来的移动端长按触发 End ****************
 
 // ******************************************** 定位相关 ****************************************
-import { myJsonp } from './api/fetch_api.js'
+import { myJsonp } from './api/server.js'
 
 // 浏览器端百度AK d217hZnM3WnQjutDakfPDpXimMdlaIgn
 // 服务端百度AK qGr2xr2DRby1ncrkX1ezNrgrozQw2CTf
 const baiduAK = process.env.VUE_APP_ENV === 'development' ? 'qGr2xr2DRby1ncrkX1ezNrgrozQw2CTf' : 'd217hZnM3WnQjutDakfPDpXimMdlaIgn'
-const baiduOrigin = 'http://api.map.baidu.com'
+const baiduOrigin = 'https://api.map.baidu.com'
 
 // * 通过 *当前IP 取得当前位置的经纬度
-export async function jsonp_getNowXY(ip) {
+export function jsonp_getNowXY(ip) {
     let result = {
         lng: '', // 经度
         lat: '', // 纬度

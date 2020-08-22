@@ -10,9 +10,9 @@
 //      * sj-board
 
 // *************************************************************** 颜色
-$sj-main-higher: #30bb73;
-$sj-main: #07c160;
 $sj-main-lower: #43eb94;
+$sj-main: #07c160;
+$sj-main-higher: #30bb73;
 $sj-back: #eeeeee;
 $sj-white: #ffffff;
 //
@@ -126,7 +126,7 @@ body,
     transition: all 0.2s;
     cursor: pointer;
     &:hover {
-        background-color: $sj-main;
+        background-color: $sj-main-higher;
     }
     img {
         width: 1rem !important;
@@ -303,11 +303,11 @@ body,
 }
 .top-scroll-off {
     transition: all 0.2s;
-    transform: translateY(-100%);
+    transform: translate(-50%, -100%);
     opacity: 0;
 }
 .top-scroll-on {
-    transform: translateY(100%);
+    transform: translate(-50%, 100%);
     opacity: 1;
 }
 .left-scroll-off {

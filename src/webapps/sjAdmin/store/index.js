@@ -1,19 +1,24 @@
 const store = {
     state: {
-        userInfo: { name: '游客', phone: '', token: '', nowShopInfo: { name: '无', id: -1 } },
+        userInfo: { name: '游客', phone: '' },
+        shopInfo: { name: '', id: -1 },
     },
     getters: {
         getUserInfo(state) {
             return state.userInfo
         },
+        getShopInfo(state) {
+            return state.shopInfo
+        },
     },
     mutations: {
-        clearUserInfo(state) {
-            state.userInfo = { name: '游客', phone: '', token: '', nowShopInfo: { name: '无', id: -1 } }
-        },
         initShopInfo(state, params) {
-            state.userInfo.nowShopInfo.id = params.id
-            state.userInfo.nowShopInfo.name = params.name
+            state.shopInfo.id = params.id
+            state.shopInfo.name = params.name
+        },
+        clearUserInfo(state) {
+            window.localStorage['sjShopToken'] = ''
+            state.userInfo = { name: '游客', phone: '', nowShopInfo: { name: '', id: -1 } }
         },
     },
 }
