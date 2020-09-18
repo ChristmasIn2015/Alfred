@@ -1,33 +1,26 @@
 import Vue from 'vue'
-import App from './App.vue'
-
 Vue.config.productionTip = false
 
 // 1.使用Vue路由
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
-import routes from './router'
+import routes from './views/routes'
 const myRouter = new VueRouter({
     routes,
 })
 // 2.Vuex存储
 import Vuex from 'vuex'
 Vue.use(Vuex)
-import store from './store'
+import store from './views/store'
 const myStore = new Vuex.Store(store)
+window.$store = myStore
 
-// * 缩放适配
-import '@/common/rem.js'
-
-// * 使用全局UI
-import '@/common/sj-ui.scss'
-import '@/common/sjUI.js'
-$sjUI.install(Vue)
-window.$warn = (message) => {
-    console.log(`%c ERROR: ${message}`, 'color: red;')
-}
+// *
+import Common from '../../common/Common.js'
+window.$common = new Common()
 
 // *.创建实例
+import App from './App.vue'
 new Vue({
     render: (h) => h(App),
     router: myRouter,

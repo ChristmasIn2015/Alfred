@@ -1,0 +1,36 @@
+.flex {
+    display: flex;
+}
+.flex-x-reverse {
+    display: flex;
+    flex-direction: row-reverse;
+}
+.flex-y {
+    display: flex;
+    flex-direction: column;
+}
+.flex-middle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.flex-middle-x {
+    display: flex;
+    justify-content: center;
+}
+.flex-middle-y {
+    display: flex;
+    align-items: center;
+}
+.flex-side {
+    display: flex;
+    justify-content: space-between;
+}
+.flex-no-side {
+    display: flex;
+    justify-content: space-around;
+}
+.flex-wrap {
+    display: flex;
+    flex-wrap: wrap;
+}

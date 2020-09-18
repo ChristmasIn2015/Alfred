@@ -4,7 +4,6 @@
   </div>
 </template>
 <script>
-import { shopUserLogin } from "@/common/api/shop_apis.js";
 export default {
   data() {
     return {};
@@ -13,4 +12,5 @@ export default {
   methods: {},
 };
 </script>
-<style lang="scss"></style>
+<style>
+</style>
