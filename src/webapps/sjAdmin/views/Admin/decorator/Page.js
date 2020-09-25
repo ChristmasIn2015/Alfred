@@ -6,7 +6,8 @@ export function PageParam(target, name, descriptor) {
         this.sideList = [
             { name: '员工管理', id: 0 },
             { name: '库存管理', id: 1 },
-            { name: '订单管理', id: 2 },
+            { name: '订单列表', id: 2 },
+            { name: '价格列表', id: 3 },
         ]
         this.sideIndex = -1
         // ************************* 店铺弹窗控制
@@ -34,21 +35,28 @@ export function PageFunc(TargetClass) {
 // * 侧边栏
 function setSideIndex(index) {
     // 任何 Side 都需要登录
-    if (!this.iAmLogined()) return
+    // if (!this.iAmLogined()) return
 
-    // 所有选项必须有店铺信息
-    if (window.$store.state.shopInfo._id === -1) {
-        $tip('请选择店铺')
-        this.toggleShopModal() // ASYNC
-        return
-    }
+    // // 所有选项必须有店铺信息
+    // if (window.$store.state.shopInfo._id === -1) {
+    //     $tip('请选择店铺')
+    //     this.toggleShopModal() // ASYNC
+    //     return
+    // }
 
-    // 仓库管理必须选择了仓库
-    if (index === 1 && window.$store.state.houseInfo._id === -1) {
-        $tip('请选择仓库')
-        this.toggleHouseModal() // ASYNC
-        return
-    }
+    // // 仓库管理必须选择了仓库
+    // if (index === 1 && window.$store.state.houseInfo._id === -1) {
+    //     $tip('请选择仓库')
+    //     this.toggleHouseModal() // ASYNC
+    //     return
+    // }
+
+    // // 订单管理必须选择了仓库
+    // if (index === 2 && window.$store.state.houseInfo._id === -1) {
+    //     $tip('请选择仓库')
+    //     this.toggleHouseModal() // ASYNC
+    //     return
+    // }
 
     // *
     this.sideIndex = index

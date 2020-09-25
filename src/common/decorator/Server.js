@@ -7,7 +7,7 @@ export default function Server(TargetClass) {
                 method: method || 'GET',
                 url: url,
                 data: params || '',
-                headers: Object.assign({}, config.header || {}),
+                headers: Object.assign({}, config || {}),
             }
             $common.postMyError('myFetch ' + JSON.stringify(requestParams))
             axios(requestParams)
@@ -47,21 +47,12 @@ export default function Server(TargetClass) {
                 if (!this.COMPLETE) reject('您未设置 Success回调函数！')
                 if (!this.ERROR) reject('您未设置 Error回调函数！')
 
-                // 设置 HTTP 请求参数
-                let METHODS = methods ? methods : 'GET'
-                let URL = this.BASE_URL + (url ? url : '')
-                let PARAMS = params
-                let HEADERS = {}
-                if (config) {
-                    HEADERS = config.header ? config.header : {}
-                }
-
                 // 发送请求
                 let requestParams = {
-                    method: METHODS,
-                    url: URL,
-                    data: PARAMS,
-                    headers: HEADERS,
+                    method: methods ? methods : 'GET',
+                    url: this.BASE_URL + (url ? url : ''),
+                    data: params,
+                    headers: config || {},
                 }
                 $common.postMyError('Server ' + JSON.stringify(requestParams))
                 axios(requestParams)

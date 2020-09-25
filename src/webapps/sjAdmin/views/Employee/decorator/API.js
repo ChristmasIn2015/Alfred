@@ -9,15 +9,15 @@ export function ApiFunc(TargetClass) {
 function createEmployee(phone, shopId) {
     let params = { phone, shopId }
     console.log(params)
-    return $common._Server.request('POST', '/sjShop/employee/create', params, $common.getLocalToken())
+    return $common._Server.request('POST', '/sjShop/employee/create', params, $common.getHeader())
 }
 // * 店铺员工列表
 function getEmployeeList(shopId) {
     let params = { shopId }
-    return $common._Server.request('POST', '/sjShop/employee/list', params, $common.getLocalToken())
+    return $common._Server.request('POST', '/sjShop/employee/list', params, $common.getHeader())
 }
 // * 店铺删除员工
 function deleteEmployee(employeeId) {
     let params = { employeeId }
-    return $common._Server.request('POST', '/sjShop/employee/delete', params, $common.getLocalToken())
+    return $common._Server.request('POST', '/sjShop/employee/delete', params, $common.getHeader())
 }

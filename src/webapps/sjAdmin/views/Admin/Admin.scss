@@ -19,11 +19,13 @@
         }
         .sj-btn {
             margin: 0.5rem 1rem;
-        }
-        .sj-btn-active {
             background-color: $sj-back-higher;
             color: $sj-main;
             border: 1px solid $sj-main;
+        }
+        .sj-btn-active {
+            background-color: $sj-main;
+            color: $sj-back;
         }
     }
     .side-right {

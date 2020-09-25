@@ -1,4 +1,4 @@
-export function PageParam(target, name, descriptor) {
+export function EmployeeParam(target, name, descriptor) {
     let sourceFunction = descriptor.value
     descriptor.value = function() {
         this.newEmployeeName = ''
@@ -8,7 +8,7 @@ export function PageParam(target, name, descriptor) {
         sourceFunction.apply(this, arguments)
     }
 }
-export function PageFunc(TargetClass) {
+export function EmployeeFunc(TargetClass) {
     TargetClass.prototype.addMyEmployee = addMyEmployee
     TargetClass.prototype.deleteMyEmployee = deleteMyEmployee
     TargetClass.prototype.getMyEmployeeList = getMyEmployeeList
@@ -39,7 +39,6 @@ async function deleteMyEmployee(id) {
         $common.loadToastWarn(error)
     }
 }
-
 // * 取得员工列表
 async function getMyEmployeeList() {
     try {

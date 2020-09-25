@@ -41,13 +41,13 @@
       <div class="con-board">
         <div class="angle" @click.stop="pageModel.sideShow = !pageModel.sideShow">
           <span
-            class="angle fa"
+            class="fa"
             :class="{'fa-caret-left':pageModel.sideShow, 'fa-caret-right':!pageModel.sideShow }"
           ></span>
         </div>
         <Employee v-if="pageModel.sideIndex === 0" ref="boardOfShop" />
         <House v-if="pageModel.sideIndex === 1" ref="boardOfWareHouse" />
-        <boardOfCustomer v-if="pageModel.sideIndex === 2" ref="boardOfCustomer" />
+        <Order v-if="pageModel.sideIndex === 2" ref="boardOfCustomer" />
       </div>
     </div>
 
@@ -59,8 +59,8 @@
           <span @click.stop="pageModel.modalLoginShow = false">✖</span>
         </div>
         <div class="content">
-          <input type="text" v-model="pageModel.userPhone" />
-          <input type="text" v-model="pageModel.userPassword" />
+          <input type="text" v-model="pageModel.userPhone" style="border:1px solid red;" />
+          <input type="text" v-model="pageModel.userPassword" style="border:1px solid red;" />
           <div>Tip: 未注册用户将会自动注册</div>
         </div>
         <div class="btns">
@@ -126,9 +126,9 @@
 
 <script>
 import Model from "./Model.js";
-import Employee from "../Board/Employee/Employee.vue";
-import House from "../Board/House/House.vue";
-import boardOfCustomer from "../Board/boardOfCustomer.vue";
+import Employee from "../Employee/Employee.vue";
+import House from "../House/House.vue";
+import Order from "../Order/Order.vue";
 export default {
   data() {
     return {
@@ -138,7 +138,7 @@ export default {
   components: {
     Employee,
     House,
-    boardOfCustomer,
+    Order,
   },
   computed: {
     userInfo() {

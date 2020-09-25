@@ -35,7 +35,7 @@ module.exports = {
     css: {
         loaderOptions: {
             scss: {
-                prependData: `@import "@/common/decorator/ui/css/sjUI.scss";`,
+                prependData: `@import "@/common/ui/css/sjUI.scss";`,
             },
         },
     },

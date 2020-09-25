@@ -56,12 +56,12 @@
 .disable {
     color: $sj-tip;
     border: 1px solid $sj-tip-lower;
-    background-color: $sj-white;
+    background-color: transparent;
     &:hover {
         cursor: not-allowed;
         color: $sj-tip;
         border: 1px solid $sj-tip-lower;
-        background-color: $sj-white;
+        background-color: transparent;
     }
 }
 .tip-on {
@@ -70,8 +70,8 @@
     background-color: $sj-white;
     &:hover {
         color: $sj-back;
-        border: 1px solid $sj-main;
-        background-color: $sj-main;
+        border: 1px solid $sj-white;
+        background-color: $sj-white;
     }
 }
 .tip {
@@ -174,5 +174,25 @@
         color: $sj-white;
         border: 1px solid $sj-pink-higher;
         background-color: $sj-pink-higher;
+    }
+}
+.green-on {
+    border: 1px solid $sj-tip;
+    background-color: $sj-white;
+    &:hover {
+        color: $sj-green;
+        border: 1px solid $sj-green;
+        background-color: $sj-white;
+    }
+}
+.green {
+    border: 1px solid transparent;
+    background-color: transparent;
+    color: $sj-green;
+    &:hover {
+        color: $sj-white;
+        background-color: $sj-green;
+        border: 1px solid $sj-green;
+        color: $sj-back;
     }
 }

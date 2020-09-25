@@ -16,17 +16,22 @@ const store = {
         },
     },
     mutations: {
-        initHouseInfo(state, params) {
-            state.houseInfo._id = params._id
-            state.houseInfo.name = params.name
-        },
+        // *
         initShopInfo(state, params) {
             state.shopInfo._id = params._id
             state.shopInfo.name = params.name
         },
+        initHouseInfo(state, params) {
+            state.houseInfo._id = params._id
+            state.houseInfo.name = params.name
+        },
+        // *
         clearUserInfo(state) {
             window.localStorage['sjShopToken'] = ''
             state.userInfo = { name: '游客', phone: '' }
+        },
+        clearShopInfo(state) {
+            state.shopInfo = { name: '', _id: -1 }
         },
         clearHouseInfo(state) {
             state.houseInfo._id = -1

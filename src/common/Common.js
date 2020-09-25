@@ -26,9 +26,10 @@ export default class Common {
             (error, reject) => reject(error.message)
         )
     }
-    getLocalToken() {
+    getHeader() {
         let token = localStorage['sjShopToken']
-        return { header: { authorization: token || '' } }
+        let config = { authorization: token || '' }
+        return config
     }
     // try/catch
     loadToastWarn(error) {
@@ -42,12 +43,18 @@ export default class Common {
         let sourceFunction = descriptor.value
         descriptor.value = async function() {
             try {
-                $load.show($common.mainColor)
+                $load.show()
                 await sourceFunction.apply(this, arguments)
                 $load.hide()
             } catch (error) {
                 $common.loadToastWarn(error)
             }
+        }
+    }
+    confirmDecorator(target, name, descriptor) {
+        let sourceFunction = descriptor.value
+        descriptor.value = function() {
+            sourceFunction.apply(this, arguments)
         }
     }
 }

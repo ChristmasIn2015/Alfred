@@ -28,6 +28,8 @@ async function initUserInfo() {
         $load.hide()
     } catch (error) {
         window.$store.commit('clearUserInfo')
+        window.$store.commit('clearShopInfo')
+        window.$store.commit('clearHouseInfo')
         $common.loadToastWarn(error)
     }
 }

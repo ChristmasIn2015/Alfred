@@ -3,10 +3,10 @@
     padding: 0px;
     box-sizing: border-box;
     //
-    -moz-user-select: none; /* 火狐 */
-    -webkit-user-select: none; /* 谷歌 */
-    -ms-user-select: none; /* IE */
-    user-select: none;
+    // -moz-user-select: none; /* 火狐 */
+    // -webkit-user-select: none; /* 谷歌 */
+    // -ms-user-select: none; /* IE */
+    // user-select: none;
 }
 html,
 body,
@@ -20,10 +20,10 @@ textarea {
     // 数字框按钮
     -moz-appearance: textfield;
     // 输入框选中
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+    // -moz-user-select: none;
+    // -webkit-user-select: none;
+    // -ms-user-select: none;
+    // user-select: none;
     &:focus {
         outline: 0rem;
     }

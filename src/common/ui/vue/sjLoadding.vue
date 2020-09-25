@@ -11,7 +11,7 @@ export default {
   data() {
     return {
       loadShow: false,
-      mainColor: "#27b495",
+      mainColor: "rgb(255, 214, 32)",
     };
   },
   methods: {
@@ -41,8 +41,8 @@ export default {
     font-size: 1.5rem;
     text-align: center;
     border-radius: 0.5rem;
-    background-color: white;
-    box-shadow: 0px 0px 10px 2px #e2e2e2;
+    background-color: black;
+    box-shadow: 0px 0px 10px 2px rgba(255, 255, 255, 0.281);
     //
     position: absolute;
     left: 50%;

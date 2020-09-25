@@ -1,6 +1,6 @@
 import 'font-awesome/css/font-awesome.css'
-import './ui/css/sjUI.scss'
-import './ui/vue/render.js'
+import '../ui/css/sjUI.scss'
+import '../ui/vue/render.js'
 export default function SjUI(TargetClass) {
     // vue ui
     console.log(`%c @sjUI: 设置全局UI成功`, 'color: green;')
