@@ -54,6 +54,8 @@ function reLogin() {
         $confirm({ title: '注销', content: '您确定要注销登录吗' }, (response) => {
             if (!response) return
             window.$store.commit('clearUserInfo')
+            window.$store.commit('clearShopInfo')
+            window.$store.commit('clearHouseInfo')
             this.sideIndex = -1
         })
     }

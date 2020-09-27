@@ -35,28 +35,28 @@ export function PageFunc(TargetClass) {
 // * 侧边栏
 function setSideIndex(index) {
     // 任何 Side 都需要登录
-    // if (!this.iAmLogined()) return
+    if (!this.iAmLogined()) return
 
-    // // 所有选项必须有店铺信息
-    // if (window.$store.state.shopInfo._id === -1) {
-    //     $tip('请选择店铺')
-    //     this.toggleShopModal() // ASYNC
-    //     return
-    // }
+    // 所有选项必须有店铺信息
+    if (window.$store.state.shopInfo._id === -1) {
+        $tip('请选择店铺')
+        this.toggleShopModal() // ASYNC
+        return
+    }
 
-    // // 仓库管理必须选择了仓库
-    // if (index === 1 && window.$store.state.houseInfo._id === -1) {
-    //     $tip('请选择仓库')
-    //     this.toggleHouseModal() // ASYNC
-    //     return
-    // }
+    // 仓库管理必须选择了仓库
+    if (index === 1 && window.$store.state.houseInfo._id === -1) {
+        $tip('请选择仓库')
+        this.toggleHouseModal() // ASYNC
+        return
+    }
 
-    // // 订单管理必须选择了仓库
-    // if (index === 2 && window.$store.state.houseInfo._id === -1) {
-    //     $tip('请选择仓库')
-    //     this.toggleHouseModal() // ASYNC
-    //     return
-    // }
+    // 订单管理必须选择了仓库
+    if (index === 2 && window.$store.state.houseInfo._id === -1) {
+        $tip('请选择仓库')
+        this.toggleHouseModal() // ASYNC
+        return
+    }
 
     // *
     this.sideIndex = index
@@ -70,13 +70,10 @@ async function toggleShopModal() {
     // *
     try {
         $load.show()
-        // 创建的店铺列表
-        let list = await this.getShopList()
-        this.shopList = Object.assign([], list)
-
-        // 加入的店铺列表
-        list = await this.getShopListOfEmployee()
-        this.shopWorkInList = Object.assign([], list)
+        // 店铺列表
+        let data = await this.getShopList()
+        this.shopList = Object.assign([], data.shopList)
+        this.shopWorkInList = Object.assign([], data.officeList)
 
         // end
         $load.hide()
@@ -97,8 +94,8 @@ async function createMyShop() {
         await this.createShop()
 
         // 创建的店铺列表
-        let list = await this.getShopList()
-        this.shopList = Object.assign([], list)
+        let data = await this.getShopList()
+        this.shopList = Object.assign([], data.shopList)
 
         //
         $load.hide()

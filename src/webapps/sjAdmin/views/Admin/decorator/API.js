@@ -7,7 +7,6 @@ export function ApiFunc(TargetClass) {
     TargetClass.prototype.createShop = createShop
     TargetClass.prototype.getShopList = getShopList
     TargetClass.prototype.deleteShop = deleteShop
-    TargetClass.prototype.getShopListOfEmployee = getShopListOfEmployee
     // ======================================================= 用户
     TargetClass.prototype.getUserInfo = getUserInfo
     TargetClass.prototype.shopUserLogin = shopUserLogin
@@ -15,18 +14,18 @@ export function ApiFunc(TargetClass) {
 // ======================================================= 仓库
 // * 新开仓库
 function createWareHouse(shopId) {
-    let params = { shopId }
-    return $common._Server.request('POST', '/sjShop/wareHouse/create', params, $common.getHeader())
+    let params = { shopId, name: `新仓库 ${parseInt(Math.random() * 10000)}` }
+    return $common._Server.request('POST', '/sjShop/house/create', params, $common.getHeader())
 }
 // * 获取我管理的仓库列表
 function getShopWareHouseList(shopId) {
     let params = { shopId }
-    return $common._Server.request('POST', '/sjShop/wareHouse/list', params, $common.getHeader())
+    return $common._Server.request('POST', '/sjShop/house/list', params, $common.getHeader())
 }
 // * 仓库删除
 function deleteShopWareHouse(shopId, wareHouseId) {
     let params = { shopId, wareHouseId }
-    return $common._Server.request('POST', '/sjShop/wareHouse/delete', params, $common.getHeader())
+    return $common._Server.request('POST', '/sjShop/house/delete', params, $common.getHeader())
 }
 // ======================================================= 店铺
 // * 新开店铺
@@ -43,11 +42,6 @@ function getShopList() {
 function deleteShop(shopId) {
     let params = { shopId }
     return $common._Server.request('POST', '/sjShop/shop/delete', params, $common.getHeader())
-}
-// * 员工加入的店铺
-function getShopListOfEmployee() {
-    let params = {}
-    return $common._Server.request('POST', '/sjShop/employee/shopList', params, $common.getHeader())
 }
 // ======================================================= 用户
 // * 获取用户信息

@@ -1,4 +1,4 @@
-export function EmployeeParam(target, name, descriptor) {
+export function CoreParam(target, name, descriptor) {
     let sourceFunction = descriptor.value
     descriptor.value = function() {
         this.newEmployeeName = ''
@@ -8,7 +8,7 @@ export function EmployeeParam(target, name, descriptor) {
         sourceFunction.apply(this, arguments)
     }
 }
-export function EmployeeFunc(TargetClass) {
+export function CoreFunc(TargetClass) {
     TargetClass.prototype.addMyEmployee = addMyEmployee
     TargetClass.prototype.deleteMyEmployee = deleteMyEmployee
     TargetClass.prototype.getMyEmployeeList = getMyEmployeeList
