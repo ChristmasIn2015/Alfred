@@ -158,10 +158,10 @@
 </template>
 
 <script>
-import Model from "./Model.js";
 import Employee from "../Board/Employee/Employee.vue";
 import House from "../Board/House/House.vue";
 import Order from "../Board/Order/Order.vue";
+import Model from "./model/Model.js";
 export default {
   data() {
     return {
@@ -175,15 +175,15 @@ export default {
   },
   computed: {
     userInfo() {
-      let info = this.$store.getters.getUserInfo;
+      let info = this.$store.state.userInfo;
       return info;
     },
     shopInfo() {
-      let info = this.$store.getters.getShopInfo;
+      let info = this.$store.state.shopInfo;
       return info;
     },
     houseInfo() {
-      let info = this.$store.getters.getHouseInfo;
+      let info = this.$store.state.houseInfo;
       return info;
     },
   },

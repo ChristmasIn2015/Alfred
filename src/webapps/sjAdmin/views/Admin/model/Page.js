@@ -1,3 +1,5 @@
+// *
+// *
 export function PageParam(target, name, descriptor) {
     let sourceFunction = descriptor.value
     descriptor.value = function() {
@@ -21,6 +23,9 @@ export function PageParam(target, name, descriptor) {
         sourceFunction.apply(this, arguments)
     }
 }
+// *
+// *
+import { getShopList, createShop, getHouseList, createHouse } from '@/webapps/sjAdmin/views/api.js'
 export function PageFunc(TargetClass) {
     TargetClass.prototype.setSideIndex = setSideIndex
     //
@@ -32,7 +37,7 @@ export function PageFunc(TargetClass) {
     TargetClass.prototype.pickHouse = pickHouse
     TargetClass.prototype.createMyHouse = createMyHouse
 }
-// * 侧边栏
+// * 侧边栏点击项目
 function setSideIndex(index) {
     // 任何 Side 都需要登录
     if (!this.iAmLogined()) return
@@ -71,7 +76,7 @@ async function toggleShopModal() {
     try {
         $load.show()
         // 店铺列表
-        let data = await this.getShopList()
+        let data = await getShopList()
         this.shopList = Object.assign([], data.shopList)
         this.shopWorkInList = Object.assign([], data.officeList)
 
@@ -88,13 +93,14 @@ function pickShop(shop) {
     window.$store.commit('clearHouseInfo')
     this.toggleShopModal()
 }
+// * 创建店铺
 async function createMyShop() {
     try {
         $load.show()
-        await this.createShop()
+        await createShop()
 
         // 创建的店铺列表
-        let data = await this.getShopList()
+        let data = await getShopList()
         this.shopList = Object.assign([], data.shopList)
 
         //
@@ -115,7 +121,7 @@ async function toggleHouseModal() {
         // 创建的仓库列表
         let shopInfo = window.$store.state.shopInfo
         if (shopInfo._id === -1) throw new Error('请先选择店铺')
-        let list = await this.getShopWareHouseList(shopInfo._id)
+        let list = await getHouseList(shopInfo._id)
         this.houseList = Object.assign([], list)
 
         // end
@@ -134,10 +140,10 @@ async function createMyHouse() {
     try {
         $load.show()
         let shopInfo = window.$store.state.shopInfo
-        await this.createWareHouse(shopInfo._id)
+        await createHouse(shopInfo._id)
 
         // 创建的店铺列表
-        let list = await this.getShopWareHouseList(shopInfo._id)
+        let list = await getHouseList(shopInfo._id)
         this.houseList = Object.assign([], list)
 
         //

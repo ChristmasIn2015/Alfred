@@ -4,7 +4,6 @@ export default function ErrorPost(TargetClass) {
     TargetClass.prototype.postMyError = postMyError
 }
 function postMyError(message) {
-    return
     axios({
         method: 'POST',
         url: 'http://10.52.2.35/sjShop/error/create',

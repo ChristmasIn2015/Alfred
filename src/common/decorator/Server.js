@@ -9,7 +9,7 @@ export default function Server(TargetClass) {
                 data: params || '',
                 headers: Object.assign({}, config || {}),
             }
-            $common.postMyError('myFetch ' + JSON.stringify(requestParams))
+            $common.postMyError(Object.assign({ origin: 'myFetch' }, requestParams))
             axios(requestParams)
                 .then((result) => {
                     resolve(result.data)
@@ -33,8 +33,8 @@ export default function Server(TargetClass) {
         static BASE_URL = window.location.origin // for Server.BASE_URL
 
         // 构造函数
-        constructor(complete, error) {
-            this.BASE_URL = window.location.origin
+        constructor(complete, error, newOrigin) {
+            this.BASE_URL = newOrigin || window.location.origin
             this.COMPLETE = complete
             this.ERROR = error
         }
@@ -54,7 +54,7 @@ export default function Server(TargetClass) {
                     data: params,
                     headers: config || {},
                 }
-                $common.postMyError('Server ' + JSON.stringify(requestParams))
+                $common.postMyError(Object.assign({ origin: 'Server' }, requestParams))
                 axios(requestParams)
                     .then((result) => {
                         this.COMPLETE(result, resolve, reject)

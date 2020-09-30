@@ -4,17 +4,6 @@ const store = {
         shopInfo: { name: '', _id: -1 },
         houseInfo: { name: '', _id: -1 },
     },
-    getters: {
-        getUserInfo(state) {
-            return state.userInfo
-        },
-        getShopInfo(state) {
-            return state.shopInfo
-        },
-        getHouseInfo(state) {
-            return state.houseInfo
-        },
-    },
     mutations: {
         // *
         initShopInfo(state, params) {

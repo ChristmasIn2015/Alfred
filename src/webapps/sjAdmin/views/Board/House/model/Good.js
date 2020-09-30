@@ -1,3 +1,5 @@
+// *
+// *
 export function GoodParam(target, name, descriptor) {
     let sourceFunction = descriptor.value
     descriptor.value = function() {
@@ -14,6 +16,9 @@ export function GoodParam(target, name, descriptor) {
         sourceFunction.apply(this, arguments)
     }
 }
+// *
+// *
+import { createGood, getGoodList, deleteGood, editGood } from '@/webapps/sjAdmin/views/api.js'
 export function GoodFunc(TargetClass) {
     TargetClass.prototype.getMyGoodList = getMyGoodList
     TargetClass.prototype.addMyGood = addMyGood
@@ -23,7 +28,7 @@ export function GoodFunc(TargetClass) {
 // * 获取某个仓库下所有商品
 async function getMyGoodList() {
     try {
-        let list = await this.getGoodList(window.$store.state.houseInfo._id) // @API
+        let list = await getGoodList(window.$store.state.houseInfo._id) // @API
         list.forEach((good) => {
             good['checked'] = false
         })
@@ -35,7 +40,7 @@ async function getMyGoodList() {
 // * 添加商品
 async function addMyGood() {
     try {
-        await this.createGood(
+        await createGood(
             $store.state.houseInfo._id,
             this.goodEditModel.name,
             this.goodEditModel.plugList,
@@ -52,7 +57,7 @@ async function addMyGood() {
 // * 编辑商品
 async function editMyGood() {
     try {
-        await this.editGood(
+        await editGood(
             $store.state.houseInfo._id,
             this.goodEditModel._id, // add
             this.goodEditModel.name,
@@ -73,7 +78,7 @@ async function deleteMyGood(goodId) {
         if (!answer) return
         try {
             let houseInfo = window.$store.state.houseInfo
-            await this.deleteGood(houseInfo._id, goodId)
+            await deleteGood(houseInfo._id, goodId)
             $tip('删除成功！')
             this.getMyGoodList() // ASYNC
         } catch (error) {

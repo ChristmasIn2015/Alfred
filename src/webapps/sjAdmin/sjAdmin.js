@@ -16,11 +16,11 @@ const myStore = new Vuex.Store(store)
 window.$store = myStore
 
 // *
-import Common from '../../common/Common.js'
+import Common from '@/common/Common.js'
 window.$common = new Common()
 
 // *.创建实例
-import App from './App.vue'
+import App from './views/App.vue'
 new Vue({
     render: (h) => h(App),
     router: myRouter,

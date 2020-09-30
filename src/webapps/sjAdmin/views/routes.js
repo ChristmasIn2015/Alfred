@@ -5,5 +5,10 @@ let routes = [
         name: 'board',
         component: () => import('../views/Admin/Admin.vue'),
     },
+    {
+        path: '/orderPrint',
+        name: 'orderPrint',
+        component: () => import('../views/Board/Order/OrderPrint.vue'),
+    },
 ]
 export default routes

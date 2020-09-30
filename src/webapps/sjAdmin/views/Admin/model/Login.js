@@ -1,3 +1,5 @@
+//*
+//*
 export function LoginParam(target, name, descriptor) {
     let sourceFunction = descriptor.value
     descriptor.value = function() {
@@ -9,8 +11,10 @@ export function LoginParam(target, name, descriptor) {
         sourceFunction.apply(this, arguments)
     }
 }
+//*
+//*
+import { getUserInfo, shopUserLogin } from '@/webapps/sjAdmin/views/api.js'
 export function LoginFunc(TargetClass) {
-    // *
     TargetClass.prototype.initUserInfo = initUserInfo
     TargetClass.prototype.postLogin = postLogin
     TargetClass.prototype.reLogin = reLogin
@@ -20,7 +24,7 @@ export function LoginFunc(TargetClass) {
 async function initUserInfo() {
     try {
         $load.show()
-        let info = await this.getUserInfo()
+        let info = await getUserInfo()
         window.$store.state.userInfo.name = info.name
         window.$store.state.userInfo.phone = info.phone
         $tip('登录成功')
@@ -37,7 +41,7 @@ async function initUserInfo() {
 async function postLogin() {
     try {
         $load.show()
-        let info = await this.shopUserLogin('', this.userPhone, this.userPassword)
+        let info = await shopUserLogin('', this.userPhone, this.userPassword)
         localStorage['sjShopToken'] = info.authorization
         window.$store.state.userInfo.name = info.name
         window.$store.state.userInfo.phone = info.phone

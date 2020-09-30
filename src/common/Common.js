@@ -9,23 +9,9 @@ import SjUI from './decorator/sjUI.js'
 @ErrorPost
 @PureFun
 export default class Common {
-    constructor() {
-        this.setPublicServer()
-    }
+    constructor() {}
 
     // ****************************** 混合操作 ******************************
-    setPublicServer() {
-        let MyServer = this.Server
-        this._Server = new MyServer(
-            // 成功
-            (result, resolve, reject) => {
-                result = result.data
-                result.code === 200 ? resolve(result.data) : reject(result.message)
-            },
-            // 失败
-            (error, reject) => reject(error.message)
-        )
-    }
     getHeader() {
         let token = localStorage['sjShopToken']
         let config = { authorization: token || '' }
@@ -49,12 +35,6 @@ export default class Common {
             } catch (error) {
                 $common.loadToastWarn(error)
             }
-        }
-    }
-    confirmDecorator(target, name, descriptor) {
-        let sourceFunction = descriptor.value
-        descriptor.value = function() {
-            sourceFunction.apply(this, arguments)
         }
     }
 }

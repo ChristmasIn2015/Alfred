@@ -142,15 +142,17 @@
     .box-table {
         overflow: hidden;
         overflow-x: auto;
-        color: $sj-tip;
+        color: $sj-white;
         font-size: 0.875rem;
         .row {
             min-height: 3rem;
             padding: 0rem 1rem;
-            border-bottom: 1px solid $sj-tip-lower;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
             display: flex;
+            transition: all 0.2s;
             &:hover {
-                background-color: $sj-tip-lower;
+                background-color: rgba(255, 255, 255, 0.15);
+                border-bottom: 1px solid transparent;
             }
             .column {
                 // border: 1px solid red;

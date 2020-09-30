@@ -42,11 +42,11 @@ module.exports = {
 
     // ** 反向代理 **
     devServer: {
-        proxy: {
-            '/sjShop': {
-                target: 'http://10.52.2.35:80',
-                changeOrigin: true,
-            },
-        },
+        // proxy: {
+        //     '/sjShop': {
+        //         target: 'http://10.52.2.35:80',
+        //         changeOrigin: true,
+        //     },
+        // },
     },
 }

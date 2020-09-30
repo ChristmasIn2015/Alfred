@@ -1,3 +1,5 @@
+// *
+// *
 export function CoreParam(target, name, descriptor) {
     let sourceFunction = descriptor.value
     descriptor.value = function() {
@@ -8,6 +10,9 @@ export function CoreParam(target, name, descriptor) {
         sourceFunction.apply(this, arguments)
     }
 }
+// *
+// *
+import { createEmployee, getEmployeeList, deleteEmployee } from '@/webapps/sjAdmin/views/api.js'
 export function CoreFunc(TargetClass) {
     TargetClass.prototype.addMyEmployee = addMyEmployee
     TargetClass.prototype.deleteMyEmployee = deleteMyEmployee
@@ -18,7 +23,7 @@ async function addMyEmployee() {
     try {
         $load.show()
         let shopInfo = window.$store.state.shopInfo
-        await this.createEmployee(this.newEmployeePhone, shopInfo._id)
+        await createEmployee(this.newEmployeePhone, shopInfo._id)
         this.getMyEmployeeList(shopInfo._id) // ASYNC
         $tip('添加员工成功')
         $load.hide()
@@ -30,7 +35,7 @@ async function addMyEmployee() {
 async function deleteMyEmployee(id) {
     try {
         $load.show()
-        await this.deleteEmployee(id)
+        await deleteEmployee(id)
         let shopInfo = window.$store.state.shopInfo
         this.getMyEmployeeList(shopInfo._id) // ASYNC
         $tip('删除成功')
@@ -43,7 +48,7 @@ async function deleteMyEmployee(id) {
 async function getMyEmployeeList() {
     try {
         let shopInfo = window.$store.state.shopInfo
-        let list = await this.getEmployeeList(shopInfo._id)
+        let list = await getEmployeeList(shopInfo._id)
         this.employeeList = Object.assign([], list)
     } catch (error) {
         this.employeeList = []
