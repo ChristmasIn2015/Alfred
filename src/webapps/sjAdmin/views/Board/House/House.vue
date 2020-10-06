@@ -1,6 +1,28 @@
 <template>
   <div class="over-box">
     <div class="box-title">库存管理</div>
+    <!-- 筛选 -->
+    <div class="box-btn-line">
+      <div
+        v-for="(name, index) in pageModel.goodNameList"
+        :key="index"
+        class="sj-btn tip-on"
+      >
+        {{ name }}
+      </div>
+    </div>
+    <div class="box-btn-line">
+      <input type="text" placeholder="规格搜索" />
+      <div
+        v-for="(name, index) in pageModel.goodPlugList"
+        :key="index"
+        class="sj-btn tip-on"
+      >
+        {{ name }}
+      </div>
+    </div>
+
+    <!-- 功能 -->
     <div class="box-btn-line flex-x-reverse">
       <div class="sj-btn" v-show="listChecked" @click.stop="orderFormShow">
         售出商品
@@ -28,7 +50,7 @@
           class="row flex"
           v-for="(good, goodIndex) in pageModel.goodList"
           :key="goodIndex"
-          @click.stop="good.checked = !good.checked"
+          @click.stop="pageModel.pickGood(good)"
         >
           <div class="column" style="width: 2rem">
             <span
@@ -132,7 +154,8 @@ export default {
     // ***************************** 订单组件控制 *****************************
     orderFormShow($event) {
       let list = [];
-      this.pageModel.goodList.forEach((e) => (e.checked ? list.push(e) : ""));
+      // this.pageModel.goodList.forEach((e) => (e.checked ? list.push(e) : ""));
+      list = this.pageModel.goodCheckedList;
       this.$refs.OrderForm.pageModel.toggleForm(list);
     },
     orderFormAction(params) {

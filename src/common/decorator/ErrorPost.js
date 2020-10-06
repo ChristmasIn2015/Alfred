@@ -6,7 +6,7 @@ export default function ErrorPost(TargetClass) {
 function postMyError(message) {
     axios({
         method: 'POST',
-        url: 'http://10.52.2.35/sjShop/error/create',
+        url: 'http://192.168.0.105/sjShop/error/create',
         data: { message: message },
         headers: {},
     })

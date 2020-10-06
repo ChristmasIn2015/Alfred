@@ -18,12 +18,23 @@ export function GoodParam(target, name, descriptor) {
 }
 // *
 // *
-import { createGood, getGoodList, deleteGood, editGood } from '@/webapps/sjAdmin/views/api.js'
+import {
+    createGood,
+    getGoodList,
+    deleteGood,
+    editGood,
+} from '@/webapps/sjAdmin/views/api.js'
 export function GoodFunc(TargetClass) {
+    TargetClass.prototype.pickGood = pickGood
     TargetClass.prototype.getMyGoodList = getMyGoodList
     TargetClass.prototype.addMyGood = addMyGood
     TargetClass.prototype.deleteMyGood = deleteMyGood
     TargetClass.prototype.editMyGood = editMyGood
+}
+// * 选择一个商品
+function pickGood(good) {
+    good.checked = !good.checked
+    this.initGoodFiltedList() // @Filter
 }
 // * 获取某个仓库下所有商品
 async function getMyGoodList() {
@@ -33,6 +44,7 @@ async function getMyGoodList() {
             good['checked'] = false
         })
         this.goodList = Object.assign([], list.reverse())
+        this.initGoodFiltedList() // @Filter
     } catch (error) {
         $common.loadToastWarn(error)
     }
@@ -74,15 +86,18 @@ async function editMyGood() {
 }
 // * 删除商品
 async function deleteMyGood(goodId) {
-    $confirm({ title: '警告', content: '确定要删除这个商品吗' }, async (answer) => {
-        if (!answer) return
-        try {
-            let houseInfo = window.$store.state.houseInfo
-            await deleteGood(houseInfo._id, goodId)
-            $tip('删除成功！')
-            this.getMyGoodList() // ASYNC
-        } catch (error) {
-            $common.loadToastWarn(error)
+    $confirm(
+        { title: '警告', content: '确定要删除这个商品吗' },
+        async (answer) => {
+            if (!answer) return
+            try {
+                let houseInfo = window.$store.state.houseInfo
+                await deleteGood(houseInfo._id, goodId)
+                $tip('删除成功！')
+                this.getMyGoodList() // ASYNC
+            } catch (error) {
+                $common.loadToastWarn(error)
+            }
         }
-    })
+    )
 }
