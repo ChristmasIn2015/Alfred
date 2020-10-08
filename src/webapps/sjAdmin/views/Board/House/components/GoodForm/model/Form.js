@@ -68,6 +68,14 @@ function getFormData() {
     let plugList1 = []
     this.plugList.forEach((e) => (e.checked ? plugList1.push(e) : ''))
     let countList1 = []
+    
+    // * 201008
+    this.countList = [{
+        name: this.newCountTag.name,
+        value: this.newCountTag.value,
+        checked: true,
+    }]
+
     this.countList.forEach((e) => (e.checked ? countList1.push(e) : ''))
     let params = {
         _id: this._id,

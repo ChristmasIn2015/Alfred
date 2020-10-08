@@ -6,7 +6,7 @@ const _server = new $common.Server(
     },
     // 失败
     (error, reject) => reject(error.message),
-    'http://192.168.0.105:80'
+    'http://192.168.0.104:80'
 )
 // ======================================================= 订单
 // * 新增订单

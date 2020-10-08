@@ -7,12 +7,11 @@
         v-for="(name, index) in pageModel.goodNameList"
         :key="index"
         class="sj-btn tip-on"
-      >
+      > 
         {{ name }}
       </div>
     </div>
     <div class="box-btn-line">
-      <input type="text" placeholder="规格搜索" />
       <div
         v-for="(name, index) in pageModel.goodPlugList"
         :key="index"

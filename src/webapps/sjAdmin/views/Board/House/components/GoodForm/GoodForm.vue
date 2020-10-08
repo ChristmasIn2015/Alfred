@@ -71,10 +71,10 @@
               style="width: 5rem"
             />
           </div>
-          <div class="sj-btn tag" @click.stop="pageModel.postMyCountTag">
+          <!-- <div class="sj-btn tag" @click.stop="pageModel.postMyCountTag">
             新增单位
-          </div>
-          <div @click.stop="pageModel.countTagEdit = !pageModel.countTagEdit">
+          </div> -->
+          <!-- <div @click.stop="pageModel.countTagEdit = !pageModel.countTagEdit">
             <span
               class="fa"
               :class="{
@@ -82,7 +82,7 @@
                 'fa-check-square': pageModel.countTagEdit,
               }"
             ></span>
-          </div>
+          </div> -->
           <div class="tag-box">
             <div
               class="sj-btn tip-on tag"
