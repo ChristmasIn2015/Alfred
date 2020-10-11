@@ -86,6 +86,7 @@ function getFormData() {
             checked: true,
         },
     ]
+    if (!this.newCountTag.name || !this.newCountTag.value) this.countList = []
 
     this.countList.forEach((e) => (e.checked ? countList1.push(e) : ''))
     let params = {

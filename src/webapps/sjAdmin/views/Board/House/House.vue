@@ -39,7 +39,7 @@
             </div>
 
             <!-- 展示行 -->
-            <div style="max-height: 40rem; overflow-y: auto">
+            <div style="max-height: 35rem; overflow-y: auto">
                 <div class="row flex" v-for="(good, goodIndex) in pageModel.goodList" :key="goodIndex">
                     <div class="column">{{ good.name }}</div>
                     <div class="column" style="width: 30rem">
