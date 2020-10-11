@@ -9,7 +9,10 @@ export function FormParams(target, name, descriptor) {
         this.cost = 0
         this.tip = ''
         this.plugList = []
+        this.plugListChecked = []
         this.countList = []
+        // *
+        this.goodNameList = []
         // *
         sourceFunction.apply(this, arguments)
     }
@@ -29,12 +32,13 @@ function initForm(goodForm) {
         this.cost = goodForm.cost
         this.tip = goodForm.tip
 
-        // *
+        // * @Tag
         this.renderPlugList(() => {
             let tempMap = {}
             goodForm.plugList.forEach((e) => (tempMap[e._id] = true))
             this.plugList.forEach((e) => (e.checked = tempMap[e._id] || false))
-        }) // @Tag
+            this.plugListChecked = Object.assign([], goodForm.plugList)
+        }) //
 
         // *
         let list = []
@@ -42,21 +46,26 @@ function initForm(goodForm) {
             e['checked'] = true
             list.push(e)
         })
+        this.newCountTag.name = list[0].name
+        this.newCountTag.value = list[0].value
         this.countList = Object.assign([], list)
     } else {
         this._id = -1
         this.name = ''
-        this.cost = 0
+        this.cost = ''
         this.tip = ''
         this.plugList = []
+        this.plugListChecked = []
         this.countList = []
         this.renderPlugList() // @Tag
     }
 }
 // * 展开表单
-function toggleForm($event, goodForm) {
+function toggleForm($event, goodForm, goodNameList) {
     this.initForm(goodForm)
     this.formShow = !this.formShow
+    // *
+    if (goodNameList) this.goodNameList = Object.assign([], goodNameList)
 }
 // *
 function toggleCountListCheck(tag) {
@@ -68,13 +77,15 @@ function getFormData() {
     let plugList1 = []
     this.plugList.forEach((e) => (e.checked ? plugList1.push(e) : ''))
     let countList1 = []
-    
+
     // * 201008
-    this.countList = [{
-        name: this.newCountTag.name,
-        value: this.newCountTag.value,
-        checked: true,
-    }]
+    this.countList = [
+        {
+            name: this.newCountTag.name,
+            value: this.newCountTag.value,
+            checked: true,
+        },
+    ]
 
     this.countList.forEach((e) => (e.checked ? countList1.push(e) : ''))
     let params = {

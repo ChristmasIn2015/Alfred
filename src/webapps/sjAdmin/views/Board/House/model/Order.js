@@ -4,6 +4,8 @@ export function OrderParam(target, name, descriptor) {
     let sourceFunction = descriptor.value
     descriptor.value = function() {
         // *
+        this.preGoodList = []
+        // *
         sourceFunction.apply(this, arguments)
     }
 }
@@ -12,6 +14,14 @@ export function OrderParam(target, name, descriptor) {
 import { createOrder } from '@/webapps/sjAdmin/views/api.js'
 export function OrderFunc(TargetClass) {
     TargetClass.prototype.createMyOrder = createMyOrder
+    TargetClass.prototype.pickPreGood = pickPreGood
+}
+function pickPreGood(good) {
+    let existed = false
+    this.preGoodList.forEach((e) => {
+        if (e._id === good._id) existed = true
+    })
+    existed ? '' : this.preGoodList.push(good)
 }
 async function createMyOrder(params) {
     try {

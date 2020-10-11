@@ -41,6 +41,8 @@ async function initUserInfo() {
 async function postLogin() {
     try {
         $load.show()
+        if (!this.userPhone) throw new Error('手机号码不能为空')
+        if (!this.userPassword) throw new Error('密码不能为空')
         let info = await shopUserLogin('', this.userPhone, this.userPassword)
         localStorage['sjShopToken'] = info.authorization
         window.$store.state.userInfo.name = info.name

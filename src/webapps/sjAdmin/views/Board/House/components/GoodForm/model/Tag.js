@@ -15,6 +15,8 @@ export function TagParams(target, name, descriptor) {
             name: '',
         }
         // *
+        this.plugModal = false
+        // *
         sourceFunction.apply(this, arguments)
     }
 }
@@ -27,6 +29,19 @@ export function TagFunc(TargetClass) {
     TargetClass.prototype.postMyCountTag = postMyCountTag
     TargetClass.prototype.deleteMyTag = deleteMyTag
     TargetClass.prototype.renderPlugList = renderPlugList
+    TargetClass.prototype.togglePlugRight = togglePlugRight
+}
+// * 展开右侧规格列表
+function togglePlugRight() {
+    this.plugModal = !this.plugModal
+    // *
+    let list = []
+    if (!this.plugModal) {
+        this.plugList.forEach((plug) => {
+            if (plug.checked) list.push(plug)
+        })
+    }
+    this.plugListChecked = Object.assign([], list)
 }
 // * POST一个标签
 async function postMyTag() {
@@ -61,6 +76,7 @@ async function postMyCountTag() {
 function deleteMyTag(index, type) {
     // 0.规格
     if (type === 0) {
+        this.togglePlugRight()
         let query = {
             title: '警告',
             content: '警告：删除规格会导致所有店铺/仓库下包含这个标签的商品，失去这个标签，确定要这样做吗',
@@ -69,7 +85,7 @@ function deleteMyTag(index, type) {
             try {
                 if (!answer) return
                 await deleteTag(this.plugList[index]._id)
-                this.renderPlugList() //async
+                this.renderPlugList(() => (this.plugListChecked = [])) //async
                 $tip('删除成功')
             } catch (error) {
                 $common.loadToastWarn(error)

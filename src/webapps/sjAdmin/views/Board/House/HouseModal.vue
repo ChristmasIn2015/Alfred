@@ -43,7 +43,7 @@
                 <div class="row flex" v-for="(good, goodIndex) in pageModel.goodList" :key="goodIndex">
                     <div class="column">{{ good.name }}</div>
                     <div class="column" style="width: 30rem">
-                        <div v-for="(tag, plugIndex) in good.plugList" :key="plugIndex" style="margin-right: 0.25rem">
+                        <div v-for="(tag, plugIndex) in good.plugList" :key="plugIndex" class="sj-link" style="margin-right: 0.25rem">
                             {{ tag.value + tag.name }}
                         </div>
                     </div>
@@ -69,9 +69,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- 商品弹窗 -->
-        <GoodForm ref="GoodForm" @formAction="goodFormAction" />
     </div>
 </template>
 
@@ -84,24 +81,8 @@
                 pageModel: new Model(),
             }
         },
-        components: {
-            GoodForm,
-        },
-        methods: {
-            // ***************************** 商品组件控制 *****************************
-            goodFormShow($event, good) {
-                this.$refs.GoodForm.pageModel.toggleForm($event, good, this.pageModel.goodNameList)
-            },
-            goodFormAction(params) {
-                if (!params) {
-                    this.pageModel.getMyGoodList()
-                    return
-                }
-                this.pageModel.goodEditModel = Object.assign({}, params)
-                let model = this.pageModel.goodEditModel
-                model._id !== -1 ? this.pageModel.editMyGood() : this.pageModel.addMyGood()
-            },
-        },
+        components: {},
+        methods: {},
     }
 </script>
 

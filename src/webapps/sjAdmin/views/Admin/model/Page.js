@@ -8,8 +8,8 @@ export function PageParam(target, name, descriptor) {
         this.sideList = [
             { name: '员工管理', id: 0 },
             { name: '库存管理', id: 1 },
+            { name: '开单', id: 3 },
             { name: '订单列表', id: 2 },
-            { name: '价格列表', id: 3 },
         ]
         this.sideIndex = -1
         // ************************* 店铺弹窗控制
@@ -49,15 +49,9 @@ function setSideIndex(index) {
         return
     }
 
-    // 仓库管理必须选择了仓库
-    if (index === 1 && window.$store.state.houseInfo._id === -1) {
-        $tip('请选择仓库')
-        this.toggleHouseModal() // ASYNC
-        return
-    }
-
-    // 订单管理必须选择了仓库
-    if (index === 2 && window.$store.state.houseInfo._id === -1) {
+    // 仓库管理 开单 订单管理必须选择了仓库
+    let indexCharge = index === 1 || index === 2 || index === 3
+    if (indexCharge && window.$store.state.houseInfo._id === -1) {
         $tip('请选择仓库')
         this.toggleHouseModal() // ASYNC
         return

@@ -14,6 +14,7 @@ export default class Model {
     // * 初始化参数
     @FilterParam
     @GoodParam
+    @OrderParam
     start() {
         this.getMyGoodList() // @Good
     }

@@ -92,7 +92,6 @@
                     flex-wrap: wrap;
                     align-items: flex-start;
                     margin-left: 5rem;
-                    margin-top: 0.5rem;
                     max-height: 10rem;
                     overflow-y: auto;
                 }
@@ -129,13 +128,31 @@
     .box-title {
         font-size: 2rem;
         padding-bottom: 1rem;
+        .tag {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            margin-left: 1rem;
+        }
     }
     .box-btn-line {
         display: flex;
         flex-wrap: wrap;
+        align-items: center;
+        margin-bottom: 1rem;
+        input {
+            width: 20rem;
+            padding: 0rem 0.5rem;
+            line-height: 2rem;
+            margin-right: 0.5rem;
+            color: $sj-white;
+            border-radius: 0.25rem;
+            border: 1px solid $sj-tip-lower;
+            &:focus {
+                border: 1px solid $sj-main;
+            }
+        }
         .sj-btn {
             margin-right: 1rem;
-            margin-bottom: 1rem;
         }
         .tag {
             font-size: 0.75rem;
@@ -218,7 +235,7 @@
     height: 100%;
     top: 0rem;
     left: 0rem;
-    z-index: 1;
+    z-index: 999;
     display: flex;
     .left {
         width: 60%;
@@ -241,8 +258,29 @@
                 margin-bottom: 1rem;
             }
             .sj-btn {
-                font-size: 1rem;
-                margin-bottom: 0.5rem;
+                margin-top: 0.5rem;
+            }
+            .card-line {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                input {
+                    // width: 20rem;
+                    padding: 0rem 0.5rem;
+                    line-height: 2rem;
+                    margin-right: 0.5rem;
+                    color: $sj-white;
+                    border-radius: 0.25rem;
+                    border: 1px solid $sj-tip-lower;
+                    &:focus {
+                        border: 1px solid $sj-main;
+                    }
+                }
+                .sj-btn {
+                    font-size: 1rem;
+                    margin: 0.5rem 0rem;
+                    margin-right: 0.5rem;
+                }
             }
         }
     }

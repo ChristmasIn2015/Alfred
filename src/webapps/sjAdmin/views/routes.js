@@ -8,7 +8,7 @@ let routes = [
     {
         path: '/orderPrint',
         name: 'orderPrint',
-        component: () => import('../views/Board/Order/OrderPrint.vue'),
+        component: () => import('../views/Board/OrderList/OrderPrint.vue'),
     },
 ]
 export default routes

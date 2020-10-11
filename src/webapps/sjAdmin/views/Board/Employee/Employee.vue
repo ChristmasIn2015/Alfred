@@ -7,9 +7,6 @@
       <div class="row">
         <div class="column">ID</div>
         <div class="column">
-          <input v-model="pageModel.newEmployeeName" placeholder="员工姓名" />
-        </div>
-        <div class="column">
           <input
             v-model="pageModel.newEmployeePhone"
             placeholder="员工手机号"
@@ -30,9 +27,6 @@
       >
         <div class="column">
           <span>{{ employee.role === 0 ? "店长" : index }}</span>
-        </div>
-        <div class="column">
-          <span>{{ employee.name }}</span>
         </div>
         <div class="column">
           <span>{{ employee.phone }}</span>
