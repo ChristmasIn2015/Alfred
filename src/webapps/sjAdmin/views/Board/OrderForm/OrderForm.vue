@@ -149,9 +149,10 @@
                             </div>
                             <div class="column">{{ good.tip }}</div>
                             <div class="column">
-                                <div class="sj-btn green tag" @click.stop="pageModel.pickGoodInForm(good)">
+                                <div v-if="!good.inOrder" class="sj-btn green tag" @click.stop="pageModel.pickGoodInForm(good)">
                                     开单
                                 </div>
+                                <div v-else>已选择</div>
                             </div>
                         </div>
                     </div>

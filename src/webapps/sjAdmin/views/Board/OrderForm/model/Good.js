@@ -29,6 +29,10 @@ function toggleGoodModal() {
 async function getMyGoodList() {
     try {
         let list = await getGoodList(window.$store.state.houseInfo._id)
+        // *
+        list.forEach((e) => this.goodListPicked.forEach((p) => (e._id === p._id ? (e['inOrder'] = true) : '')))
+        console.log(list)
+        // *
         this.goodSourceList = Object.assign([], list.reverse()) // @Filter
         this.goodList = JSON.parse(JSON.stringify(this.goodSourceList))
 
