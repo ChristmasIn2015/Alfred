@@ -1,24 +1,17 @@
 // * Node glob 模块允许你使用 *等符号, 来解析匹配路径
 // * glob.sync: Array 用于同步获取匹配的文件列表
-const glob = require('glob')
-
 // * 这个方法用于获取多页项目下的所有Webpack入口文件
 function getPages() {
     let viewsMap = {}
-    let webpackJsEntryList = glob.sync('./src/webapps/*/*.js')
+    let webpackJsEntryList = require('glob').sync('./src/webapps/*/*.js')
     webpackJsEntryList.forEach((filepath) => {
         let fileList = filepath.split('/')
         let projectName = fileList[fileList.length - 2]
         viewsMap[projectName] = {
-            // Webpack 入口文件
-            entry: `src/webapps/${projectName}/${projectName}.js`,
-            // Html-webpack-plugin 插件的模板来源
-            template: `src/webapps/${projectName}/${projectName}.html`,
-            // template: `./public/index.html`,
-            // 在 dist/index.html 的输出
-            filename: `${projectName}.html`,
-            // 提取出来的通用 chunk 和 vendor chunk。
-            chunks: ['chunk-vendors', 'chunk-common', projectName],
+            entry: `src/webapps/${projectName}/main.js`, // Webpack 打包入口
+            template: `src/public/index.html`, // Html-webpack-plugin 插件的模板来源
+            filename: `${projectName}.html`, // 在 dist/index.html 的输出
+            chunks: ['chunk-vendors', 'chunk-common', projectName], // 提取出来的通用 chunk 和 vendor chunk。
         }
     })
     return viewsMap
@@ -32,21 +25,11 @@ module.exports = {
     pages: getPages(),
 
     // ** 导入的scss公共变量 **
-    css: {
-        loaderOptions: {
-            scss: {
-                prependData: `@import "@/common/ui/css/sjUI.scss";`,
-            },
-        },
-    },
-
-    // ** 反向代理 **
-    devServer: {
-        // proxy: {
-        //     '/sjShop': {
-        //         target: 'http://10.52.2.35:80',
-        //         changeOrigin: true,
-        //     },
-        // },
-    },
+    // css: {
+    //     loaderOptions: {
+    //         scss: {
+    //             prependData: `@import "@/public/ui/css/sjUI.scss";`,
+    //         },
+    //     },
+    // },
 }

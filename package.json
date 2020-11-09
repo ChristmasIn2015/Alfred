@@ -4,12 +4,14 @@
     "private": true,
     "scripts": {
         "serve": "vue-cli-service serve",
-        "build": "vue-cli-service build && node ./bats/distMutiPack.js"
+        "build": "vue-cli-service build && node ./bats/distMutiPack.js",
+        "packAdmin": "webpack --config ./src/webapps/sjAdmin/pack/webpack.config.js"
     },
     "dependencies": {
         "axios": "^0.19.2",
         "core-js": "^3.6.5",
         "font-awesome": "^4.7.0",
+        "view-design": "^4.4.0",
         "vue": "^2.6.11",
         "vue-router": "^3.2.0",
         "vuex": "^3.5.1"
@@ -20,7 +22,10 @@
         "@vue/cli-service": "~4.5.0",
         "sass": "^1.26.5",
         "sass-loader": "^8.0.2",
-        "vue-template-compiler": "^2.6.11"
+        "vue-template-compiler": "^2.6.11",
+        "babel-loader": "^8.0.5",
+        "webpack": "^4.43.0",
+        "webpack-cli": "^3.3.11"
     },
     "browserslist": [
         "> 1%",
