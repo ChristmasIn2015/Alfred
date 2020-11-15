@@ -52,56 +52,56 @@
 
         <!-- 店铺列表 -->
         <Modal v-model="model.shopModal" title="店铺列表">
-            <br />
-            <div class="flex-middle-y">
-                <Input v-model="model.shopCreateName" size="large" placeholder="请输新店铺名称" />
-                <Button @click.stop="model.createMyShop">创建</Button>
+            <div class="flex">
+                <div style="width: 30%; margin-right: 1rem; padding-right: 1rem; border-right:1px solid #E5E5E5;">
+                    <Input v-model="model.shopCreateName" size="large" placeholder="请输新店铺名称" />
+                    <Button type="warning" long @click.stop="model.createMyShop">创建店铺</Button>
+                </div>
+                <div>
+                    <h2>我的店铺</h2>
+                    <List>
+                        <ListItem v-for="(shop, index) in model.shopList" :key="index">
+                            <div>{{ shop.name }}</div>
+                            <div slot="action">
+                                <Button disabled v-show="shop._id === shopInfo._id">已选择</Button>
+                                <Button v-show="shop._id !== shopInfo._id" @click.stop="model.pickShop(shop)">选择</Button>
+                            </div>
+                        </ListItem>
+                    </List>
+                    <h2>我加入的店铺</h2>
+                    <List>
+                        <ListItem v-for="(office, index) in model.officeList" :key="index">
+                            <div>{{ office.name }}</div>
+                            <div slot="action">
+                                <Button @click.stop="pickShop(shop)">选择</Button>
+                            </div>
+                        </ListItem>
+                    </List>
+                </div>
             </div>
-            <br />
-            <h3>我的店铺</h3>
-            <br />
-            <List border>
-                <ListItem v-for="(shop, index) in model.shopList" :key="index">
-                    <div>{{ shop.name }}</div>
-                    <div slot="action">
-                        <Button disabled v-show="shop._id === shopInfo._id">已选择</Button>
-                        <Button v-show="shop._id !== shopInfo._id" @click.stop="model.pickShop(shop)">选择</Button>
-                    </div>
-                </ListItem>
-            </List>
-            <br />
-            <h3>我加入的店铺</h3>
-            <br />
-            <List border>
-                <ListItem v-for="(office, index) in model.officeList" :key="index">
-                    <div>{{ office.name }}</div>
-                    <div slot="action">
-                        <Button @click.stop="pickShop(shop)">选择</Button>
-                    </div>
-                </ListItem>
-            </List>
             <div slot="footer"></div>
         </Modal>
 
         <!-- 仓库列表 -->
         <Modal v-model="model.houseModal" title="仓库列表">
-            <br />
-            <div class="flex-middle-y">
-                <Input v-model="model.houseCreateName" size="large" placeholder="请输新仓库名称" />
-                <Button @click.stop="model.createMyHouse">创建</Button>
+            <div class="flex">
+                <div style="width: 30%; margin-right: 1rem; padding-right: 1rem; border-right:1px solid #E5E5E5;">
+                    <Input v-model="model.houseCreateName" size="large" placeholder="请输新仓库名称" />
+                    <Button type="warning" long @click.stop="model.createMyHouse">创建仓库</Button>
+                </div>
+                <div>
+                    <h2>{{ shopInfo.name }}的仓库列表</h2>
+                    <List>
+                        <ListItem v-for="(house, index) in model.houseList" :key="index">
+                            <div>{{ house.name }}</div>
+                            <div slot="action">
+                                <Button disabled v-show="house._id === houseInfo._id">已选择</Button>
+                                <Button v-show="house._id !== houseInfo._id" @click.stop="model.pickHouse(house)">选择</Button>
+                            </div>
+                        </ListItem>
+                    </List>
+                </div>
             </div>
-            <br />
-            <h3>{{ shopInfo.name }}的仓库列表</h3>
-            <br />
-            <List border>
-                <ListItem v-for="(house, index) in model.houseList" :key="index">
-                    <div>{{ house.name }}</div>
-                    <div slot="action">
-                        <Button disabled v-show="house._id === houseInfo._id">已选择</Button>
-                        <Button v-show="house._id !== houseInfo._id" @click.stop="model.pickHouse(house)">选择</Button>
-                    </div>
-                </ListItem>
-            </List>
             <div slot="footer"></div>
         </Modal>
     </div>

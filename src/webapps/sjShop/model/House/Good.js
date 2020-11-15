@@ -19,10 +19,11 @@ export function GoodParams(target, name, descriptor) {
         this.goodTableColumn = [
             { title: 'Id', key: '_id', width: 150 },
             { title: '商品名称', key: 'name', width: 200 },
-            { title: '商品规格', key: '' },
-            { title: '商品库存', key: '' },
+            { title: '商品规格', slot: 'plugList' },
+            { title: '商品库存', slot: 'countList' },
+            { title: '成本', key: 'cost', width: 200 },
             { title: '备注', key: 'tip', width: 200 },
-            { title: '操作', key: '' },
+            { title: '操作', slot: 'action' },
         ]
         this.goodList = []
         // *
@@ -35,6 +36,7 @@ export function GoodFunc(TargetClass) {
     TargetClass.prototype.initGoodModel = initGoodModel
     TargetClass.prototype.renderGoodList = renderGoodList
     TargetClass.prototype.postGood = postGood
+    TargetClass.prototype.deleteMyGood = deleteMyGood
     //
     TargetClass.prototype.addGoodCount = addGoodCount
     TargetClass.prototype.deleteGoodCount = deleteGoodCount
@@ -63,8 +65,6 @@ async function renderGoodList() {
         if (!houseId) throw new Error('获取仓库信息失败')
         let list = await getGoodList(houseId) // @API
         this.goodList = Object.assign([], list)
-        // this.goodSourceList = Object.assign([], list.reverse()) // @Filter
-        // this.initFilterParams() // @Filter
     } catch (error) {
         $common.loadOff(error)
     }
@@ -97,4 +97,18 @@ async function postGood() {
     } catch (error) {
         $common.loadOff(error)
     }
+}
+// * 删除商品
+function deleteMyGood(index) {
+    let target = this.goodList[index]
+    if (target)
+        $confirm(`确定要删除 ${target.name} 吗`, async () => {
+            try {
+                await deleteGood($store.state.houseInfo._id, target._id)
+                $tip('删除成功')
+                this.renderGoodList() // @Good
+            } catch (error) {
+                $common.loadOff(error)
+            }
+        })
 }

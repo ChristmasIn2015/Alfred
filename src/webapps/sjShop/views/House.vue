@@ -4,7 +4,17 @@
             <Button type="primary" @click.stop="model.toggleGoodEditModal">新商品入库</Button>
         </div>
         <div>
-            <Table stripe :columns="model.goodTableColumn" :data="model.goodList"> </Table>
+            <Table stripe :columns="model.goodTableColumn" :data="model.goodList">
+                <template slot-scope="{ row }" slot="plugList">
+                    <span v-for="(plug, index) in row.plugList" :key="index">{{ plug.value }}{{ plug.name }} </span>
+                </template>
+                <template slot-scope="{ row }" slot="countList">
+                    <span v-for="(count, index) in row.countList" :key="index">{{ count.value }}{{ count.name }} </span>
+                </template>
+                <template slot-scope="{ index }" slot="action">
+                    <Button type="error" size="small" @click="model.deleteMyGood(index)">删除</Button>
+                </template>
+            </Table>
         </div>
 
         <!-- 商品编辑的表单 -->
@@ -27,7 +37,7 @@
                     <Button v-else type="error" size="small" @click.stop="model.deleteGoodCount(index)">✖</Button>
                 </FormItem>
                 <FormItem label="成本">
-                    <Input v-model="model.goodModel.price" placeholder="请输入库成本" />
+                    <Input v-model="model.goodModel.cost" placeholder="请输入库成本" />
                 </FormItem>
                 <FormItem label="备注">
                     <Input v-model="model.goodModel.tip" placeholder="商品备注" />
@@ -42,7 +52,7 @@
         <!-- 编辑规格的表单 -->
         <Modal v-model="model.plugTagModal" title="规格列表">
             <div class="flex">
-                <div style="width: 30%; margin-right: 1rem; padding-right: 1rem; border-right:1px solid #333333;">
+                <div style="width: 30%; margin-right: 1rem; padding-right: 1rem; border-right:1px solid #E5E5E5;">
                     <Input v-model="model.plugModel.value" placeholder="请输入规格值" />
                     <Input v-model="model.plugModel.name" placeholder="请输入规格名称" />
                     <Button type="primary" long @click.stop="model.createPlugTag">创建规格</Button>

@@ -10,7 +10,6 @@ export function ReactParams(target, name, descriptor) {
     }
 }
 // *
-// import { getShopList, createShop } from '../api.js'
 export function ReactFunc(TargetClass) {
     TargetClass.prototype.toggleGoodEditModal = toggleGoodEditModal
     TargetClass.prototype.goodEditModalConfirm = goodEditModalConfirm

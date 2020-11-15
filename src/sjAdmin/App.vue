@@ -53,7 +53,7 @@
                 <div class="modal" style="width: 20%">
                     <div class="title">
                         <span>登录</span>
-                        <span @click.stop="pageModel.modalloginModal = false">✖</span>
+                        <span @click.stop="pageModel.modalloginModal = false"> ✖</span>
                     </div>
                     <div class="content">
                         <div class="form-line">
@@ -62,13 +62,11 @@
                         <div class="form-line">
                             <input type="text" v-model="pageModel.userPassword" placeholder="请输入密码" />
                         </div>
-                        <div style="font-size: 0.75rem;">Tip: 未注册用户将会自动注册</div>
+                        <div style="font-size: 0.75rem">Tip: 未注册用户将会自动注册</div>
                     </div>
                     <div class="btns">
                         <div class="sj-btn" @click.stop="pageModel.postLogin">登录</div>
-                        <div class="sj-btn tip-on" @click.stop="pageModel.modalloginModal = false">
-                            取消
-                        </div>
+                        <div class="sj-btn tip-on" @click.stop="pageModel.modalloginModal = false">取消</div>
                     </div>
                 </div>
             </div>
@@ -88,9 +86,7 @@
                         >
                             {{ shop.name }}
                         </div>
-                        <div class="sj-btn" @click.stop="pageModel.createMyShop">
-                            + 创建新店铺
-                        </div>
+                        <div class="sj-btn" @click.stop="pageModel.createMyShop">+ 创建新店铺</div>
                     </div>
                     <div class="card">
                         <div class="title">加入的店铺</div>
@@ -122,9 +118,7 @@
                         >
                             {{ house.name }}
                         </div>
-                        <div class="sj-btn" @click.stop="pageModel.createMyHouse">
-                            + 创建新仓库
-                        </div>
+                        <div class="sj-btn" @click.stop="pageModel.createMyHouse">+ 创建新仓库</div>
                     </div>
                 </div>
             </div>

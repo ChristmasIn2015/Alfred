@@ -1,5 +1,5 @@
-import { GoodParams, GoodFunc } from '../Public/Good.js'
-import { TagParams, TagFunc } from '../Public/Tag.js'
+import { GoodParams, GoodFunc } from './Good.js'
+import { TagParams, TagFunc } from './Tag.js'
 import { ReactParams, ReactFunc } from './React.js'
 
 @ReactFunc

@@ -31,7 +31,7 @@ async function renderPlugTagList(plugListChecked) {
         let list = await getPlugTagList(null)
         list.forEach((e) => {
             e['checked'] = false
-            plugListChecked.forEach((m) => (e._id === m._id ? (e['checked'] = true) : ''))
+            if (plugListChecked) plugListChecked.forEach((m) => (e._id === m._id ? (e['checked'] = true) : ''))
         })
         this.plugTagList = Object.assign([], list)
     } catch (error) {

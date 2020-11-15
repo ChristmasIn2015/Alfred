@@ -10,7 +10,8 @@ function log(message) {
     // return
     axios({
         method: 'POST',
-        url: 'http://10.52.2.35/sjShop/error/create',
+        url: 'http://192.168.0.105/sjShop/error/create',
+        // url: 'http://10.52.2.35/sjShop/error/create',
         data: { message: message },
         headers: {},
     })
