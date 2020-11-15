@@ -1,5 +1,3 @@
-// *
-// *
 export function ShopParams(target, name, descriptor) {
     let sourceFunction = descriptor.value
     descriptor.value = function() {
@@ -14,7 +12,6 @@ export function ShopParams(target, name, descriptor) {
         sourceFunction.apply(this, arguments)
     }
 }
-// *
 // *
 import { getShopList, createShop } from '../api.js'
 export function ShopFunc(TargetClass) {
@@ -42,6 +39,7 @@ async function toggleShopModal() {
 // * 选择店铺
 function pickShop(shop) {
     $store.commit('setShopInfo', shop)
+    this.shopModal = false
 }
 // * 创建店铺
 async function createMyShop() {

@@ -28,12 +28,11 @@ function pickSide(index) {
     }
 
     // // 仓库管理 开单 订单管理必须选择了仓库
-    // let indexCharge = index === 1 || index === 2 || index === 3
-    // if (indexCharge && window.$store.state.houseInfo._id === -1) {
-    //     $tip('请选择仓库')
-    //     this.toggleHouseModal() // @House
-    //     return
-    // }
+    if (index > 0 && !$store.state.houseInfo._id) {
+        $warn('请选择仓库')
+        this.toggleHouseModal() // @House
+        return
+    }
 
     // *
     this.sideIndex = index

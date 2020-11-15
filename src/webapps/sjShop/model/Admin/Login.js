@@ -3,8 +3,11 @@ export function LoginParams(target, name, descriptor) {
     descriptor.value = function() {
         // *
         this.loginModal = false
-        this.userPhone = ''
-        this.userPassword = ''
+        this.userModel = {
+            name: '',
+            phone: '',
+            password: '',
+        }
         // *
         sourceFunction.apply(this, arguments)
     }
@@ -34,9 +37,9 @@ function iAmLogined() {
 async function postLogin() {
     try {
         $load.show()
-        if (!this.userPhone) throw new Error('手机号码不能为空')
-        if (!this.userPassword) throw new Error('密码不能为空')
-        let info = await shopUserLogin('', this.userPhone, this.userPassword)
+        if (!this.userModel.phone) throw new Error('手机号码不能为空')
+        if (!this.userModel.password) throw new Error('密码不能为空')
+        let info = await shopUserLogin(this.userModel.name, this.userModel.phone, this.userModel.password)
         localStorage['sjShopToken'] = info.authorization
         $store.commit('setUserInfo', info)
         $tip('登录成功')
@@ -51,26 +54,25 @@ async function initUserInfo() {
     try {
         $load.show()
         $store.commit('clearUserInfo')
-        this.shopInfo = {}
-        this.houseInfo = {}
         let info = await getUserInfo()
         $store.commit('setUserInfo', info)
         this.loginModal = false
         $load.hide()
     } catch (error) {
-        this.userInfo = {}
+        this.loginModal = true
+        localStorage['sjShopToken'] = ''
+        $store.commit('clearUserInfo')
+        $store.commit('clearShopInfo')
+        $store.commit('clearHouseInfo')
         $common.loadOff(error)
     }
 }
 // * 注销登录
 function clearUserInfo() {
-    this.vue.$Modal.warning({
-        title: '确实要注销登录吗?',
-        onOk: () => {
-            localStorage['sjShopToken'] = ''
-            $store.commit('clearUserInfo')
-            $store.commit('clearShopInfo')
-            $store.commit('clearHouseInfo')
-        },
+    $confirm('确实要注销登录吗?', () => {
+        localStorage['sjShopToken'] = ''
+        $store.commit('clearUserInfo')
+        $store.commit('clearShopInfo')
+        $store.commit('clearHouseInfo')
     })
 }

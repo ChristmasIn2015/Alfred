@@ -38,6 +38,7 @@ async function toggleHouseModal() {
 }
 function pickHouse(house) {
     $store.commit('setHouseInfo', house)
+    this.houseModal = false
 }
 async function createMyHouse() {
     try {

@@ -1,6 +1,6 @@
 <template>
     <div class="employee">
-        <Table :columns="model.employeeTable" :data="model.employeeList"></Table>
+        <Table stripe :columns="model.employeeTableColumn" :data="model.employeeList"> </Table>
     </div>
 </template>
 

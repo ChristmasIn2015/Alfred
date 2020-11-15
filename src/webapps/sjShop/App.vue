@@ -18,7 +18,7 @@
                 <Button
                     v-for="(side, index) in model.sideList"
                     :key="index"
-                    :type="model.sideIndex === index ? 'primary' : ''"
+                    :type="model.sideIndex === index ? 'primary' : 'info'"
                     @click.stop="model.pickSide(index)"
                 >
                     <Icon :type="side.icon" />
@@ -33,10 +33,17 @@
 
         <!-- 登录框 -->
         <Modal v-model="model.loginModal" title="用户登录">
-            <Input v-model="model.userPhone" size="large" placeholder="请输入手机号" />
-            <br />
-            <Input v-model="model.userPassword" size="large" type="password" placeholder="请输入密码" />
-            <br />
+            <Form :model="model.userModel" label-position="left" :label-width="100">
+                <FormItem label="手机号">
+                    <Input v-model="model.userModel.phone" placeholder="请输入手机号" />
+                </FormItem>
+                <FormItem label="密码">
+                    <Input v-model="model.userModel.password" type="password" placeholder="请输入密码" />
+                </FormItem>
+                <FormItem label="昵称 (可选)">
+                    <Input v-model="model.userModel.name" placeholder="请输入昵称 (可选)" />
+                </FormItem>
+            </Form>
             <div slot="footer">
                 <Button @click.stop="model.loginModal = false">取消</Button>
                 <Button type="info" @click.stop="model.postLogin">登录/注册</Button>
@@ -44,7 +51,7 @@
         </Modal>
 
         <!-- 店铺列表 -->
-        <Modal v-model="model.shopModal" title="店铺列表" ok-text="确定">
+        <Modal v-model="model.shopModal" title="店铺列表">
             <br />
             <div class="flex-middle-y">
                 <Input v-model="model.shopCreateName" size="large" placeholder="请输新店铺名称" />
@@ -77,7 +84,7 @@
         </Modal>
 
         <!-- 仓库列表 -->
-        <Modal v-model="model.houseModal" title="仓库列表" ok-text="确定">
+        <Modal v-model="model.houseModal" title="仓库列表">
             <br />
             <div class="flex-middle-y">
                 <Input v-model="model.houseCreateName" size="large" placeholder="请输新仓库名称" />
@@ -124,6 +131,14 @@
                 this.$Notice.warning({
                     title: message,
                 })
+            window.$confirm = (message, next) => {
+                this.$Modal.confirm({
+                    title: message,
+                    onOk: next,
+                    okText: '确定',
+                    cancelText: '取消',
+                })
+            }
         },
         data() {
             return {

@@ -4,54 +4,64 @@ export function TagParams(target, name, descriptor) {
     let sourceFunction = descriptor.value
     descriptor.value = function() {
         // *
-        this.plugTagEdit = false
-        this.countTagEdit = false
-        this.newPlugTag = {
+        this.plugModel = {
             value: '',
             name: '',
         }
-        this.newCountTag = {
+        this.tagModel = {
             value: '',
             name: '',
         }
         // *
-        this.plugModal = false
+        this.plugTagList = []
         // *
         sourceFunction.apply(this, arguments)
     }
 }
 // *
-// *
 import { createTag, deleteTag, getPlugTagList } from '../api.js'
 export function TagFunc(TargetClass) {
-    // *
-    TargetClass.prototype.postMyTag = postMyTag
-    TargetClass.prototype.postMyCountTag = postMyCountTag
-    TargetClass.prototype.deleteMyTag = deleteMyTag
-    TargetClass.prototype.renderPlugList = renderPlugList
-    TargetClass.prototype.togglePlugRight = togglePlugRight
+    TargetClass.prototype.createPlugTag = createPlugTag
+    TargetClass.prototype.renderPlugTagList = renderPlugTagList
+    TargetClass.prototype.getTagModalInfo = getTagModalInfo
 }
-// * 展开右侧规格列表
-function togglePlugRight() {
-    this.plugModal = !this.plugModal
-    // *
-    let list = []
-    if (!this.plugModal) {
-        this.plugList.forEach((plug) => {
-            if (plug.checked) list.push(plug)
-        })
-    }
-    this.plugListChecked = Object.assign([], list)
-}
-// * POST一个标签
-async function postMyTag() {
+// * 渲染标签列表 goodId
+async function renderPlugTagList(plugListChecked) {
     try {
-        await createTag(null, this.newPlugTag.name, this.newPlugTag.value) // @API
-        this.renderPlugList() // @Form
-        $tip('添加成功')
+        let list = await getPlugTagList(null)
+        list.forEach((e) => {
+            e['checked'] = false
+            plugListChecked.forEach((m) => (e._id === m._id ? (e['checked'] = true) : ''))
+        })
+        this.plugTagList = Object.assign([], list)
     } catch (error) {
         $common.loadOff(error)
     }
+}
+// * 创建一个标签 goodId name value
+async function createPlugTag() {
+    try {
+        await createTag(null, this.plugModel.name, this.plugModel.value) // @API
+        $tip('添加成功')
+        this.renderPlugTagList() // @Tag
+    } catch (error) {
+        $common.loadOff(error)
+    }
+}
+// * 取得Modal有效信息
+function getTagModalInfo() {
+    let info = {
+        plugTagList: [],
+    }
+    this.plugTagList.forEach((plug) => {
+        if (plug.checked) info.plugTagList.push(plug)
+    })
+    return info
+}
+
+function initTagModel(model) {
+    model = model || {}
+    this.plugTagList = model.plugTagList ? Object.assign([], model.plugTagList) : []
 }
 // * 新增计量标签
 async function postMyCountTag() {
@@ -95,16 +105,5 @@ function deleteMyTag(index, type) {
     // 1.计量
     if (type === 1) {
         if (!this.countList[index]._id) this.countList.splice(index, 1)
-    }
-}
-// * 渲染标签列表
-async function renderPlugList(next) {
-    try {
-        let list = await getPlugTagList(null)
-        list.forEach((e) => (e['checked'] = false))
-        this.plugList = Object.assign([], list) // @Form
-        if (next) next()
-    } catch (error) {
-        $common.loadOff(error)
     }
 }

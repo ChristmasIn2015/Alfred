@@ -64,7 +64,7 @@
 
         <!-- 底部按钮 -->
         <div class="box-btn-line" style="margin-top: 1rem;">
-            <div class="sj-btn" style="margin-left: auto;" @click.stop="pageModel.toggleGoodModal">选择商品</div>
+            <div class="sj-btn" style="margin-left: auto;" @click.stop="pageModel.toggleGoodEditModal">选择商品</div>
             <div class="sj-btn">创建订单</div>
         </div>
 
@@ -90,11 +90,11 @@
         </div>
 
         <!-- 商品弹窗 -->
-        <div class="sj-modal-back" v-show="pageModel.goodModal">
+        <div class="sj-modal-back" v-show="pageModel.goodEditModal">
             <div class="modal">
                 <div class="title">
                     <span>库存</span>
-                    <span @click.stop="pageModel.toggleGoodModal">✖</span>
+                    <span @click.stop="pageModel.toggleGoodEditModal">✖</span>
                 </div>
                 <div class="content">
                     <!-- 筛选区域 -->

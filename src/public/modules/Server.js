@@ -35,7 +35,7 @@ export default function Server(TargetClass) {
                     url = url.slice(0, url.length - 1)
                     requestParams.url = url
                 }
-                $common.log({ server: requestParams })
+                // $common.log({ server: requestParams })
                 axios(requestParams)
                     .then((result) => this.COMPLETE(result, resolve, reject))
                     .catch((error) => this.ERROR(error, reject))
@@ -51,7 +51,7 @@ export default function Server(TargetClass) {
                 data: params || '',
                 headers: Object.assign({}, config || {}),
             }
-            $common.log({ fetch: requestParams })
+            // $common.log({ fetch: requestParams })
             axios(requestParams)
                 .then((result) => resolve(result.data))
                 .catch((error) => reject(error))
