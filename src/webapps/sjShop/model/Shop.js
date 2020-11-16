@@ -13,33 +13,29 @@ export function ShopParams(target, name, descriptor) {
     }
 }
 // *
-import { getShopList, createShop } from '../api.js'
+import { getShopList, createShop } from './api.js'
 export function ShopFunc(TargetClass) {
     //
     TargetClass.prototype.toggleShopModal = toggleShopModal
-    TargetClass.prototype.pickShop = pickShop
+    TargetClass.prototype.renderShopList = renderShopList
     TargetClass.prototype.createMyShop = createMyShop
 }
 // * 店铺
-async function toggleShopModal() {
+function toggleShopModal() {
+    if (!this.shopModal) this.renderShopList() // @Shop
+    this.shopModal = !this.shopModal
+}
+// * 渲染店铺列表
+async function renderShopList() {
     try {
-        if (!this.shopModal) {
-            $load.show()
-            let data = await getShopList()
-            this.shopList = Object.assign([], data.shopList)
-            this.officeList = Object.assign([], data.officeList)
-            $load.hide()
-        }
+        $load.show()
+        let data = await getShopList()
+        this.shopList = Object.assign([], data.shopList)
+        this.officeList = Object.assign([], data.officeList)
+        $load.hide()
     } catch (error) {
         $common.loadOff(error)
-    } finally {
-        this.shopModal = !this.shopModal
     }
-}
-// * 选择店铺
-function pickShop(shop) {
-    $store.commit('setShopInfo', shop)
-    this.shopModal = false
 }
 // * 创建店铺
 async function createMyShop() {
@@ -49,6 +45,7 @@ async function createMyShop() {
         await createShop(this.shopCreateName)
         let data = await getShopList()
         this.shopList = Object.assign([], data.shopList)
+        this.toggleShopModal() // @Shop
         $load.hide()
     } catch (error) {
         $common.loadOff(error)

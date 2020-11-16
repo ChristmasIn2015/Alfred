@@ -12,17 +12,12 @@ export function LoginParams(target, name, descriptor) {
         sourceFunction.apply(this, arguments)
     }
 }
-import { getUserInfo, shopUserLogin } from '../api.js'
+import { getUserInfo, shopUserLogin } from './api.js'
 export function LoginFunc(TargetClass) {
     TargetClass.prototype.iAmLogined = iAmLogined
-    TargetClass.prototype.chargeLogin = chargeLogin
     TargetClass.prototype.postLogin = postLogin
     TargetClass.prototype.initUserInfo = initUserInfo
     TargetClass.prototype.clearUserInfo = clearUserInfo
-}
-// * 点击登录按钮
-function chargeLogin() {
-    if (this.iAmLogined()) this.clearUserInfo()
 }
 // * 判断是否登录，如果没有登录则唤起登录框
 function iAmLogined() {

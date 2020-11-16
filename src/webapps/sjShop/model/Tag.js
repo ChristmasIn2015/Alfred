@@ -19,11 +19,12 @@ export function TagParams(target, name, descriptor) {
     }
 }
 // *
-import { createTag, deleteTag, getPlugTagList } from '../api.js'
+import { createTag, deleteTag, getPlugTagList } from './api.js'
 export function TagFunc(TargetClass) {
     TargetClass.prototype.createPlugTag = createPlugTag
     TargetClass.prototype.renderPlugTagList = renderPlugTagList
     TargetClass.prototype.getTagModalInfo = getTagModalInfo
+    TargetClass.prototype.deleteMyTag = deleteMyTag
 }
 // * 渲染标签列表 goodId
 async function renderPlugTagList(plugListChecked) {
@@ -58,6 +59,25 @@ function getTagModalInfo() {
     })
     return info
 }
+// * 删除一个标签
+function deleteMyTag(tagId, type) {
+    // 0.规格
+    if (type === 0) {
+        $confirm('删除规格会导致所有店铺/仓库下包含这个标签的商品，失去这个标签，确定要这样做吗', async () => {
+            try {
+                await deleteTag(tagId)
+                this.renderPlugTagList() //@Tag
+                $tip('删除成功')
+            } catch (error) {
+                $common.loadOff(error)
+            }
+        })
+    }
+    // 1.计量
+    // if (type === 1) {
+    //     if (!this.countList[index]._id) this.countList.splice(index, 1)
+    // }
+}
 
 function initTagModel(model) {
     model = model || {}
@@ -81,29 +101,4 @@ async function postMyCountTag() {
         checked: false,
     })
     $tip('添加成功')
-}
-// * 删除一个标签
-function deleteMyTag(index, type) {
-    // 0.规格
-    if (type === 0) {
-        this.togglePlugRight()
-        let query = {
-            title: '警告',
-            content: '警告：删除规格会导致所有店铺/仓库下包含这个标签的商品，失去这个标签，确定要这样做吗',
-        }
-        $confirm(query, async (answer) => {
-            try {
-                if (!answer) return
-                await deleteTag(this.plugList[index]._id)
-                this.renderPlugList(() => (this.plugListChecked = [])) //async
-                $tip('删除成功')
-            } catch (error) {
-                $common.loadOff(error)
-            }
-        })
-    }
-    // 1.计量
-    if (type === 1) {
-        if (!this.countList[index]._id) this.countList.splice(index, 1)
-    }
 }

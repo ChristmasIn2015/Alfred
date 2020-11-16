@@ -8,11 +8,11 @@ export function EmployeeParams(target, name, descriptor) {
         this.newEmployeePhone = ''
         //
         this.employeeTableColumn = [
-            { title: 'Id', key: '_id', width: 150 },
+            { title: 'Id', key: '_id', width: 130 },
             { title: '员工名称', key: 'name', width: 200 },
             { title: '员工手机号', key: 'phone', width: 200 },
             { title: '角色', key: 'roleName', width: 200 },
-            { title: '其他', key: '' },
+            { title: '操作', slot: 'action' },
         ]
         this.employeeList = []
         // *
@@ -21,7 +21,7 @@ export function EmployeeParams(target, name, descriptor) {
 }
 // *
 // *
-import { createEmployee, getEmployeeList, deleteEmployee } from '../api.js'
+import { createEmployee, getEmployeeList, deleteEmployee } from './api.js'
 export function EmployeeFunc(TargetClass) {
     TargetClass.prototype.addMyEmployee = addMyEmployee
     TargetClass.prototype.deleteMyEmployee = deleteMyEmployee
@@ -30,8 +30,8 @@ export function EmployeeFunc(TargetClass) {
 // * 取得员工列表
 async function renderEmployeeList() {
     try {
-        let shopInfo = $store.state.shopInfo
-        let list = await getEmployeeList(shopInfo._id)
+        let shopId = $store.state.shopInfo._id
+        let list = await getEmployeeList(shopId)
         list.forEach((e) => {
             if (e.role === 0) e['roleName'] = '店长'
         })

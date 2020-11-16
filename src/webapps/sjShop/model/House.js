@@ -15,30 +15,26 @@ export function HouseParams(target, name, descriptor) {
 }
 // *
 // *
-import { getHouseList, createHouse } from '../api.js'
+import { getHouseList, createHouse } from './api.js'
 export function HouseFunc(TargetClass) {
     TargetClass.prototype.toggleHouseModal = toggleHouseModal
-    TargetClass.prototype.pickHouse = pickHouse
+    TargetClass.prototype.renderHouseList = renderHouseList
     TargetClass.prototype.createMyHouse = createMyHouse
 }
 async function toggleHouseModal() {
+    if (!this.houseModal) this.renderHouseList() // @House
+    this.houseModal = !this.houseModal
+}
+async function renderHouseList() {
     try {
-        if (!this.houseModal) {
-            $load.show()
-            let shopId = $store.state.shopInfo._id
-            let data = await getHouseList(shopId)
-            this.houseList = Object.assign([], data)
-            $load.hide()
-        }
+        $load.show()
+        let shopId = $store.state.shopInfo._id
+        let data = await getHouseList(shopId)
+        this.houseList = Object.assign([], data)
+        $load.hide()
     } catch (error) {
         $common.loadOff(error)
-    } finally {
-        this.houseModal = !this.houseModal
     }
-}
-function pickHouse(house) {
-    $store.commit('setHouseInfo', house)
-    this.houseModal = false
 }
 async function createMyHouse() {
     try {
@@ -49,6 +45,7 @@ async function createMyHouse() {
         await createHouse(shopId, this.houseCreateName)
         let data = await getHouseList(shopId)
         this.houseList = Object.assign([], data)
+        this.toggleHouseModal() // @House
         $load.hide()
     } catch (error) {
         $common.loadOff(error)

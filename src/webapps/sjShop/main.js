@@ -25,7 +25,7 @@ Vue.use(ViewUI)
 import '@/public/Common.js'
 
 // *.创建实例
-import App from './App.vue'
+import App from './views/Admin/Admin.vue'
 new Vue({
     render: (h) => h(App),
     router: myRoutes,
