@@ -38,7 +38,7 @@ async function renderEmployeeList() {
         this.employeeList = Object.assign([], list)
     } catch (error) {
         this.employeeList = []
-        $common.loadOff(error)
+        return Promise.reject(error)
     }
 }
 // * 添加员工
@@ -51,7 +51,7 @@ async function addMyEmployee() {
         $tip('添加员工成功')
         $load.hide()
     } catch (error) {
-        $common.loadOff(error)
+        return Promise.reject(error)
     }
 }
 // * 删除员工
@@ -64,6 +64,6 @@ async function deleteMyEmployee(id) {
         $tip('删除成功')
         $load.hide()
     } catch (error) {
-        $common.loadOff(error)
+        return Promise.reject(error)
     }
 }

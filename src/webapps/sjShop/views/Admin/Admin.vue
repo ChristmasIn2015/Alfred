@@ -2,15 +2,17 @@
     <div id="app" class="no-scroll-bar">
         <div class="app-container">
             <ButtonGroup style="margin-bottom: 1rem;">
-                <Button
-                    type="primary"
-                    v-for="(side, index) in model.sideList"
-                    :key="index"
-                    :ghost="model.sideIndex !== index"
-                    @click.stop="model.pickSide(index)"
-                >
-                    <Icon :type="side.icon" />
-                    <span>{{ side.name }}</span>
+                <Button type="info" :ghost="model.sideIndex !== 0" @click.stop="model.pickSide(0)">
+                    <Icon type="ios-people" />
+                    <span>员工管理</span>
+                </Button>
+                <Button type="success" :ghost="model.sideIndex !== 1" @click.stop="model.pickSide(1)">
+                    <Icon type="md-home" />
+                    <span>库存管理</span>
+                </Button>
+                <Button type="warning" :ghost="model.sideIndex !== 2" @click.stop="model.pickSide(2)">
+                    <Icon type="ios-paper" />
+                    <span>订单管理</span>
                 </Button>
             </ButtonGroup>
             <Employee v-show="model.sideIndex === 0" />
@@ -79,7 +81,7 @@
 </script>
 
 <style lang="scss">
-    @import '@/public/css/default.scss';
+    @import '@/../common/module/CSS/default.scss';
     #app {
         padding: 3rem 0rem;
         background-color: $back-higher;

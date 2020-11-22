@@ -2,7 +2,7 @@ import Vue from 'vue'
 Vue.config.productionTip = false
 
 // *
-import Common from '@/public/Common.js'
+import Common from '@/../common/common.js'
 window.$common = new Common()
 
 // *.创建实例

@@ -33,7 +33,7 @@ async function renderHouseList() {
         this.houseList = Object.assign([], data)
         $load.hide()
     } catch (error) {
-        $common.loadOff(error)
+        return Promise.reject(error)
     }
 }
 async function createMyHouse() {
@@ -48,6 +48,6 @@ async function createMyHouse() {
         this.toggleHouseModal() // @House
         $load.hide()
     } catch (error) {
-        $common.loadOff(error)
+        return Promise.reject(error)
     }
 }

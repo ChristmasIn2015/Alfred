@@ -1,0 +1,33 @@
+.sj-shadow {
+    box-shadow: 0px 0px 10px 2px #e2e2e2;
+}
+.text-cut {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.no-scroll-bar {
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+.grey-placeholder {
+    // 设置 placeholder
+    ::-webkit-input-placeholder, /* 使用webkit内核的浏览器 */
+      :-moz-placeholder, /* Firefox版本4-18 */
+      ::-moz-placeholder, /* Firefox版本19+ */
+      :-ms-input-placeholder /* IE浏览器 */ {
+        color: #b2b2b2;
+        font-size: 1rem;
+    }
+}
+.single-grey {
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    filter: grayscale(100%);
+    filter: progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);
+    // background-color: rgba(0, 0, 0, 0.25) !important;
+}

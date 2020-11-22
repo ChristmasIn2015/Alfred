@@ -41,7 +41,7 @@ async function postLogin() {
         $load.hide()
         this.loginModal = false
     } catch (error) {
-        $common.loadOff(error)
+        return Promise.reject(error)
     }
 }
 // * 初始化用户信息
@@ -59,7 +59,7 @@ async function initUserInfo() {
         $store.commit('clearUserInfo')
         $store.commit('clearShopInfo')
         $store.commit('clearHouseInfo')
-        $common.loadOff(error)
+        return Promise.reject(error)
     }
 }
 // * 注销登录

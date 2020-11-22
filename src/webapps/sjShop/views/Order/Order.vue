@@ -27,5 +27,5 @@
 </script>
 
 <style lang="scss">
-    @import '@/public/css/default.scss';
+    // @import '@/public/css/default.scss';
 </style>

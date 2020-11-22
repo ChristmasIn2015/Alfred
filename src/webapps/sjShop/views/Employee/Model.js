@@ -17,14 +17,22 @@ export default class Model {
     @HouseParams
     @EmployeeParams
     async init() {
-        await this.initUserInfo() // @Login
-        this.renderShopList() // @Shop
+        try {
+            await this.initUserInfo() // @Login
+            this.renderShopList() // @Shop
+        } catch (error) {
+            $common.loadOff(error)
+        }
     }
 
     // * 登录框点击确定
     async loginConfirm() {
-        await this.postLogin()
-        this.renderShopList() // @Shop
+        try {
+            await this.postLogin() // Login
+            await this.renderShopList() // @Shop
+        } catch (error) {
+            $common.loadOff(error)
+        }
     }
     // * 注销登录
     reLogin() {
@@ -35,15 +43,23 @@ export default class Model {
     }
     // * 选择店铺
     pickShop(shop) {
-        $store.commit('setShopInfo', shop)
-        $store.commit('clearHouseInfo')
-        this.employeeList = [] // @Employee
-        this.renderHouseList() // @House
+        try {
+            $store.commit('setShopInfo', shop)
+            $store.commit('clearHouseInfo')
+            this.employeeList = [] // @Employee
+            this.renderHouseList() // @House
+        } catch (error) {
+            $common.loadOff(error)
+        }
     }
     // * 选择仓库
     pickHouse(house) {
-        if (!$store.state.shopInfo._id) return
-        $store.commit('setHouseInfo', house)
-        this.renderEmployeeList() // @Employee
+        try {
+            if (!$store.state.shopInfo._id) return
+            $store.commit('setHouseInfo', house)
+            this.renderEmployeeList() // @Employee
+        } catch (error) {
+            $common.loadOff(error)
+        }
     }
 }

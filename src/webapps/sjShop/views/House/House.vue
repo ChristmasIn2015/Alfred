@@ -12,7 +12,7 @@
                     <span v-for="(count, index) in row.countList" :key="index">{{ count.value }}{{ count.name }} </span>
                 </template>
                 <template slot-scope="{ row, index }" slot="action">
-                    <Button type="error" size="small" @click="model.deleteMyGood(index)">删除</Button>
+                    <Button type="error" size="small" ghost @click="model.deleteMyGood(index)">删除</Button>
                     <Button type="success" size="small" @click.stop="model.toggleGoodEditModal(row)">编辑</Button>
                 </template>
             </Table>
@@ -21,8 +21,11 @@
         <!-- 商品编辑的表单 -->
         <Modal v-model="model.goodEditModal" title="商品">
             <Form :model="model.goodModel" label-position="left" :label-width="100">
+                <FormItem>
+                    <Button type="dashed" size="small" v-for="(good, index) in model.goodNameList" :key="index">{{ good.label }}</Button>
+                </FormItem>
                 <FormItem label="名称">
-                    <Input v-model="model.goodModel.name" placeholder="请输入商品名称" />
+                    <Input v-model="model.goodModel.name" />
                 </FormItem>
                 <FormItem label="规格">
                     <Button
@@ -39,7 +42,7 @@
                     <Button type="success" size="small" @click.stop="model.togglePlugTagModal"> 编辑规格</Button>
                 </FormItem>
                 <FormItem v-for="(item, index) in model.goodModel.countList" :key="index" :label="index === 0 ? '单位' : ''">
-                    <Input style="width: 6rem;" v-model="item.value" placeholder="100" />
+                    <InputNumber style="width: 6rem;" v-model="item.value" />
                     <Input style="width: 6rem;" v-model="item.name" placeholder="张" />
                     <Button v-if="index === 0" type="success" size="small" @click.stop="model.addGoodCount">增加单位</Button>
                     <Button v-else type="error" size="small" icon="md-close" @click.stop="model.deleteGoodCount(index)"></Button>
@@ -118,6 +121,4 @@
     }
 </script>
 
-<style lang="scss">
-    @import '@/public/css/default.scss';
-</style>
+<style lang="scss"></style>

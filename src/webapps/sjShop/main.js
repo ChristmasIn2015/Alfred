@@ -1,6 +1,14 @@
 import Vue from 'vue'
 Vue.config.productionTip = false
 
+// *
+import ViewUI from 'view-design'
+import 'view-design/dist/styles/iview.css'
+Vue.use(ViewUI)
+
+// *
+import '@/../common/common.js'
+
 // 1.使用Vue路由
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
@@ -15,14 +23,6 @@ Vue.use(Vuex)
 import store from './views/store'
 const myStore = new Vuex.Store(store)
 window.$store = myStore
-
-// *
-import ViewUI from 'view-design'
-import 'view-design/dist/styles/iview.css'
-Vue.use(ViewUI)
-
-// *
-import '@/public/Common.js'
 
 // *.创建实例
 import App from './views/Admin/Admin.vue'

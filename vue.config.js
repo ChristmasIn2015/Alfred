@@ -21,15 +21,5 @@ module.exports = {
     publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
 
     // ** 多页模式 **
-    // ** 200811 本地通过 file:// 加载多页成功 **
     pages: getPages(),
-
-    // ** 导入的scss公共变量 **
-    // css: {
-    //     loaderOptions: {
-    //         scss: {
-    //             prependData: `@import "@/public/ui/css/sjUI.scss";`,
-    //         },
-    //     },
-    // },
 }

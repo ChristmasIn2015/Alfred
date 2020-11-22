@@ -34,7 +34,7 @@ async function renderShopList() {
         this.officeList = Object.assign([], data.officeList)
         $load.hide()
     } catch (error) {
-        $common.loadOff(error)
+        return Promise.reject(error)
     }
 }
 // * 创建店铺
@@ -48,6 +48,6 @@ async function createMyShop() {
         this.toggleShopModal() // @Shop
         $load.hide()
     } catch (error) {
-        $common.loadOff(error)
+        return Promise.reject(error)
     }
 }

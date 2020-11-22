@@ -14,6 +14,7 @@ export function TagParams(target, name, descriptor) {
         }
         // *
         this.plugTagList = []
+        this.plugTagSimpleList = []
         // *
         sourceFunction.apply(this, arguments)
     }
@@ -36,7 +37,7 @@ async function renderPlugTagList(plugListChecked) {
         })
         this.plugTagList = Object.assign([], list)
     } catch (error) {
-        $common.loadOff(error)
+        return Promise.reject(error)
     }
 }
 // * 创建一个标签 goodId name value
@@ -46,7 +47,7 @@ async function createPlugTag() {
         $tip('添加成功')
         this.renderPlugTagList() // @Tag
     } catch (error) {
-        $common.loadOff(error)
+        return Promise.reject(error)
     }
 }
 // * 取得Modal有效信息
@@ -69,7 +70,7 @@ function deleteMyTag(tagId, type) {
                 this.renderPlugTagList() //@Tag
                 $tip('删除成功')
             } catch (error) {
-                $common.loadOff(error)
+                return Promise.reject(error)
             }
         })
     }

@@ -15,7 +15,10 @@ export default class Model {
 
     //
     pickSide(index) {
-        if (!$store.state.userInfo._id) return
+        if (!$store.state.userInfo._id) {
+            $warn('请先登录')
+            return
+        }
 
         // 所有选项必须有店铺信息
         if (!$store.state.shopInfo._id) {
