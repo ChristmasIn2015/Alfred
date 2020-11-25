@@ -1,0 +1,75 @@
+#app {
+    padding: 2rem;
+    background-color: $back-0;
+    .container {
+        background-color: $back-2;
+        border-radius: 0.5rem;
+        height: 100%;
+        overflow: hidden;
+        //
+        display: flex;
+        .side {
+            min-width: 9rem;
+            max-width: 9rem;
+            height: 100%;
+            background-color: $back-1;
+            .ad {
+                min-height: 3rem;
+                max-height: 3rem;
+            }
+            .side-item {
+                color: $tip-1;
+                cursor: pointer;
+                line-height: 2.5;
+                text-align: center;
+                position: relative;
+                background-color: transparent;
+                border-radius: 0.35rem;
+                margin: 1rem 0.5rem;
+                span {
+                    margin-right: 0.5rem;
+                }
+                &:hover {
+                    color: $white-0;
+                }
+            }
+            .side-item-on {
+                color: $white-0;
+                background-color: $tip-0;
+                box-shadow: 1px 1px 1px 1px $shadow;
+                // 主题色
+                // &::after {
+                //     content: '';
+                //     top: 50%;
+                //     left: 0;
+                //     width: 0.25rem;
+                //     height: 2rem;
+                //     position: absolute;
+                //     transform: translateY(-50%);
+                //     background-color: $main-0;
+                // }
+            }
+        }
+        .container-board {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            .nav {
+                min-height: 3rem;
+                max-height: 3rem;
+                background-color: $back-2;
+                display: flex;
+                align-items: center;
+                padding: 0 1rem;
+                .ivu-btn {
+                    margin-right: 0.5rem;
+                }
+            }
+            .container-board-content {
+                padding: 1rem;
+                height: 100%;
+                overflow: auto;
+            }
+        }
+    }
+}

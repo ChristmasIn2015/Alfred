@@ -1,16 +1,14 @@
-import { GoodParams, GoodFunc } from '../../model/Good.js'
-import { TagParams, TagFunc } from '../../model/Tag.js'
+import Good from '@/webapps/sjShop/module/Good.js'
+import Tag from '@/webapps/sjShop/module/Tag.js'
 
-@TagFunc
-@GoodFunc
-export default class Model {
+export default class React {
     constructor() {
-        this.init()
+        this.initReact()
     }
     // *
-    @TagParams
-    @GoodParams
-    async init() {
+    @Tag
+    @Good
+    async initReact() {
         try {
             this.goodEditModal = false
             this.plugTagModal = false
@@ -18,7 +16,6 @@ export default class Model {
             this.countTagModal = false
             await this.renderPlugTagList() // @Tag
             await this.renderGoodList() // @Good
-            // await
         } catch (error) {
             $common.loadOff(error)
         }
@@ -37,8 +34,7 @@ export default class Model {
     // ** 商品弹窗 点击确定
     async goodEditModalConfirm() {
         try {
-            let info = await this.postGood() // @Good
-            console.log(info)
+            await this.postGood() // @Good
             await this.renderGoodList() // @Good
             this.toggleGoodEditModal() // @React
         } catch (error) {

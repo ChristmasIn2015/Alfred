@@ -46,5 +46,4 @@ export default class Common {
         )
     }
 }
-if (!global) window.$common = new Common()
-if (global) global.$common = new Common()
+window.$common = new Common()

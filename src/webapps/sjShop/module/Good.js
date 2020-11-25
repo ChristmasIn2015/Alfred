@@ -1,18 +1,8 @@
-export function GoodParams(target, name, descriptor) {
+import { createGood, getGoodList, deleteGood, editGood } from './api.js'
+export default function Good(target, name, descriptor) {
     let sourceFunction = descriptor.value
     descriptor.value = function() {
-        this.goodTableColumn = [
-            { type: 'selection', width: 60, align: 'center' },
-            { title: 'Id', key: '_id', width: 150 },
-            { title: '商品名称', key: 'name', width: 200 },
-            { title: '商品规格', slot: 'plugList', width: 200 },
-            { title: '商品库存', slot: 'countList', width: 100 },
-            { title: '成本', key: 'cost', width: 100 },
-            { title: '备注', key: 'tip' },
-            { title: '入库时间', key: 'timeString', width: 200 },
-            { title: '操作', slot: 'action', width: 200 },
-        ]
-        //
+        // * 参数
         this.goodModel = {
             _id: -1,
             name: '',
@@ -26,23 +16,29 @@ export function GoodParams(target, name, descriptor) {
             cost: 0,
             tip: '',
         }
-        //
+        this.goodTableColumn = [
+            { type: 'selection', width: 60, align: 'center' },
+            { title: 'Id', key: '_id', width: 150 },
+            { title: '商品名称', key: 'name', width: 200 },
+            { title: '商品规格', slot: 'plugList', width: 200 },
+            { title: '商品库存', slot: 'countList', width: 100 },
+            { title: '成本', key: 'cost', width: 100 },
+            { title: '备注', key: 'tip' },
+            { title: '入库时间', key: 'timeString', width: 200 },
+            { title: '操作', slot: 'action', width: 200 },
+        ]
         this.goodList = []
         this.goodNameList = []
-        // *
+        // * 方法
+        this.postGood = postGood
+        this.deleteMyGood = deleteMyGood
+        this.addGoodCount = addGoodCount
+        this.initGoodModel = initGoodModel
+        this.renderGoodList = renderGoodList
+        this.deleteGoodCount = deleteGoodCount
+        //
         sourceFunction.apply(this, arguments)
     }
-}
-// *
-import { createGood, getGoodList, deleteGood, editGood } from './api.js'
-export function GoodFunc(TargetClass) {
-    TargetClass.prototype.initGoodModel = initGoodModel
-    TargetClass.prototype.renderGoodList = renderGoodList
-    TargetClass.prototype.postGood = postGood
-    TargetClass.prototype.deleteMyGood = deleteMyGood
-    //
-    TargetClass.prototype.addGoodCount = addGoodCount
-    TargetClass.prototype.deleteGoodCount = deleteGoodCount
 }
 // * 渲染 goodList 字段
 async function renderGoodList() {

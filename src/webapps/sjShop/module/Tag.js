@@ -1,9 +1,8 @@
-// *
-// *
-export function TagParams(target, name, descriptor) {
+import { createTag, deleteTag, getPlugTagList } from './api.js'
+export default function Tag(target, name, descriptor) {
     let sourceFunction = descriptor.value
     descriptor.value = function() {
-        // *
+        // * 参数
         this.plugModel = {
             value: '',
             name: '',
@@ -12,20 +11,16 @@ export function TagParams(target, name, descriptor) {
             value: '',
             name: '',
         }
-        // *
         this.plugTagList = []
         this.plugTagSimpleList = []
+        // * 方法
+        this.createPlugTag = createPlugTag
+        this.renderPlugTagList = renderPlugTagList
+        this.getTagModalInfo = getTagModalInfo
+        this.deleteMyTag = deleteMyTag
         // *
         sourceFunction.apply(this, arguments)
     }
-}
-// *
-import { createTag, deleteTag, getPlugTagList } from './api.js'
-export function TagFunc(TargetClass) {
-    TargetClass.prototype.createPlugTag = createPlugTag
-    TargetClass.prototype.renderPlugTagList = renderPlugTagList
-    TargetClass.prototype.getTagModalInfo = getTagModalInfo
-    TargetClass.prototype.deleteMyTag = deleteMyTag
 }
 // * 渲染标签列表 goodId
 async function renderPlugTagList(plugListChecked) {

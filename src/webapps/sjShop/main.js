@@ -2,12 +2,14 @@ import Vue from 'vue'
 Vue.config.productionTip = false
 
 // *
+import 'font-awesome/css/font-awesome.min.css'
+// import '@/css/sjShop/UI'
 import ViewUI from 'view-design'
 import 'view-design/dist/styles/iview.css'
 Vue.use(ViewUI)
 
 // *
-import '@/../common/common.js'
+import '@/common/common.js'
 
 // 1.使用Vue路由
 import VueRouter from 'vue-router'

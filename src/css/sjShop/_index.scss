@@ -1,12 +1,3 @@
-@import './const.scss';
-@import './flex.scss';
-@import './func.scss';
-@import './animation.scss';
-* {
-    margin: 0px;
-    padding: 0px;
-    box-sizing: border-box;
-}
 html,
 body,
 #app {
@@ -23,3 +14,12 @@ body,
     -ms-user-select: none; /* IE */
     user-select: none;
 }
+// * 基础
+@import '../base/flex.scss';
+@import '../base/func.scss';
+@import '../base/animation.scss';
+// * 搭配色彩方案
+@import '../color/black-purple.scss';
+// * 功能型CSS
+@import './dash-board.scss';
+@import './iview-reset.scss';

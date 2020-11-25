@@ -1,32 +1,30 @@
-export function LoginParams(target, name, descriptor) {
+import { getUserInfo, shopUserLogin } from './api.js'
+// *
+export default function Login(target, name, descriptor) {
     let sourceFunction = descriptor.value
     descriptor.value = function() {
-        // *
+        // * params
         this.loginModal = false
         this.userModel = {
             name: '',
             phone: '',
             password: '',
         }
+        // * function
+        this.iAmLogined = iAmLogined
+        this.postLogin = postLogin
+        this.initUserInfo = initUserInfo
+        this.clearUserInfo = clearUserInfo
         // *
         sourceFunction.apply(this, arguments)
     }
-}
-import { getUserInfo, shopUserLogin } from './api.js'
-export function LoginFunc(TargetClass) {
-    TargetClass.prototype.iAmLogined = iAmLogined
-    TargetClass.prototype.postLogin = postLogin
-    TargetClass.prototype.initUserInfo = initUserInfo
-    TargetClass.prototype.clearUserInfo = clearUserInfo
+    return descriptor
 }
 // * 判断是否登录，如果没有登录则唤起登录框
 function iAmLogined() {
-    let notLogin = localStorage['sjShopToken'] ? false : true
-    if (notLogin) {
-        $warn('尚未登录')
-        this.loginModal = true
-    }
-    return !notLogin
+    let token = localStorage['sjShopToken'] ? true : false
+    if (!token) this.loginModal = true
+    return token
 }
 // * 登录
 async function postLogin() {
@@ -62,12 +60,10 @@ async function initUserInfo() {
         return Promise.reject(error)
     }
 }
-// * 注销登录
+// * 清空本地用户/店铺/仓库数据
 function clearUserInfo() {
-    $confirm('确实要注销登录吗?', () => {
-        localStorage['sjShopToken'] = ''
-        $store.commit('clearUserInfo')
-        $store.commit('clearShopInfo')
-        $store.commit('clearHouseInfo')
-    })
+    localStorage['sjShopToken'] = ''
+    $store.commit('clearUserInfo')
+    $store.commit('clearShopInfo')
+    $store.commit('clearHouseInfo')
 }
