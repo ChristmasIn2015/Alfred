@@ -1,10 +1,10 @@
 <template>
     <div class="house">
         <div class="flex" style="margin-bottom: 1rem;">
-            <Button type="warning" size="small" @click.stop="react.toggleGoodEditModal">新商品入库</Button>
+            <Button type="success" size="small" @click.stop="react.toggleGoodModal">新商品入库</Button>
         </div>
         <div>
-            <!-- <Table stripe :columns="react.goodTableColumn" :data="react.goodList">
+            <Table stripe :columns="react.goodTableColumn" :data="react.goodList">
                 <template slot-scope="{ row }" slot="plugList">
                     <span v-for="(plug, index) in row.plugList" :key="index">{{ plug.value }}{{ plug.name }} </span>
                 </template>
@@ -12,27 +12,27 @@
                     <span v-for="(count, index) in row.countList" :key="index">{{ count.value }}{{ count.name }} </span>
                 </template>
                 <template slot-scope="{ row }" slot="action">
-                    <Button type="error" size="small" ghost @click="react.deleteMyGood(index)">删除</Button>
-                    <Button type="success" size="small" @click.stop="react.toggleGoodEditModal(row)">编辑</Button>
+                    <Button type="default" size="small" style="margin-right: 0.25rem;" @click="react.deleteMyGood(index)">删除</Button>
+                    <Button type="success" size="small" @click.stop="react.toggleGoodModal(row)">编辑</Button>
                 </template>
-            </Table> -->
+            </Table>
         </div>
 
         <!-- 商品编辑的表单 -->
-        <!-- <Modal v-model="model.goodEditModal" title="商品">
-            <Form :model="model.goodModel" label-position="left" :label-width="100">
+        <Modal v-model="react.goodModal" title="商品" width="350">
+            <Form label-position="top">
                 <FormItem>
                     <Button
                         type="dashed"
                         size="small"
-                        v-for="(good, index) in model.goodNameList"
+                        v-for="(good, index) in react.goodNameList"
                         :key="index"
-                        @click.stop="model.goodModel.name = good.label"
+                        @click.stop="react.goodModel.name = good.label"
                         >{{ good.label }}</Button
                     >
                 </FormItem>
                 <FormItem label="名称">
-                    <Input v-model="model.goodModel.name" />
+                    <Input v-model="react.goodModel.name" placeholder="请输入商品名称" />
                 </FormItem>
                 <FormItem label="规格">
                     <Button
@@ -40,32 +40,32 @@
                         size="small"
                         ghost
                         style="margin: 0 0.25rem 0.25rem 0;"
-                        v-for="(plug, index) in model.goodModel.plugList"
+                        v-for="(plug, index) in react.goodModel.plugList"
                         :key="index"
                     >
                         <span>{{ plug.value }}</span>
                         <span>{{ plug.name }}</span>
                     </Button>
-                    <Button type="success" size="small" @click.stop="model.togglePlugTagModal"> 编辑规格</Button>
+                    <Button type="info" size="small" @click.stop="react.togglePlugTagModal">增加规格</Button>
                 </FormItem>
-                <FormItem v-for="(item, index) in model.goodModel.countList" :key="index" :label="index === 0 ? '单位' : ''">
-                    <Input style="width: 6rem;" v-model="item.value" />
-                    <Input style="width: 6rem;" v-model="item.name" placeholder="张" />
-                    <Button v-if="index === 0" type="success" size="small" @click.stop="model.addGoodCount">增加单位</Button>
-                    <Button v-else type="error" size="small" icon="md-close" @click.stop="model.deleteGoodCount(index)"></Button>
+                <FormItem v-for="(item, index) in react.goodModel.countList" :key="index" :label="index === 0 ? '单位' : ''">
+                    <Input class="no-radius" style="width: 7rem;" v-model="item.value" />
+                    <Input class="no-radius" style="width: 7rem;" v-model="item.name" placeholder="张" />
+                    <Button class="right-middle" v-if="index === 0" size="small" @click.stop="react.addGoodCount">增加单位</Button>
+                    <Button class="right-middle" v-else type="error" size="small" icon="md-close" @click.stop="react.deleteGoodCount(index)"></Button>
                 </FormItem>
                 <FormItem label="成本">
-                    <Input v-model="model.goodModel.cost" placeholder="请输入库成本" />
+                    <Input v-model="react.goodModel.cost" placeholder="请输入商品成本" />
                 </FormItem>
                 <FormItem label="备注">
-                    <Input v-model="model.goodModel.tip" />
+                    <Input v-model="react.goodModel.tip" placeholder="请输入库备注" />
                 </FormItem>
             </Form>
             <div slot="footer">
-                <Button type="success" ghost @click.stop="model.goodEditModal = false">取消</Button>
-                <Button type="success" @click.stop="model.goodEditModalConfirm">{{ model.goodModel._id === -1 ? '新增' : '编辑' }}</Button>
+                <Button @click.stop="react.goodModal = false">取消</Button>
+                <Button type="success" @click.stop="react.goodEditModalConfirm">{{ react.goodModel._id === -1 ? '新增' : '编辑' }}</Button>
             </div>
-        </Modal> -->
+        </Modal>
 
         <!-- 编辑规格的表单 -->
         <!-- <Modal v-model="model.plugTagModal" title="规格列表">
@@ -109,7 +109,7 @@
     export default {
         data() {
             return {
-                model: new React(),
+                react: new React(),
             }
         },
         mounted() {},

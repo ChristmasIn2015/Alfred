@@ -10,23 +10,24 @@ export default class React {
     @Good
     async initReact() {
         try {
-            this.goodEditModal = false
-            this.plugTagModal = false
-            this.plugTagEditButton = false
-            this.countTagModal = false
-            await this.renderPlugTagList() // @Tag
-            await this.renderGoodList() // @Good
+            // @Tag
+            // this.plugTagModal = false
+            // this.plugTagEditButton = false
+            // await this.renderPlugTagList()
+            // // @Good
+            // this.goodModal = false
+            // this.countTagModal = false
+            await this.renderGoodList()
         } catch (error) {
             $common.loadOff(error)
         }
     }
 
-    // * 商品弹窗
-    // ** 点击新增商品 展开商品弹窗
-    toggleGoodEditModal(good = null) {
+    // * 展开商品弹窗
+    toggleGoodModal(good = null) {
         try {
-            this.goodEditModal = !this.goodEditModal
-            if (this.goodEditModal) this.initGoodModel(good) // @Good
+            this.goodModal = !this.goodModal
+            // if (this.goodModal) this.initGoodModel(good) // @Good
         } catch (error) {
             $common.loadOff(error)
         }
@@ -36,7 +37,7 @@ export default class React {
         try {
             await this.postGood() // @Good
             await this.renderGoodList() // @Good
-            this.toggleGoodEditModal() // @React
+            this.toggleGoodModal() // @React
         } catch (error) {
             $common.loadOff(error)
         }

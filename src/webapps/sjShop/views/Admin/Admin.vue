@@ -23,7 +23,7 @@
                     </Button>
                     <!-- 店铺选择 -->
                     <Dropdown trigger="click">
-                        <Button :type="shopInfo._id ? 'success' : 'default'" size="small">
+                        <Button :type="shopInfo._id ? 'warning' : 'default'" size="small">
                             <span class="fa fa-users"></span>
                             <span>{{ shopInfo._id ? shopInfo.name : '点击选择店铺' }}</span>
                         </Button>
@@ -33,7 +33,7 @@
                                     size="small"
                                     v-for="(shop, index) in react.shopList"
                                     :key="index"
-                                    :type="shopInfo._id === shop._id ? 'success' : 'default'"
+                                    :type="shopInfo._id === shop._id ? 'warning' : 'default'"
                                     @click.stop="react.pickShop(shop)"
                                 >
                                     {{ shop.name }}
@@ -42,7 +42,7 @@
                                     size="small"
                                     v-for="(shop, index) in react.officeList"
                                     :key="index"
-                                    :type="shopInfo._id === shop._id ? 'success' : 'default'"
+                                    :type="shopInfo._id === shop._id ? 'warning' : 'default'"
                                     @click.stop="react.pickShop(shop)"
                                 >
                                     {{ shop.name }}
@@ -55,7 +55,7 @@
                     </Dropdown>
                     <!-- 仓库选择 -->
                     <Dropdown trigger="click" v-show="shopInfo._id">
-                        <Button :type="houseInfo._id ? 'warning' : 'default'" size="small">
+                        <Button :type="houseInfo._id ? 'success' : 'default'" size="small">
                             <span class="fa fa-home"></span>
                             <span>{{ houseInfo._id ? houseInfo.name : '点击选择仓库' }}</span>
                         </Button>
@@ -65,7 +65,7 @@
                                     size="small"
                                     v-for="(house, index) in react.houseList"
                                     :key="index"
-                                    :type="houseInfo._id === house._id ? 'warning' : 'default'"
+                                    :type="houseInfo._id === house._id ? 'success' : 'default'"
                                     @click.stop="react.pickHouse(house)"
                                 >
                                     {{ house.name }}
@@ -113,7 +113,7 @@
             </Form>
             <div slot="footer">
                 <Button @click.stop="react.shopModal = false">取消</Button>
-                <Button type="success" @click.stop="react.createMyShop">创建店铺</Button>
+                <Button type="warning" @click.stop="react.createMyShop">创建店铺</Button>
             </div>
         </Modal>
 
@@ -126,7 +126,7 @@
             </Form>
             <div slot="footer">
                 <Button @click.stop="react.houseModal = false">取消</Button>
-                <Button type="warning" @click.stop="react.createMyHouse">创建仓库</Button>
+                <Button type="success" @click.stop="react.createMyHouse">创建仓库</Button>
             </div>
         </Modal>
     </div>

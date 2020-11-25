@@ -3,6 +3,7 @@ export default function Good(target, name, descriptor) {
     let sourceFunction = descriptor.value
     descriptor.value = function() {
         // * 参数
+        this.goodModal = false
         this.goodModel = {
             _id: -1,
             name: '',
@@ -13,13 +14,12 @@ export default function Good(target, name, descriptor) {
                     value: 0,
                 },
             ],
-            cost: 0,
+            cost: '',
             tip: '',
         }
         this.goodTableColumn = [
-            { type: 'selection', width: 60, align: 'center' },
-            { title: 'Id', key: '_id', width: 150 },
-            { title: '商品名称', key: 'name', width: 200 },
+            { title: 'Id', key: '_id', width: 135 },
+            { title: '商品名称', key: 'name', width: 120 },
             { title: '商品规格', slot: 'plugList', width: 200 },
             { title: '商品库存', slot: 'countList', width: 100 },
             { title: '成本', key: 'cost', width: 100 },
@@ -28,7 +28,6 @@ export default function Good(target, name, descriptor) {
             { title: '操作', slot: 'action', width: 200 },
         ]
         this.goodList = []
-        this.goodNameList = []
         // * 方法
         this.postGood = postGood
         this.deleteMyGood = deleteMyGood
@@ -40,48 +39,13 @@ export default function Good(target, name, descriptor) {
         sourceFunction.apply(this, arguments)
     }
 }
-// * 渲染 goodList 字段
+// * 渲染商品列表
 async function renderGoodList() {
     try {
         let houseId = $store.state.houseInfo._id
-        if (!houseId) throw new Error('获取仓库信息失败')
+        if (!houseId) throw new Error('请选择仓库')
         let list = await getGoodList(houseId) // @API
         this.goodList = Object.assign([], list)
-
-        // ** 商品名称列表
-        let tempSet = new Set()
-        list.forEach((good) => tempSet.add(good.name))
-        let tempList = []
-        tempSet.forEach((goodName) =>
-            tempList.push({
-                label: goodName,
-                value: goodName,
-            })
-        )
-        this.goodNameList = Object.assign([], tempList)
-
-        // ** 商品名称添加筛选
-        this.goodTableColumn[2] = {
-            title: '商品名称',
-            key: 'name',
-            width: 200,
-            filters: this.goodNameList,
-            filterMethod: (goodName, row) => {
-                return row.name == goodName
-            },
-        }
-        // ** 商品规格添加筛选
-        tempSet = new Set()
-        // this.goodTableColumn[3] = {
-        //     title: '商品规格',
-        //     key: 'name',
-        //     width: 200,
-        //     filters: this.goodNameList,
-        //     filterMethod: (goodName, row) => {
-        //         return row.name == goodName
-        //     },
-        // }
-        this.goodTableColumn = Object.assign([], this.goodTableColumn)
     } catch (error) {
         return Promise.reject(error)
     }

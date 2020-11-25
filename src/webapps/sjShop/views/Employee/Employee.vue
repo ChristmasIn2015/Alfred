@@ -1,7 +1,7 @@
 <template>
     <div class="employee">
         <div class="flex" style="margin-bottom: 1rem;">
-            <Button type="success" size="small" @click.stop="react.newEmployeeModal = true">添加新员工</Button>
+            <Button type="warning" size="small" @click.stop="react.newEmployeeModal = true">添加新员工</Button>
         </div>
         <div>
             <Table stripe :columns="react.employeeTableColumn" :data="react.employeeList">
@@ -20,7 +20,7 @@
             </Form>
             <div slot="footer">
                 <Button @click.stop="react.newEmployeeModal = false">取消</Button>
-                <Button type="success" @click.stop="react.addMyEmployee">添加</Button>
+                <Button type="warning" @click.stop="react.addMyEmployee">添加</Button>
             </div>
         </Modal>
     </div>

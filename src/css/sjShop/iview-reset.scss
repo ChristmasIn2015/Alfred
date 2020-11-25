@@ -69,6 +69,18 @@
         }
     }
 }
+.no-radius {
+    .ivu-input {
+        border-radius: 0;
+    }
+}
+.right-middle {
+    // float: right;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+}
 
 // * 按钮
 .ivu-btn {
@@ -114,6 +126,14 @@
     &:hover {
         border-top: 1px solid $blue-1;
         background-color: $blue-0;
+    }
+}
+.ivu-btn-success {
+    background-color: $green-0;
+    border-top: 1px solid $green-1;
+    &:hover {
+        border-top: 1px solid $green-1;
+        background-color: $green-0;
     }
 }
 .ivu-btn-warning {

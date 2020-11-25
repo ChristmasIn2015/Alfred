@@ -4,7 +4,7 @@ export function GoodParams(target, name, descriptor) {
     let sourceFunction = descriptor.value
     descriptor.value = function() {
         // *
-        this.goodEditModal = false
+        this.goodModal = false
         // *
         this.goodList = []
         // *
@@ -16,12 +16,12 @@ export function GoodParams(target, name, descriptor) {
 import { getGoodList } from '../api.js'
 export function GoodFunc(TargetClass) {
     TargetClass.prototype.getMyGoodList = getMyGoodList
-    TargetClass.prototype.toggleGoodEditModal = toggleGoodEditModal
+    TargetClass.prototype.toggleGoodModal = toggleGoodModal
 }
 // * 开单展开商品列表
-function toggleGoodEditModal() {
-    this.goodEditModal = !this.goodEditModal
-    if (this.goodEditModal) {
+function toggleGoodModal() {
+    this.goodModal = !this.goodModal
+    if (this.goodModal) {
         this.getMyGoodList() // @Good
     }
 }

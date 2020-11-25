@@ -29,7 +29,7 @@ function pickGoodInForm(good) {
         }
     }
     this.goodListPicked = Object.assign([], this.goodListPicked)
-    this.toggleGoodEditModal() // @good
+    this.toggleGoodModal() // @good
 }
 function deleteGoodPicked(index) {
     let target = this.goodListPicked[index]
