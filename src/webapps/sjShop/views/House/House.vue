@@ -1,7 +1,13 @@
 <template>
     <div class="house">
         <div class="flex" style="margin-bottom: 1rem;">
-            <Button type="success" size="small" @click.stop="react.toggleGoodModal">新商品入库</Button>
+            <Button type="success" style="margin-right: 0.5rem;" size="small" @click.stop="react.toggleGoodModal">新商品入库</Button>
+            <Button size="small" :type="react.goodEdit ? 'error' : 'default'" @click.stop="react.goodEdit = !react.goodEdit">{{
+                react.goodEdit ? '关闭' : '编辑'
+            }}</Button>
+        </div>
+        <div class="flex" style="margin-bottom: 1rem;">
+            <Button size="small" style="margin-right: 0.5rem;" v-for="(name, index) in react.goodNameList" :key="index">{{ name }} </Button>
         </div>
         <div>
             <Table stripe :columns="react.goodTableColumn" :data="react.goodList">
@@ -12,7 +18,7 @@
                     <span v-for="(count, index) in row.countList" :key="index">{{ count.value }}{{ count.name }} </span>
                 </template>
                 <template slot-scope="{ row }" slot="action">
-                    <Button type="default" size="small" style="margin-right: 0.25rem;" @click="react.deleteMyGood(index)">删除</Button>
+                    <Button v-if="react.goodEdit" type="error" size="small" style="margin-right: 0.25rem;" @click="react.deleteMyGood(row)">删除</Button>
                     <Button type="success" size="small" @click.stop="react.toggleGoodModal(row)">编辑</Button>
                 </template>
             </Table>
@@ -21,38 +27,31 @@
         <!-- 商品编辑的表单 -->
         <Modal v-model="react.goodModal" title="商品" width="350">
             <Form label-position="top">
-                <FormItem>
-                    <Button
-                        type="dashed"
-                        size="small"
-                        v-for="(good, index) in react.goodNameList"
-                        :key="index"
-                        @click.stop="react.goodModel.name = good.label"
-                        >{{ good.label }}</Button
-                    >
-                </FormItem>
                 <FormItem label="名称">
                     <Input v-model="react.goodModel.name" placeholder="请输入商品名称" />
                 </FormItem>
-                <FormItem label="规格">
+                <FormItem>
                     <Button
-                        type="success"
                         size="small"
-                        ghost
-                        style="margin: 0 0.25rem 0.25rem 0;"
-                        v-for="(plug, index) in react.goodModel.plugList"
+                        style="margin-right: 0.5rem;"
+                        v-for="(name, index) in react.goodNameList"
                         :key="index"
-                    >
+                        @click.stop="react.goodModel.name = name"
+                        >{{ name }}
+                    </Button>
+                </FormItem>
+                <FormItem label="规格">
+                    <Button type="info" size="small" style="margin-right: 0.5rem;" v-for="(plug, index) in react.goodModel.plugList" :key="index">
                         <span>{{ plug.value }}</span>
                         <span>{{ plug.name }}</span>
                     </Button>
-                    <Button type="info" size="small" @click.stop="react.togglePlugTagModal">增加规格</Button>
+                    <Button size="small" @click.stop="react.toggleTagModal">选择规格</Button>
                 </FormItem>
                 <FormItem v-for="(item, index) in react.goodModel.countList" :key="index" :label="index === 0 ? '单位' : ''">
                     <Input class="no-radius" style="width: 7rem;" v-model="item.value" />
                     <Input class="no-radius" style="width: 7rem;" v-model="item.name" placeholder="张" />
-                    <Button class="right-middle" v-if="index === 0" size="small" @click.stop="react.addGoodCount">增加单位</Button>
-                    <Button class="right-middle" v-else type="error" size="small" icon="md-close" @click.stop="react.deleteGoodCount(index)"></Button>
+                    <Button v-if="index === 0" size="small" style="margin-left:0.5rem;" @click.stop="react.addGoodCount">增加单位</Button>
+                    <Button v-else size="small" style="margin-left:0.5rem;" @click.stop="react.deleteGoodCount(index)">删除</Button>
                 </FormItem>
                 <FormItem label="成本">
                     <Input v-model="react.goodModel.cost" placeholder="请输入商品成本" />
@@ -63,44 +62,40 @@
             </Form>
             <div slot="footer">
                 <Button @click.stop="react.goodModal = false">取消</Button>
-                <Button type="success" @click.stop="react.goodEditModalConfirm">{{ react.goodModel._id === -1 ? '新增' : '编辑' }}</Button>
+                <Button type="success" @click.stop="react.goodModalOk">{{ react.goodModel._id === -1 ? '新增' : '编辑' }}</Button>
             </div>
         </Modal>
 
         <!-- 编辑规格的表单 -->
-        <!-- <Modal v-model="model.plugTagModal" title="规格列表">
-            <div class="flex">
-                <div style="width: 30%; margin-right: 1rem; padding-right: 1rem; border-right:1px solid #E5E5E5;">
-                    <Input v-model="model.plugModel.value" type="number" placeholder="规格值" />
-                    <Input v-model="model.plugModel.name" placeholder="规格单位" />
-                    <Button type="success" long @click.stop="model.createPlugTag">创建规格</Button>
-                </div>
-                <div>
-                    <span v-show="!model.plugTagList.length">暂无规格</span>
-                    <ButtonGroup style="margin: 0 0.25rem 0.25rem 0;" v-for="(plug, index) in model.plugTagList" :key="index">
-                        <Button type="success" size="small" :ghost="!plug.checked" @click.stop="plug.checked = !plug.checked">
+        <Modal v-model="react.tagModal" title="规格列表">
+            <Form label-position="top">
+                <FormItem label="创建规格">
+                    <Input class="no-radius" style="width: 7rem;" v-model="react.tagModel.value" placeholder="值" />
+                    <Input class="no-radius" style="width: 7rem;" v-model="react.tagModel.name" placeholder="单位" />
+                    <Button type="info" size="small" style="margin-left: 0.5rem;" @click.stop="react.createMyTag">创建规格</Button>
+                    <Button
+                        :type="react.tagEdit ? 'error' : 'default'"
+                        size="small"
+                        style="margin-left: 0.5rem;"
+                        @click.stop="react.tagEdit = !react.tagEdit"
+                        >{{ react.tagEdit ? '关闭' : '编辑' }}</Button
+                    >
+                </FormItem>
+                <FormItem label="规格列表">
+                    <ButtonGroup style="margin: 0 0.25rem 0.25rem 0;" v-for="(plug, index) in react.tagList" :key="index">
+                        <Button :type="plug.checked ? 'info' : 'default'" size="small" @click.stop="plug.checked = !plug.checked">
                             <span>{{ plug.value }}</span>
                             <span>{{ plug.name }}</span>
                         </Button>
-                        <Button
-                            v-if="model.plugTagEditButton"
-                            type="error"
-                            size="small"
-                            ghost
-                            icon="md-close"
-                            @click.stop="model.deleteMyTag(plug._id, 0)"
-                        ></Button>
+                        <Button v-if="react.tagEdit" type="error" size="small" @click.stop="react.deleteMyTag(plug._id, 0)">删除</Button>
                     </ButtonGroup>
-                </div>
-            </div>
+                </FormItem>
+            </Form>
             <div slot="footer">
-                <Button type="error" ghost @click.stop="model.plugTagEditButton = !model.plugTagEditButton"
-                    >{{ model.plugTagEditButton ? '关闭' : '开启' }}编辑</Button
-                >
-                <Button type="success" ghost @click.stop="model.plugTagModal = false">取消</Button>
-                <Button type="success" @click.stop="model.plugModalConfirm">完成</Button>
+                <Button @click.stop="react.tagModal = false">取消</Button>
+                <Button type="info" @click.stop="react.tagModalOk">完成</Button>
             </div>
-        </Modal> -->
+        </Modal>
     </div>
 </template>
 

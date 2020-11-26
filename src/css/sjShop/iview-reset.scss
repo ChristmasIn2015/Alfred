@@ -72,6 +72,7 @@
 .no-radius {
     .ivu-input {
         border-radius: 0;
+        border-bottom: 2px solid transparent;
     }
 }
 .right-middle {
@@ -123,9 +124,11 @@
 .ivu-btn-info {
     background-color: $blue-0;
     border-top: 1px solid $blue-1;
+    color: $back-2;
     &:hover {
         border-top: 1px solid $blue-1;
         background-color: $blue-0;
+        color: $back-2;
     }
 }
 .ivu-btn-success {

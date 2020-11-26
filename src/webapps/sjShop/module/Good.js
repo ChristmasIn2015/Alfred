@@ -3,20 +3,6 @@ export default function Good(target, name, descriptor) {
     let sourceFunction = descriptor.value
     descriptor.value = function() {
         // * 参数
-        this.goodModal = false
-        this.goodModel = {
-            _id: -1,
-            name: '',
-            plugList: [],
-            countList: [
-                {
-                    name: '',
-                    value: 0,
-                },
-            ],
-            cost: '',
-            tip: '',
-        }
         this.goodTableColumn = [
             { title: 'Id', key: '_id', width: 135 },
             { title: '商品名称', key: 'name', width: 120 },
@@ -27,14 +13,23 @@ export default function Good(target, name, descriptor) {
             { title: '入库时间', key: 'timeString', width: 200 },
             { title: '操作', slot: 'action', width: 200 },
         ]
+        this.goodModal = false
         this.goodList = []
+        this.goodModel = {
+            _id: -1,
+            name: '',
+            plugList: [],
+            countList: [],
+            cost: '',
+            tip: '',
+        }
         // * 方法
+        this.renderGoodList = renderGoodList
+        this.initGoodModel = initGoodModel
+        this.addGoodCount = addGoodCount
+        this.deleteGoodCount = deleteGoodCount
         this.postGood = postGood
         this.deleteMyGood = deleteMyGood
-        this.addGoodCount = addGoodCount
-        this.initGoodModel = initGoodModel
-        this.renderGoodList = renderGoodList
-        this.deleteGoodCount = deleteGoodCount
         //
         sourceFunction.apply(this, arguments)
     }
@@ -55,17 +50,29 @@ function initGoodModel(model) {
     model = model || {}
     this.goodModel._id = model._id || -1
     this.goodModel.name = model.name || ''
-    this.goodModel.plugList = model.plugList ? Object.assign([], model.plugList) : []
-    this.goodModel.countList = model.countList
-        ? Object.assign([], model.countList)
-        : [
-              {
-                  name: '',
-                  value: 0,
-              },
-          ]
-    this.goodModel.cost = model.cost || 0
+    this.goodModel.plugList = model.plugList || []
+    let newCountList = [
+        {
+            name: '张',
+            value: 0,
+        },
+    ]
+    this.goodModel.countList = model.countList || newCountList
+    this.goodModel.cost = model.cost || ''
     this.goodModel.tip = model.tip || ''
+}
+// * 添加新单位
+function addGoodCount() {
+    // @Good
+    this.goodModel.countList.push({
+        name: '吨',
+        value: 0,
+    })
+}
+// * 删除单位
+function deleteGoodCount(index) {
+    // @Good
+    if (this.goodModel.countList[index]) this.goodModel.countList.splice(index, 1)
 }
 // * 添加/编辑商品
 async function postGood() {
@@ -76,7 +83,17 @@ async function postGood() {
             if (typeof count.name === '') throw new Error('请输入库存单位')
         })
         // ** 2
-        if (this.goodModel._id !== -1) {
+        if (this.goodModel._id === -1) {
+            await createGood(
+                $store.state.houseInfo._id,
+                this.goodModel.name,
+                this.goodModel.plugList,
+                this.goodModel.countList,
+                this.goodModel.cost,
+                this.goodModel.tip
+            )
+            $tip(`添加 ${this.goodModel.name} 成功`)
+        } else {
             await editGood(
                 $store.state.houseInfo._id,
                 this.goodModel._id,
@@ -87,49 +104,21 @@ async function postGood() {
                 this.goodModel.tip
             )
             $tip(`编辑 ${this.goodModel.name} 成功`)
-        } else {
-            await createGood(
-                $store.state.houseInfo._id,
-                this.goodModel.name,
-                this.goodModel.plugList,
-                this.goodModel.countList,
-                this.goodModel.cost,
-                this.goodModel.tip
-            )
-            $tip(`添加 ${this.goodModel.name} 成功`)
         }
     } catch (error) {
         return Promise.reject(error)
     }
 }
 // * 删除商品
-function deleteMyGood(index) {
-    try {
-        let target = this.goodList[index]
-        if (target)
-            $confirm(`确定要删除 ${target.name} 吗`, async () => {
-                try {
-                    await deleteGood($store.state.houseInfo._id, target._id)
-                    $tip('删除成功')
-                    this.renderGoodList() // @Good
-                } catch (error) {
-                    return Promise.reject(error)
-                }
-            })
-    } catch (error) {
-        return Promise.resolve(error)
-    }
-}
-// * 添加新单位
-function addGoodCount() {
-    // @Good
-    this.goodModel.countList.push({
-        value: '',
-        name: '',
+function deleteMyGood(good) {
+    $confirm(`确定要删除 ${good.name} 吗`, async () => {
+        try {
+            await deleteGood($store.state.houseInfo._id, good._id)
+            $tip('删除成功')
+            this.renderGoodList() // @Good
+            this.renderGoodNameList() // @GoodFilter
+        } catch (error) {
+            return Promise.reject(error)
+        }
     })
-}
-// * 删除单位
-function deleteGoodCount(index) {
-    // @Good
-    if (this.goodModel.countList[index]) this.goodModel.countList.splice(index, 1)
 }

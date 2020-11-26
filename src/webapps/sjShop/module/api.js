@@ -65,7 +65,7 @@ export function deleteGood(houseId, goodId) {
 }
 // * 编辑商品
 export function editGood(houseId, _id, name, plugList, countList, cost, tip) {
-    let params = { _id, houseId, name, plugList, countList, cost, tip }
+    let params = { houseId, _id, name, plugList, countList, cost, tip }
     return _server.request('POST', '/sjShop/good/edit', params, $common.getHeaders())
 }
 // ======================================================= 员工
