@@ -80,7 +80,7 @@
                 <div class="container-board-content">
                     <Employee v-if="react.sideIndex === 0" />
                     <House v-if="react.sideIndex === 1" />
-                    <!-- <Order v-if="sideIndex === 2" /> -->
+                    <Order v-if="react.sideIndex === 2" />
                 </div>
             </div>
         </div>
@@ -136,7 +136,7 @@
     import React from './React.js'
     import Employee from '../Employee/Employee.vue'
     import House from '../House/House.vue'
-    // import Order from '../Order/Order.vue'
+    import Order from '../Order/Order.vue'
     export default {
         data() {
             return {
@@ -157,7 +157,7 @@
         components: {
             Employee,
             House,
-            // Order,
+            Order,
         },
         methods: {
             test() {

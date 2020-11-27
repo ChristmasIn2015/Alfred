@@ -7,7 +7,7 @@ export default class React {
         this.sideList = [
             { name: '员工管理', icon: 'fa fa-users' },
             { name: '库存管理', icon: 'fa fa-home' },
-            { name: '订单管理', icon: 'fa-newspaper-o' },
+            { name: '销售开单', icon: 'fa-newspaper-o' },
         ]
         this.sideIndex = -1
         this.initReact()

@@ -1,15 +1,25 @@
 <template>
-    <div class="house">
-        <div class="flex" style="margin-bottom: 1rem;">
-            <Button type="success" style="margin-right: 0.5rem;" size="small" @click.stop="react.toggleGoodModal">新商品入库</Button>
+    <div class="house flex-y" style="height: 100%; overflow: hidden;">
+        <div class="flex-middle-y flex-side" style="margin-bottom: 1rem; width: 32rem;">
+            <Input style="width: 20rem;" v-model="react.filterKey" placeholder="请输入规格" @input="filterGoodList" />
+            <Button size="small" type="success" @click.stop="react.filterClear">清空</Button>
+            <Button type="success" size="small" @click.stop="react.toggleGoodModal">新商品入库</Button>
             <Button size="small" :type="react.goodEdit ? 'error' : 'default'" @click.stop="react.goodEdit = !react.goodEdit">{{
                 react.goodEdit ? '关闭' : '编辑'
             }}</Button>
         </div>
         <div class="flex" style="margin-bottom: 1rem;">
-            <Button size="small" style="margin-right: 0.5rem;" v-for="(name, index) in react.goodNameList" :key="index">{{ name }} </Button>
+            <Button
+                size="small"
+                style="margin-right: 0.5rem;"
+                v-for="(good, index) in react.goodNameList"
+                :key="index"
+                :type="good.checked ? 'success' : 'default'"
+                @click.stop="react.pickGoodName(index)"
+                >{{ good.name }}
+            </Button>
         </div>
-        <div>
+        <div style="height: 100%; overflow: auto;">
             <Table stripe :columns="react.goodTableColumn" :data="react.goodList">
                 <template slot-scope="{ row }" slot="plugList">
                     <span v-for="(plug, index) in row.plugList" :key="index">{{ plug.value }}{{ plug.name }} </span>
@@ -34,14 +44,14 @@
                     <Button
                         size="small"
                         style="margin-right: 0.5rem;"
-                        v-for="(name, index) in react.goodNameList"
+                        v-for="(good, index) in react.goodNameList"
                         :key="index"
-                        @click.stop="react.goodModel.name = name"
-                        >{{ name }}
+                        @click.stop="react.goodModel.name = good.name"
+                        >{{ good.name }}
                     </Button>
                 </FormItem>
                 <FormItem label="规格">
-                    <Button type="info" size="small" style="margin-right: 0.5rem;" v-for="(plug, index) in react.goodModel.plugList" :key="index">
+                    <Button type="success" size="small" style="margin-right: 0.5rem;" v-for="(plug, index) in react.goodModel.plugList" :key="index">
                         <span>{{ plug.value }}</span>
                         <span>{{ plug.name }}</span>
                     </Button>
@@ -72,7 +82,7 @@
                 <FormItem label="创建规格">
                     <Input class="no-radius" style="width: 7rem;" v-model="react.tagModel.value" placeholder="值" />
                     <Input class="no-radius" style="width: 7rem;" v-model="react.tagModel.name" placeholder="单位" />
-                    <Button type="info" size="small" style="margin-left: 0.5rem;" @click.stop="react.createMyTag">创建规格</Button>
+                    <Button type="success" size="small" style="margin-left: 0.5rem;" @click.stop="react.createMyTag">创建规格</Button>
                     <Button
                         :type="react.tagEdit ? 'error' : 'default'"
                         size="small"
@@ -83,7 +93,7 @@
                 </FormItem>
                 <FormItem label="规格列表">
                     <ButtonGroup style="margin: 0 0.25rem 0.25rem 0;" v-for="(plug, index) in react.tagList" :key="index">
-                        <Button :type="plug.checked ? 'info' : 'default'" size="small" @click.stop="plug.checked = !plug.checked">
+                        <Button :type="plug.checked ? 'success' : 'default'" size="small" @click.stop="plug.checked = !plug.checked">
                             <span>{{ plug.value }}</span>
                             <span>{{ plug.name }}</span>
                         </Button>
@@ -93,7 +103,7 @@
             </Form>
             <div slot="footer">
                 <Button @click.stop="react.tagModal = false">取消</Button>
-                <Button type="info" @click.stop="react.tagModalOk">完成</Button>
+                <Button type="success" @click.stop="react.tagModalOk">完成</Button>
             </div>
         </Modal>
     </div>
@@ -119,7 +129,11 @@
                 return this.$store.state.houseInfo
             },
         },
-        methods: {},
+        methods: {
+            filterGoodList() {
+                this.react.filterGoodList()
+            },
+        },
     }
 </script>
 

@@ -1,6 +1,6 @@
 import Tag from '@/webapps/sjShop/module/Tag.js'
 import Good from '@/webapps/sjShop/module/Good.js'
-import GoodFilter from './GoodFilter.js'
+import GoodFilter from '@/webapps/sjShop/module/GoodFilter.js'
 
 export default class React {
     constructor() {
@@ -13,13 +13,7 @@ export default class React {
     @GoodFilter
     async initReact() {
         try {
-            // @Tag
-            // this.plugTagModal = false
-            // this.plugTagEditButton = false
             await this.renderTagList() // @Tag
-            // // @Good
-            // this.goodModal = false
-            // this.countTagModal = false
             await this.renderGoodList() // @Good
             this.renderGoodNameList() // GoodFilter
         } catch (error) {
@@ -29,23 +23,16 @@ export default class React {
 
     // * 展开商品弹窗
     toggleGoodModal(good = null) {
-        try {
-            this.goodModal = !this.goodModal // @Good
-            if (this.goodModal) this.initGoodModel(good) // @Good
-        } catch (error) {
-            $common.loadOff(error)
-        }
+        this.goodModal = !this.goodModal // @Good
+        if (this.goodModal) this.initGoodModel(good) // @Good
     }
 
     // * 展开规格列表
-    toggleTagModal() {
+    async toggleTagModal() {
         try {
+            await this.renderTagList(this.goodModel.plugList) // @Tag
+            this.tagEdit = false // @Tag
             this.tagModal = !this.tagModal // @Tag
-            // if (this.plugTagModal) {
-            //     $warn('请为商品选择规格')
-            //     let plugListChecked = this.goodModel.plugList // @Good
-            //     this.renderPlugTagList(plugListChecked) // @Tag
-            // }
         } catch (error) {
             $common.loadOff(error)
         }

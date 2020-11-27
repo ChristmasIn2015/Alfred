@@ -4,16 +4,17 @@ export default function Good(target, name, descriptor) {
     descriptor.value = function() {
         // * 参数
         this.goodTableColumn = [
-            { title: 'Id', key: '_id', width: 135 },
+            { title: 'Id', key: '_id', width: 150 },
             { title: '商品名称', key: 'name', width: 120 },
             { title: '商品规格', slot: 'plugList', width: 200 },
-            { title: '商品库存', slot: 'countList', width: 100 },
+            { title: '商品库存', slot: 'countList', width: 200 },
             { title: '成本', key: 'cost', width: 100 },
             { title: '备注', key: 'tip' },
-            { title: '入库时间', key: 'timeString', width: 200 },
             { title: '操作', slot: 'action', width: 200 },
+            { title: '入库时间', key: 'timeString', width: 200 },
         ]
         this.goodModal = false
+        this.goodSourceList = []
         this.goodList = []
         this.goodModel = {
             _id: -1,
@@ -39,8 +40,9 @@ async function renderGoodList() {
     try {
         let houseId = $store.state.houseInfo._id
         if (!houseId) throw new Error('请选择仓库')
-        let list = await getGoodList(houseId) // @API
-        this.goodList = Object.assign([], list)
+        let list = await getGoodList(houseId)
+        this.goodList = Object.assign([], list) // @Good
+        this.goodSourceList = Object.assign([], list) // @Good
     } catch (error) {
         return Promise.reject(error)
     }
@@ -115,8 +117,8 @@ function deleteMyGood(good) {
         try {
             await deleteGood($store.state.houseInfo._id, good._id)
             $tip('删除成功')
-            this.renderGoodList() // @Good
-            this.renderGoodNameList() // @GoodFilter
+            await this.renderGoodList() // @Good
+            await this.renderGoodNameList() // @GoodFilter
         } catch (error) {
             return Promise.reject(error)
         }
