@@ -1,6 +1,6 @@
 <template>
     <div class="house flex-y" style="height: 100%; overflow: hidden;">
-        <div class="flex-middle-y flex-side" style="margin-bottom: 1rem; width: 32rem;">
+        <div class="ivu-btn-line flex-middle-y">
             <Input style="width: 20rem;" v-model="react.filterKey" placeholder="请输入规格" @input="filterGoodList" />
             <Button size="small" type="success" @click.stop="react.filterClear">清空</Button>
             <Button type="success" size="small" @click.stop="react.toggleGoodModal">新商品入库</Button>
@@ -8,10 +8,9 @@
                 react.goodEdit ? '关闭' : '编辑'
             }}</Button>
         </div>
-        <div class="flex" style="margin-bottom: 1rem;">
+        <div class="ivu-btn-line flex-wrap">
             <Button
                 size="small"
-                style="margin-right: 0.5rem;"
                 v-for="(good, index) in react.goodNameList"
                 :key="index"
                 :type="good.checked ? 'success' : 'default'"

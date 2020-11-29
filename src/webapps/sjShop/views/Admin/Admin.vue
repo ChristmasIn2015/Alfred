@@ -1,29 +1,29 @@
 <template>
     <div id="app" class="no-scroll-bar">
         <div class="container">
-            <div class="side">
+            <div class="side flex-y">
                 <div class="ad"></div>
-                <div
-                    class="side-item"
+                <Button
+                    size="small"
                     v-for="(side, index) in react.sideList"
                     :key="index"
-                    :class="{ 'side-item-on': react.sideIndex === index }"
+                    :type="react.sideIndex === index ? side.type : 'default'"
                     @click.stop="react.pickSide(index)"
                 >
                     <span :class="side.icon"></span>
                     <span>{{ side.name }}</span>
-                </div>
+                </Button>
             </div>
             <div class="container-board">
                 <div class="nav">
                     <!-- 登录按钮 -->
-                    <Button :type="userInfo._id ? 'primary' : 'default'" size="small" @click.stop="react.reLogin">
+                    <Button :type="userInfo._id ? 'default' : 'primary'" size="small" @click.stop="react.reLogin">
                         <span class="fa fa-user"></span>
                         <span>{{ userInfo._id ? userInfo.name : '点击登录' }}</span>
                     </Button>
                     <!-- 店铺选择 -->
-                    <Dropdown trigger="click">
-                        <Button :type="shopInfo._id ? 'warning' : 'default'" size="small">
+                    <Dropdown trigger="click" v-show="userInfo._id">
+                        <Button size="small" :type="shopInfo._id ? 'default' : 'warning'">
                             <span class="fa fa-users"></span>
                             <span>{{ shopInfo._id ? shopInfo.name : '点击选择店铺' }}</span>
                         </Button>
@@ -55,7 +55,7 @@
                     </Dropdown>
                     <!-- 仓库选择 -->
                     <Dropdown trigger="click" v-show="shopInfo._id">
-                        <Button :type="houseInfo._id ? 'success' : 'default'" size="small">
+                        <Button size="small" :type="houseInfo._id ? 'default' : 'success'">
                             <span class="fa fa-home"></span>
                             <span>{{ houseInfo._id ? houseInfo.name : '点击选择仓库' }}</span>
                         </Button>
@@ -100,7 +100,7 @@
             </Form>
             <div slot="footer">
                 <Button @click.stop="react.loginModal = false">取消</Button>
-                <Button type="primary" @click.stop="react.loginConfirm">登录/注册</Button>
+                <Button type="primary" @click.stop="react.loginModalOk">登录/注册</Button>
             </div>
         </Modal>
 
@@ -159,27 +159,21 @@
             House,
             Order,
         },
-        methods: {
-            test() {
-                console.log(123)
-            },
-        },
+        methods: {},
         beforeCreate() {
             window.$load = {
-                show: () =>
-                    this.$Message.loading({
-                        content: '请稍后',
-                        duration: 0.5,
-                    }),
-                hide: () => {
-                    // this.$Message.destroy()
-                },
+                show: () => this.$Spin.show(),
+                hide: () => this.$Spin.hide(),
             }
             window.$tip = (message) =>
                 this.$Message['success']({
                     background: true,
                     content: message,
                 })
+            // this.$Notice.open({
+            //     title: '提示',
+            //     desc: message
+            // });
             window.$warn = (message) =>
                 this.$Message['error']({
                     background: true,

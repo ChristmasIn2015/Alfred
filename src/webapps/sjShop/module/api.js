@@ -6,8 +6,9 @@ const _server = $common.getServer(
     },
     // 失败
     (error, reject) => reject(error.message),
-    // 'http://192.168.0.105:80'
-    'http://10.52.2.35:80'
+    'http://192.168.0.101:80'
+    // 'http://192.168.199.100:80'
+    // 'http://10.52.2.35:80'
 )
 // ======================================================= 客户
 // * 新增客户
@@ -22,14 +23,29 @@ export function getCustomerList() {
 }
 // ======================================================= 订单
 // * 新增订单
-export function createOrder(houseId, mockGoodList) {
-    let params = { houseId, mockGoodList }
+export function createOrder(houseId, goodList, customerPicked) {
+    let params = { houseId, goodList, customerPicked }
     return _server.request('POST', '/sjShop/order/create', params, $common.getHeaders())
 }
 // * 获取订单列表
 export function getOrderList(houseId) {
     let params = { houseId }
     return _server.request('POST', '/sjShop/order/list', params, $common.getHeaders())
+}
+// * 修改订单状态
+export function changeOrderStatus(orderId, goodStatus, priceStatus) {
+    let params = { orderId, goodStatus, priceStatus }
+    return _server.request('POST', '/sjShop/order/changeStatus', params, $common.getHeaders())
+}
+// * 库存撤回
+export function clearOrderGood(orderId) {
+    let params = { orderId }
+    return _server.request('POST', '/sjShop/order/clearOrderGood', params, $common.getHeaders())
+}
+// * 订单修改
+export function updateOrder(orderId, goodList) {
+    let params = { orderId, goodList }
+    return _server.request('POST', '/sjShop/order/updateOrder', params, $common.getHeaders())
 }
 // ======================================================= 标签
 // * 新增标签

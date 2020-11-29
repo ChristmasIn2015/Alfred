@@ -2,14 +2,13 @@ export default function GoodFilter(target, name, descriptor) {
     let sourceFunction = descriptor.value
     descriptor.value = function() {
         // * 参数
-        this.filterKey = ''
-        this.goodNameList = []
         this.filterTimer = null
+        this.goodNameList = []
+        this.filterKey = ''
         // * 方法
         this.renderGoodNameList = renderGoodNameList
         this.pickGoodName = pickGoodName
         this.filterGoodList = filterGoodList
-        this.filterClear = filterClear
         //
         sourceFunction.apply(this, arguments)
     }
@@ -17,7 +16,7 @@ export default function GoodFilter(target, name, descriptor) {
 // goodList 去重
 function renderGoodNameList() {
     let mySet = new Set()
-    this.goodList.forEach((e) => mySet.add(e.name))
+    this.goodList.forEach((e) => mySet.add(e.name)) // @Good
     this.goodNameList = Array.from(mySet).map((e) => {
         return { name: e, checked: false }
     })
@@ -60,16 +59,7 @@ function filterGoodList() {
         } else {
             list2 = list
         }
-        this.goodList = Object.assign([], list2)
+        $load.hide()
+        this.goodList = Object.assign([], list2) // @Good
     }, 255)
-}
-// 清空筛选
-async function filterClear() {
-    try {
-        this.filterKey = ''
-        this.renderGoodList() // @Good
-        this.renderGoodNameList() // @GoodFilter
-    } catch (error) {
-        $common.loadOff(error)
-    }
 }

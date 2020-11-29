@@ -3,19 +3,11 @@ export default function Good(target, name, descriptor) {
     let sourceFunction = descriptor.value
     descriptor.value = function() {
         // * 参数
-        this.goodTableColumn = [
-            { title: 'Id', key: '_id', width: 150 },
-            { title: '商品名称', key: 'name', width: 120 },
-            { title: '商品规格', slot: 'plugList', width: 200 },
-            { title: '商品库存', slot: 'countList', width: 200 },
-            { title: '成本', key: 'cost', width: 100 },
-            { title: '备注', key: 'tip' },
-            { title: '操作', slot: 'action', width: 200 },
-            { title: '入库时间', key: 'timeString', width: 200 },
-        ]
-        this.goodModal = false
+        this.goodListModal = false
         this.goodSourceList = []
         this.goodList = []
+        //
+        this.goodModal = false
         this.goodModel = {
             _id: -1,
             name: '',
@@ -35,48 +27,48 @@ export default function Good(target, name, descriptor) {
         sourceFunction.apply(this, arguments)
     }
 }
-// * 渲染商品列表
+// 渲染商品列表
 async function renderGoodList() {
     try {
         let houseId = $store.state.houseInfo._id
         if (!houseId) throw new Error('请选择仓库')
         let list = await getGoodList(houseId)
-        this.goodList = Object.assign([], list) // @Good
         this.goodSourceList = Object.assign([], list) // @Good
+        this.goodList = Object.assign([], list) // @Good
     } catch (error) {
         return Promise.reject(error)
     }
 }
-// * 初始化商品表单
+// 商品表单 初始化
 function initGoodModel(model) {
     model = model || {}
-    this.goodModel._id = model._id || -1
-    this.goodModel.name = model.name || ''
-    this.goodModel.plugList = model.plugList || []
     let newCountList = [
         {
             name: '张',
             value: 0,
         },
     ]
-    this.goodModel.countList = model.countList || newCountList
-    this.goodModel.cost = model.cost || ''
-    this.goodModel.tip = model.tip || ''
+    this.goodModel = {
+        _id: model._id || null,
+        name: model.name || '',
+        plugList: model.plugList || [],
+        countList: model.countList || newCountList,
+        cost: model.cost || '',
+        tip: model.tip || '',
+    }
 }
-// * 添加新单位
+// 商品表单 添加一个新单位
 function addGoodCount() {
-    // @Good
     this.goodModel.countList.push({
         name: '吨',
         value: 0,
     })
 }
-// * 删除单位
+// 商品表单 删除一个新单位
 function deleteGoodCount(index) {
-    // @Good
-    if (this.goodModel.countList[index]) this.goodModel.countList.splice(index, 1)
+    this.goodModel.countList.splice(index, 1)
 }
-// * 添加/编辑商品
+// 添加/编辑商品
 async function postGood() {
     try {
         // ** 1
@@ -85,17 +77,7 @@ async function postGood() {
             if (typeof count.name === '') throw new Error('请输入库存单位')
         })
         // ** 2
-        if (this.goodModel._id === -1) {
-            await createGood(
-                $store.state.houseInfo._id,
-                this.goodModel.name,
-                this.goodModel.plugList,
-                this.goodModel.countList,
-                this.goodModel.cost,
-                this.goodModel.tip
-            )
-            $tip(`添加 ${this.goodModel.name} 成功`)
-        } else {
+        if (this.goodModel._id) {
             await editGood(
                 $store.state.houseInfo._id,
                 this.goodModel._id,
@@ -106,12 +88,22 @@ async function postGood() {
                 this.goodModel.tip
             )
             $tip(`编辑 ${this.goodModel.name} 成功`)
+        } else {
+            await createGood(
+                $store.state.houseInfo._id,
+                this.goodModel.name,
+                this.goodModel.plugList,
+                this.goodModel.countList,
+                this.goodModel.cost,
+                this.goodModel.tip
+            )
+            $tip(`添加 ${this.goodModel.name} 成功`)
         }
     } catch (error) {
         return Promise.reject(error)
     }
 }
-// * 删除商品
+// 删除商品
 function deleteMyGood(good) {
     $confirm(`确定要删除 ${good.name} 吗`, async () => {
         try {
@@ -120,7 +112,7 @@ function deleteMyGood(good) {
             await this.renderGoodList() // @Good
             await this.renderGoodNameList() // @GoodFilter
         } catch (error) {
-            return Promise.reject(error)
+            $common.loadOff(error)
         }
     })
 }

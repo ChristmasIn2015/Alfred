@@ -4,12 +4,6 @@ export default function CustomerParams(target, name, descriptor) {
     descriptor.value = function() {
         // * 参数
         this.customerModal = false
-        this.customerTableColumn = [
-            { title: '公司', key: 'companyName' },
-            { title: '地址', key: 'companyAddress' },
-            { title: '联系人', key: 'contact' },
-            { title: '操作', slot: 'action' },
-        ]
         this.customerModel = {
             company: '',
             address: '',

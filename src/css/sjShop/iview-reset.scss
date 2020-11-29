@@ -68,6 +68,12 @@
             color: $tip-0;
         }
     }
+    .ivu-input-disabled {
+        color: $tip-1;
+        &:hover {
+            border: 2px solid transparent;
+        }
+    }
 }
 .no-radius {
     .ivu-input {
@@ -82,13 +88,20 @@
     right: 0;
     transform: translateY(-50%);
 }
+.ivu-btn-line {
+    margin-bottom: 1rem;
+    .ivu-input-wrapper,
+    .ivu-btn {
+        margin-right: 0.5rem;
+    }
+}
 
 // * 按钮
 .ivu-btn {
     color: $white-0;
     height: 2.5rem;
     border: 2px solid transparent;
-    box-shadow: 1px 1px 1px 1px $shadow;
+    box-shadow: 1px 1px 1px 1px $shadow !important;
     .fa {
         margin-right: 0.25rem;
     }
@@ -97,7 +110,7 @@
         border: 2px solid transparent;
     }
     &:active {
-        box-shadow: 1px 1px 1px 1px $shadow;
+        box-shadow: 1px 1px 1px 1px $shadow !important;
     }
 }
 .ivu-btn-small {
@@ -196,6 +209,16 @@
             border: 1px solid transparent !important;
             background-color: transparent !important ;
             color: $tip-1;
+        }
+    }
+}
+
+// * 加载
+.ivu-spin-fullscreen {
+    background-color: transparent;
+    .ivu-spin-main {
+        .ivu-spin-dot {
+            background-color: $main-0;
         }
     }
 }

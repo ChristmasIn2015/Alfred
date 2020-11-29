@@ -45,5 +45,18 @@ export default class Common {
             hearder
         )
     }
+    TryCatch(target, name, descriptor) {
+        let sourceFunction = descriptor.value
+        descriptor.value = async function() {
+            try {
+                $load.show()
+                await sourceFunction.apply(this, arguments)
+                $load.hide()
+            } catch (error) {
+                $common.loadOff(error)
+            }
+        }
+        return descriptor
+    }
 }
 window.$common = new Common()

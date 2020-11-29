@@ -18,11 +18,9 @@ export default function Shop(target, name, descriptor) {
 // * 渲染店铺列表
 async function renderShopList() {
     try {
-        $load.show()
         let data = await getShopList()
         this.shopList = Object.assign([], data.shopList)
         this.officeList = Object.assign([], data.officeList)
-        $load.hide()
     } catch (error) {
         return Promise.reject(error)
     }
@@ -31,14 +29,15 @@ async function renderShopList() {
 async function createMyShop() {
     try {
         if (!this.iAmLogined()) return
-        $load.show()
         if (!this.shopCreateName) throw new Error('请输入店铺名称')
+        $load.show()
         await createShop(this.shopCreateName)
         let data = await getShopList()
         this.shopList = Object.assign([], data.shopList)
         this.shopModal = false
         $load.hide()
     } catch (error) {
+        $common.loadOff(error)
         return Promise.reject(error)
     }
 }

@@ -5,7 +5,9 @@ export default function House(target, name, descriptor) {
         // * 参数
         this.houseModal = false
         this.houseList = []
+        //
         this.houseCreateName = ''
+        //
         // * 方法
         this.renderHouseList = renderHouseList
         this.createMyHouse = createMyHouse
@@ -13,15 +15,13 @@ export default function House(target, name, descriptor) {
         sourceFunction.apply(this, arguments)
     }
 }
-// * 渲染仓库列表
+// 渲染仓库列表
 async function renderHouseList() {
     try {
         let shopId = $store.state.shopInfo._id
-        if (!shopId) return
-        $load.show()
+        if (!shopId) throw new Error('请选择店铺')
         let data = await getHouseList(shopId)
         this.houseList = Object.assign([], data)
-        $load.hide()
     } catch (error) {
         return Promise.reject(error)
     }
@@ -40,6 +40,6 @@ async function createMyHouse() {
         this.houseModal = false
         $load.hide()
     } catch (error) {
-        return Promise.reject(error)
+        $common.loadOff(error)
     }
 }
