@@ -5,8 +5,8 @@ const _server = $common.getServer(
         result.code === 200 ? resolve(result.data) : reject(result.message)
     },
     // 失败
-    (error, reject) => reject(error.message),
-    'http://192.168.0.101:80'
+    (error, reject) => reject(error.message)
+    // 'http://192.168.0.101:80'
     // 'http://192.168.199.100:80'
     // 'http://10.52.2.35:80'
 )
