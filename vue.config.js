@@ -7,6 +7,7 @@ function getPages() {
     webpackJsEntryList.forEach((filepath) => {
         let fileList = filepath.split('/')
         let projectName = fileList[fileList.length - 2]
+        if (projectName !== 'log') return
         viewsMap[projectName] = {
             entry: `src/webapps/${projectName}/main.js`, // Webpack 打包入口
             template: `src/public/index.html`, // Html-webpack-plugin 插件的模板来源
