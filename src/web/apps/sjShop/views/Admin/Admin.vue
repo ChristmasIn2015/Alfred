@@ -192,5 +192,5 @@
 </script>
 
 <style lang="scss">
-    @import '@/css/sjShop/_index.scss';
+    @import '../../styles/index.scss';
 </style>

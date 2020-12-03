@@ -1,6 +1,6 @@
-import Tag from '@/webapps/sjShop/module/Tag.js'
-import Good from '@/webapps/sjShop/module/Good.js'
-import GoodFilter from '@/webapps/sjShop/module/GoodFilter.js'
+import Tag from '@/web/apps/sjShop/module/Tag.js'
+import Good from '@/web/apps/sjShop/module/Good.js'
+import GoodFilter from '@/web/apps/sjShop/module/GoodFilter.js'
 
 export default class React {
     constructor() {

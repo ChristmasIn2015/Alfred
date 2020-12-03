@@ -15,11 +15,11 @@ body,
     user-select: none;
 }
 // * 基础
-@import '../base/flex.scss';
-@import '../base/func.scss';
-@import '../base/animation.scss';
-// * 搭配色彩方案
-@import '../color/black-purple.scss';
+@import '@/web/styles/base/flex.scss';
+@import '@/web/styles/base/func.scss';
+@import '@/web/styles/base/animation.scss';
+// * 色彩方案
+@import '@/web/styles/color/black-purple.scss';
 // * 功能型CSS
 @import './dash-board.scss';
-@import './iview-reset.scss';
+@import './dash-board-iview.scss';

@@ -1,15 +1,13 @@
 import Vue from 'vue'
-Vue.config.productionTip = false
-
-// *
+// ***************************** 自定义模块 **********************************
+// * ui
 import 'font-awesome/css/font-awesome.min.css'
-// import '@/css/sjShop/UI'
 import ViewUI from 'view-design'
 import 'view-design/dist/styles/iview.css'
 Vue.use(ViewUI)
-
-// *
-import '@/common/common.js'
+// * common
+import '@/web/utils/common.js'
+// ***************************** 自定义模块 **********************************
 
 // 1.使用Vue路由
 import VueRouter from 'vue-router'
@@ -26,7 +24,8 @@ import store from './views/store'
 const myStore = new Vuex.Store(store)
 window.$store = myStore
 
-// *.创建实例
+// 3.创建实例
+Vue.config.productionTip = false
 import App from './views/Admin/Admin.vue'
 new Vue({
     render: (h) => h(App),

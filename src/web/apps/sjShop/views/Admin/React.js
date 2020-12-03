@@ -1,6 +1,6 @@
-import Login from '@/webapps/sjShop/module/Login.js'
-import Shop from '@/webapps/sjShop/module/Shop.js'
-import House from '@/webapps/sjShop/module/House.js'
+import Login from '@/web/apps/sjShop/module/Login.js'
+import Shop from '@/web/apps/sjShop/module/Shop.js'
+import House from '@/web/apps/sjShop/module/House.js'
 
 export default class React {
     constructor() {

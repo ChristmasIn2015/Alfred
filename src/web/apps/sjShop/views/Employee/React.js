@@ -1,4 +1,4 @@
-import Employee from '@/webapps/sjShop/module/Employee.js'
+import Employee from '@/web/apps/sjShop/module/Employee.js'
 
 export default class React {
     constructor() {
