@@ -4,7 +4,8 @@
     "private": true,
     "scripts": {
         "serve": "vue-cli-service serve",
-        "server": "vue-cli-service serve",
+        "packNode": "webpack --config ./src/node/webpack.config.js",
+        "server": "npm run packNode && node ./src/node/apps/manager.js",
         "build": "vue-cli-service build"
     },
     "dependencies": {
@@ -12,18 +13,28 @@
         "core-js": "^3.6.5",
         "fingerprintjs": "^0.5.3",
         "font-awesome": "^4.7.0",
+        "fs-extra": "^9.0.1",
         "view-design": "^4.4.0",
         "vue": "^2.6.11",
         "vue-router": "^3.2.0",
         "vuex": "^3.5.1"
     },
     "devDependencies": {
+        "@babel/cli": "^7.12.1",
+        "@babel/core": "^7.12.3",
         "@babel/plugin-proposal-decorators": "^7.12.1",
         "@babel/plugin-proposal-private-methods": "^7.12.1",
+        "@babel/plugin-transform-runtime": "^7.12.1",
+        "@babel/preset-env": "^7.12.1",
         "@vue/cli-plugin-babel": "~4.5.0",
         "@vue/cli-plugin-router": "~4.5.0",
         "@vue/cli-service": "~4.5.0",
         "babel-loader": "^8.0.5",
+        "body-parser": "^1.19.0",
+        "express": "^4.17.1",
+        "js-md5": "^0.7.3",
+        "jsonwebtoken": "^8.5.1",
+        "mongodb": "^3.6.3",
         "sass": "^1.26.5",
         "sass-loader": "^8.0.2",
         "vue-template-compiler": "^2.6.11",

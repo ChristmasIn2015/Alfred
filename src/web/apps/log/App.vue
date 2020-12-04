@@ -7,7 +7,7 @@
             return {}
         },
         mounted() {
-            $common.fetch('http://10.52.2.35:80/sjShop/error/list').then((res) => console.log(res.data))
+            $common.fetch('http://10.52.2.35:7001/sjShop/error/list').then((res) => console.log(res.data))
         },
     }
 </script>
