@@ -16,8 +16,7 @@
         },
         methods: {
             openDevTool() {
-                console.log('openDevTool')
-                $electron.ipcRenderer.send('openDevTool', Math.random())
+                $electron.ipcRenderer.send('openDevTool')
             },
         },
     }

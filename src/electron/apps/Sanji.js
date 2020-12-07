@@ -1,17 +1,10 @@
+// npm config edit
+// electron_mirror=https://npm.taobao.org/mirrors/electron/
+
 const { app, ipcMain, BrowserWindow, Menu } = require('electron')
 
 // Node 打开Chromium控制台
-ipcMain.on('openDevTool', (event, arg) => {
-    try {
-        // return new Promise((resolve, reject) => {
-        console.log(arg)
-        event.sender.openDevTools()
-        // resolve(true)
-        // })
-    } catch (error) {
-        console.log(error.message)
-    }
-})
+ipcMain.on('openDevTool', (event, arg) => event.sender.openDevTools())
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit()
 })
@@ -23,7 +16,7 @@ app.on('ready', () => {
         resizable: false,
         webPreferences: {
             nodeIntegration: true, // 为了让Vue app在浏览器内核中能够使用到Electron的API
-            preload: require('path').join(__dirname, '../utils/render.js'), // existsSync is not a function
+            preload: require('path').join(__dirname, '../utils/preload.js'), // existsSync is not a function
         },
     })
     let instance = global.SanJi
