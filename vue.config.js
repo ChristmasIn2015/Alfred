@@ -1,26 +1,32 @@
-// * Node glob 模块允许你使用 *等符号, 来解析匹配路径
-// * glob.sync: Array 用于同步获取匹配的文件列表
-// * 这个方法用于获取多页项目下的所有Webpack入口文件
 function getPages() {
     let viewsMap = {}
+    let list = []
     require('glob')
         .sync('./src/web/apps/*/*.js')
-        .forEach((filepath) => {
-            let fileList = filepath.split('/')
-            let projectName = fileList[fileList.length - 2]
-            viewsMap[projectName] = {
-                entry: `src/web/apps/${projectName}/main.js`, // Webpack 打包入口
-                template: `src/public/index.html`, // Html-webpack-plugin 插件的模板来源
-                filename: `${projectName}.html`, // 在 dist/index.html 的输出
-                chunks: ['chunk-vendors', 'chunk-common', projectName], // 提取出来的通用 chunk 和 vendor chunk。
+        .forEach((filePath) => {
+            let entry = {
+                name: filePath.split('/').reverse()[1],
+                filePath,
+            }
+            if (process.argv[3] === 'electron') {
+                entry.name.indexOf('_') === 0 ? list.push(entry) : ''
+            } else {
+                entry.name.indexOf('_') !== 0 ? list.push(entry) : ''
             }
         })
+    //
+    list.forEach((entry) => {
+        viewsMap[entry.name] = {
+            entry: entry.filePath, // Webpack 打包入口
+            template: `src/public/index.html`, // Html-webpack-plugin 插件的模板来源
+            filename: `${entry.name}.html`, // 在 dist/index.html 的输出
+            chunks: ['chunk-vendors', 'chunk-common', entry.name], // 提取出来的通用 chunk 和 vendor chunk。
+        }
+    })
     return viewsMap
 }
 module.exports = {
-    // ** 200811 本地通过 file:// 加载单页成功 **
     publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
-
-    // ** 多页模式 **
+    outputDir: './src/web/dist',
     pages: getPages(),
 }

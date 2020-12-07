@@ -7,7 +7,7 @@ import 'view-design/dist/styles/iview.css'
 Vue.use(ViewUI)
 // * common
 import '@/web/utils/common.js'
-// ***************************** 自定义模块 **********************************
+// ***************************** Vue **********************************
 
 // 1.使用Vue路由
 import VueRouter from 'vue-router'
@@ -32,3 +32,4 @@ new Vue({
     router: myRoutes,
     store: myStore,
 }).$mount('#app')
+// ***************************** End **********************************

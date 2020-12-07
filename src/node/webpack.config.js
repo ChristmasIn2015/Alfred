@@ -7,7 +7,7 @@ function getEntrys() {
     let list = require('glob').sync('./src/node/apps/*/*.js')
     let entrys = {}
     list.forEach((e) => {
-        entrys[`Server_${e.split('/').reverse()[1]}`] = e
+        entrys[`${e.split('/').reverse()[1]}`] = e
     })
     return entrys
 }

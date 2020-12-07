@@ -1,5 +1,6 @@
-import Server from '../../mongoDB/Server.js'
-import Operator from '../../mongoDB/Operator.js'
+import Server from '../../../database/mongoDB/Server.js'
+import Operator from '../../../database/mongoDB/Operator.js'
+//
 import _Error from './modules/Error.js'
 import User from './modules/User.js'
 import Shop from './modules/Shop.js'
@@ -169,7 +170,7 @@ class Cabin {
     }
 }
 // * manager
-global.Server_SanJi_Shop = Cabin
+global.Server_sjShop = Cabin
 
 //
 function getRedLog(message) {
