@@ -1,5 +1,5 @@
 import Response from '../../../utils/Response.js'
-class CustomerPackager {
+export default class Customer {
     constructor() {}
     #getModel() {
         return {
@@ -13,7 +13,7 @@ class CustomerPackager {
     @Response('添加客户成功')
     async addCustomer(request, response, Cabin) {
         // 1.
-        let user = await Cabin.UserPackager.userCharge(request, response, Cabin)
+        let user = await Cabin.userCharge(request, response, Cabin)
 
         //
         let model = this.#getModel()
@@ -27,7 +27,7 @@ class CustomerPackager {
     @Response()
     async getCustomerList(request, response, Cabin) {
         // 1.
-        let user = await Cabin.UserPackager.userCharge(request, response, Cabin)
+        let user = await Cabin.userCharge(request, response, Cabin)
 
         //
         let list = await Cabin.Customer.query({ byUserId: user._id })

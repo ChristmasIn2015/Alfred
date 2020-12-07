@@ -1,14 +1,11 @@
-// *
-// *
 import Response from '../../../utils/Response.js'
-class EmployeePackager {
+export default class Employee {
     constructor() {}
 
-    //
     @Response('添加员工成功')
     async addEmployee(request, response, Cabin) {
         // 1.
-        let user = await Cabin.UserPackager.userCharge(request, response, Cabin)
+        let user = await Cabin.userCharge(request, response, Cabin)
 
         // 2.希望加入店铺的员工必须已注册
         let userDoc = await Cabin.User.get({ phone: request.body.phone })
@@ -34,7 +31,7 @@ class EmployeePackager {
     @Response()
     async getEmployeeList(request, response, Cabin) {
         // 1.
-        let user = await Cabin.UserPackager.userCharge(request, response, Cabin)
+        let user = await Cabin.userCharge(request, response, Cabin)
 
         // 2.找到这个店铺
         let shopDoc = await Cabin.Shop.get({ _id: request.body.shopId })
@@ -54,7 +51,7 @@ class EmployeePackager {
     // @Response()
     // async deleteEmployee(request, response, Cabin) {
     //     // 1.
-    //     let user = await Cabin.UserPackager.userCharge(request, response, Cabin)
+    //     let user = await Cabin.userCharge(request, response, Cabin)
 
     //     // 2.取得需要删除的雇员
     //     let employee = await Cabin.Employee.get({ userId: request.body.employeeId, role: 1 }) // ShopEmployee

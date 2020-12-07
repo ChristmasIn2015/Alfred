@@ -1,7 +1,7 @@
 import Response from '../../../utils/Response.js'
 const jwt = require('jsonwebtoken')
 const md5 = require('js-md5')
-export default class UserPackager {
+export default class User {
     constructor() {
         this.jwtKey = 'Wqao'
     }
@@ -16,7 +16,16 @@ export default class UserPackager {
             officeIds: [],
         }
     }
-    //
+
+    async userCharge(request, response, Cabin) {
+        // 1.找到这个手机号对应的用户
+        if (!request.header('authorization')) throw new Error('获取用户信息失败, 请重新登录')
+        let userPhone = this.#getTokenInfo(request.header('authorization')).phone
+        let user = await Cabin.User.get({ phone: userPhone })
+        if (!user) throw new Error('获取用户信息失败, 请重新登录')
+        return user
+    }
+
     @Response('登录成功')
     async login(request, response, Cabin) {
         // * 准备参数
@@ -55,7 +64,6 @@ export default class UserPackager {
         }
     }
 
-    //
     @Response()
     async getUserInfo(request, response, Cabin) {
         // 1.找到这个手机号对应的用户
@@ -70,24 +78,14 @@ export default class UserPackager {
         }
     }
 
-    //
-    async userCharge(request, response, Cabin) {
-        // 1.找到这个手机号对应的用户
-        if (!request.header('authorization')) throw new Error('获取用户信息失败, 请重新登录')
-        let userPhone = this.#getTokenInfo(request.header('authorization')).phone
-        let user = await Cabin.User.get({ phone: userPhone })
-        if (!user) throw new Error('获取用户信息失败, 请重新登录')
-        return user
-    }
-
     // 生成一个Token
     #createToken(params) {
-        let myToken = jwt.sign(params, jwtKey)
+        let myToken = jwt.sign(params, this.jwtKey)
         return myToken
     }
     // 获取Token中的信息
     #getTokenInfo(token) {
-        let info = jwt.verify(token, jwtKey)
+        let info = jwt.verify(token, this.jwtKey)
         return info
     }
 }

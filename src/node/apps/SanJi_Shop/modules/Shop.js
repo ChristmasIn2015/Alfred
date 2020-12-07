@@ -1,16 +1,16 @@
 import Response from '../../../utils/Response.js'
-class ShopPackager {
+export default class Shop {
     constructor() {}
     #getModel() {
         return {
             name: '',
         }
     }
-    //
+
     @Response('添加店铺成功')
     async addShop(request, response, Cabin) {
         // 1.
-        let user = await Cabin.UserPackager.userCharge(request, response, Cabin)
+        let user = await Cabin.userCharge(request, response, Cabin)
 
         // 2.
         let model = this.#getModel()
@@ -22,11 +22,10 @@ class ShopPackager {
         await Cabin.Employee.create(relationShip)
     }
 
-    //
     @Response()
     async getShopList(request, response, Cabin) {
         // 1.
-        let user = await Cabin.UserPackager.userCharge(request, response, Cabin)
+        let user = await Cabin.userCharge(request, response, Cabin)
 
         // 2.获取请求者身份为店长 role=0 的所有店铺
         let query = { userId: user._id, role: 0 }
@@ -51,11 +50,10 @@ class ShopPackager {
         return { shopList, officeList }
     }
 
-    //
     @Response()
     async deleteShop(request, response, Cabin) {
         // 1.
-        let user = await Cabin.UserPackager.userCharge(request, response, Cabin)
+        let user = await Cabin.userCharge(request, response, Cabin)
 
         // 2.
         let query = { shopId: request.body.shopId, userId: user._id }

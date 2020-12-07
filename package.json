@@ -4,8 +4,7 @@
     "private": true,
     "scripts": {
         "serve": "vue-cli-service serve",
-        "packNode": "webpack --config ./src/node/webpack.config.js",
-        "server": "npm run packNode && node ./src/node/apps/manager.js",
+        "server": "webpack --config ./src/node/webpack.config.js && node ./src/node/apps/manager.js",
         "build": "vue-cli-service build"
     },
     "dependencies": {

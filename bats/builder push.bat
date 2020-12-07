@@ -1,1 +1,1 @@
-cd sjWebApps && git add . && git commit -m "auto push from lvmama" && git push
+cd WebBuilder && git add . && git commit -m "auto push by bats" && git push

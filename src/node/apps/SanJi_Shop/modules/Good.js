@@ -1,7 +1,5 @@
-// *
-// *
 import Response from '../../../utils/Response.js'
-class GoodPackager {
+export default class Good {
     constructor() {}
     #getModel() {
         return {
@@ -14,7 +12,7 @@ class GoodPackager {
     @Response('添加商品成功')
     async addGood(request, response, Cabin) {
         // 1.
-        let user = await Cabin.UserPackager.userCharge(request, response, Cabin)
+        let user = await Cabin.userCharge(request, response, Cabin)
 
         // 2.
         if (!request.body.name) throw new Error(`商品名称不能为${request.body.name}`)
@@ -61,7 +59,7 @@ class GoodPackager {
     @Response()
     async getGoodList(request, response, Cabin) {
         // 1.
-        let user = await Cabin.UserPackager.userCharge(request, response, Cabin)
+        let user = await Cabin.userCharge(request, response, Cabin)
 
         // 2.取得所有商品
         let goodList = await Cabin.Good.query({ byHouseId: request.body.byHouseId })
@@ -98,7 +96,7 @@ class GoodPackager {
     @Response('修改商品成功')
     async updateGood(request, response, Cabin) {
         // 1.
-        let user = await Cabin.UserPackager.userCharge(request, response, Cabin)
+        let user = await Cabin.userCharge(request, response, Cabin)
 
         // 1.更新商品数据库
         if (!request.body.name) throw new Error('商品名称不能为空')
@@ -149,7 +147,7 @@ class GoodPackager {
     @Response('删除商品成功')
     async deleteGood(request, response, Cabin) {
         // 1
-        let user = await Cabin.UserPackager.userCharge(request, response, Cabin)
+        let user = await Cabin.userCharge(request, response, Cabin)
 
         // 2 删除这个商品
         await Cabin.Good.delete(request.body.goodId)

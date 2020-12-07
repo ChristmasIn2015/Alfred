@@ -1,6 +1,14 @@
 import Server from '../../mongoDB/Server.js'
 import Operator from '../../mongoDB/Operator.js'
-import AppError from './modules/AppError.js'
+import _Error from './modules/Error.js'
+import User from './modules/User.js'
+import Shop from './modules/Shop.js'
+import Employee from './modules/Employee.js'
+import House from './modules/House.js'
+import Tag from './modules/Tag.js'
+import Good from './modules/Good.js'
+import Order from './modules/Order.js'
+import Customer from './modules/Customer.js'
 class Cabin {
     // * 基础
     express = require('express')
@@ -18,91 +26,85 @@ class Cabin {
             this.expressAPP = this.express()
             this.initCabin() // ASYNC
         } else {
-            console.log('请配置正确端口', socketNumber)
+            console.log('请配置正确的端口', socketNumber)
         }
     }
+
+    // 初始化服务控制台
     async initCabin() {
         try {
-            // 1.创建数据库链接 并初始化操作员
+            // 1 创建数据库链接
             this.server = new Server('mongodb://127.0.0.1:27017', 'sjShop')
             await this.server.start()
-            await this.initOperator()
 
-            // 2.绑定调度员并暴露调度方法
-            this.initDispatcher()
-
-            // 3.启动Express服务
-            this.initExpress()
-        } catch (error) {
-            typeof error === 'string' ? console.log(error) : console.log(error.message)
-        }
-    }
-    async initOperator() {
-        try {
-            this.operatorList = ['Error']
+            // 2 初始化数据库操作员
+            this.operatorList = ['Error', 'User', 'Shop', 'Employee', 'House', 'Tag', 'Good', 'GoodTag', 'Order', 'Customer']
             for (let key in this.operatorList) {
                 let dbName = this.operatorList[key]
                 let collection = await this.server.getCollection(dbName)
                 this[dbName] = new Operator(collection)
             }
-            this.operatorList
+
+            // 3 绑定调度员并暴露调度方法
+            this.#initDispatcher()
+
+            // 4 启动Express服务
+            this.#initExpress()
         } catch (error) {
-            return Promise.reject(error)
+            let message = typeof error === 'string' ? error : error.message
+            console.log(getRedLog(message))
+            console.log()
+            process.exit()
         }
     }
-    initDispatcher() {
-        this.bindClass('AppError', AppError)
-        this.appList.push({ method: 'POST', route: '/sjShop/error/create', next: this.addError }) // @AppError
-        this.appList.push({ method: 'GET', route: '/sjShop/error/list', next: this.getErrorList }) // @AppError
 
-        // // * PackUser
-        // await this.initOperator('User')
-        // appList.push({ method: 'POST', route: '/sjShop/user/login', next: this.UserPackager.login })
-        // appList.push({ method: 'GET', route: '/sjShop/user/info', next: this.UserPackager.getUserInfo })
+    // * 初始化调度员
+    #initDispatcher() {
+        this.#bindDispatcher('_Error', _Error)
+        this.appList.push({ method: 'POST', route: '/sjShop/error/create', next: this.addError })
+        this.appList.push({ method: 'GET', route: '/sjShop/error/list', next: this.getErrorList })
 
-        // // * PackShop
-        // // * PackEmployee
-        // await this.initOperator('Employee')
-        // await this.initOperator('Shop')
-        // appList.push({ method: 'POST', route: '/sjShop/shop/create', next: this.ShopPackager.addShop }) // @Employee 0
-        // appList.push({ method: 'GET', route: '/sjShop/shop/list', next: this.ShopPackager.getShopList }) // @Employee
-        // appList.push({ method: 'POST', route: '/sjShop/shop/delete', next: this.ShopPackager.deleteShop }) // @Employee
-        // appList.push({ method: 'POST', route: '/sjShop/employee/create', next: this.EmployeePackager.addEmployee }) // @Employee
-        // appList.push({ method: 'POST', route: '/sjShop/employee/list', next: this.EmployeePackager.getEmployeeList }) // @Employee
+        this.#bindDispatcher('User', User)
+        this.appList.push({ method: 'POST', route: '/sjShop/user/login', next: this.login })
+        this.appList.push({ method: 'GET', route: '/sjShop/user/info', next: this.getUserInfo })
 
-        // // * PackHouse
-        // await this.initOperator('House')
-        // appList.push({ method: 'POST', route: '/sjShop/house/create', next: this.HousePackager.addHouse })
-        // appList.push({ method: 'POST', route: '/sjShop/house/list', next: this.HousePackager.getHouseList })
+        this.#bindDispatcher('Shop', Shop)
+        this.appList.push({ method: 'POST', route: '/sjShop/shop/create', next: this.addShop })
+        this.appList.push({ method: 'GET', route: '/sjShop/shop/list', next: this.getShopList })
+        this.appList.push({ method: 'POST', route: '/sjShop/shop/delete', next: this.deleteShop })
 
-        // // * PackTag
-        // await this.initOperator('GoodTag')
-        // await this.initOperator('Tag')
-        // appList.push({ method: 'POST', route: '/sjShop/tag/create', next: this.TagPackager.addTag }) // @GoodTag 0
-        // appList.push({ method: 'POST', route: '/sjShop/tag/plugList', next: this.TagPackager.getPlugList })
-        // appList.push({ method: 'POST', route: '/sjShop/tag/delete', next: this.TagPackager.deleteTag })
+        this.#bindDispatcher('Employee', Employee)
+        this.appList.push({ method: 'POST', route: '/sjShop/employee/create', next: this.addEmployee })
+        this.appList.push({ method: 'POST', route: '/sjShop/employee/list', next: this.getEmployeeList })
 
-        // // * PackGood
-        // await this.initOperator('Good')
-        // appList.push({ method: 'POST', route: '/sjShop/good/create', next: this.GoodPackager.addGood })
-        // appList.push({ method: 'POST', route: '/sjShop/good/list', next: this.GoodPackager.getGoodList })
-        // appList.push({ method: 'POST', route: '/sjShop/good/edit', next: this.GoodPackager.updateGood })
-        // appList.push({ method: 'POST', route: '/sjShop/good/delete', next: this.GoodPackager.deleteGood })
+        this.#bindDispatcher('House', House)
+        this.appList.push({ method: 'POST', route: '/sjShop/house/create', next: this.addHouse })
+        this.appList.push({ method: 'POST', route: '/sjShop/house/list', next: this.getHouseList })
 
-        // // * PackOrder
-        // await this.initOperator('Order')
-        // appList.push({ method: 'POST', route: '/sjShop/order/create', next: this.OrderPackager.addOrder })
-        // appList.push({ method: 'POST', route: '/sjShop/order/list', next: this.OrderPackager.getOrderList })
-        // appList.push({ method: 'POST', route: '/sjShop/order/changeStatus', next: this.OrderPackager.changeOrderStatus })
-        // appList.push({ method: 'POST', route: '/sjShop/order/clearOrderGood', next: this.OrderPackager.clearOrderGood })
-        // appList.push({ method: 'POST', route: '/sjShop/order/updateOrder', next: this.OrderPackager.updateOrder })
+        this.#bindDispatcher('Tag', Tag)
+        this.appList.push({ method: 'POST', route: '/sjShop/tag/create', next: this.addTag })
+        this.appList.push({ method: 'POST', route: '/sjShop/tag/plugList', next: this.getPlugList })
+        this.appList.push({ method: 'POST', route: '/sjShop/tag/delete', next: this.deleteTag })
 
-        // // * Customer
-        // await this.initOperator('Customer')
-        // appList.push({ method: 'POST', route: '/sjShop/customer/create', next: this.CustomerPackager.addCustomer })
-        // appList.push({ method: 'POST', route: '/sjShop/customer/list', next: this.CustomerPackager.getCustomerList })}
+        this.#bindDispatcher('Good', Good)
+        this.appList.push({ method: 'POST', route: '/sjShop/good/create', next: this.addGood })
+        this.appList.push({ method: 'POST', route: '/sjShop/good/list', next: this.getGoodList })
+        this.appList.push({ method: 'POST', route: '/sjShop/good/edit', next: this.updateGood })
+        this.appList.push({ method: 'POST', route: '/sjShop/good/delete', next: this.deleteGood })
+
+        this.#bindDispatcher('Order', Order)
+        this.appList.push({ method: 'POST', route: '/sjShop/order/create', next: this.addOrder })
+        this.appList.push({ method: 'POST', route: '/sjShop/order/list', next: this.getOrderList })
+        this.appList.push({ method: 'POST', route: '/sjShop/order/changeStatus', next: this.changeOrderStatus })
+        this.appList.push({ method: 'POST', route: '/sjShop/order/clearOrderGood', next: this.clearOrderGood })
+        this.appList.push({ method: 'POST', route: '/sjShop/order/updateOrder', next: this.updateOrder })
+
+        this.#bindDispatcher('Customer', Customer)
+        this.appList.push({ method: 'POST', route: '/sjShop/customer/create', next: this.addCustomer })
+        this.appList.push({ method: 'POST', route: '/sjShop/customer/list', next: this.getCustomerList })
     }
-    initExpress() {
+
+    #initExpress() {
         this.expressAPP.all('*', (req, res, next) => {
             res.header('Access-Control-Allow-Origin', '*')
             res.header('Access-Control-Allow-Headers', '*')
@@ -126,8 +128,9 @@ class Cabin {
         this.expressAPP.listen(this.socketNumber)
         this.printCabinInfo()
     }
+
     // * 将某个类原型上的所有方法绑定到this的原型上
-    bindClass(TargetClassName, TargetClass) {
+    #bindDispatcher(TargetClassName, TargetClass) {
         if (this.__proto__ && TargetClass.prototype) {
             // 1.在this的原型上创建目标对象
             this.__proto__[TargetClassName] = new TargetClass()
@@ -142,6 +145,7 @@ class Cabin {
             })
         }
     }
+
     // * 获取Cabin信息
     printCabinInfo() {
         if (global.process.platform === 'win32') {
@@ -152,8 +156,8 @@ class Cabin {
                         let value = interfaces[index][key]
                         if (value.family === 'IPv4') {
                             console.log()
-                            console.log(getGreenLog('数据服务链接成功'), this.server.dbAddress)
-                            console.log(getGreenLog('Web服务启动成功 '), getLink(`http://${value.address}:${this.socketNumber}`))
+                            console.log(getGreenLog(' 数据服务链接成功 '), this.server.dbAddress)
+                            console.log(getGreenLog(' Web服务启动成功  '), getLink(`http://${value.address}:${this.socketNumber}`))
                             console.log()
                             break
                         }

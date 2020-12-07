@@ -1,5 +1,5 @@
 import Response from '../../../utils/Response.js'
-export default class AppError {
+export default class _Error {
     constructor() {}
     #getModel() {
         return {
@@ -7,7 +7,7 @@ export default class AppError {
             message: '',
         }
     }
-    //
+
     @Response('添加日志成功')
     async addError(request, response, Cabin) {
         let model = this.#getModel()
@@ -16,7 +16,6 @@ export default class AppError {
         await Cabin.Error.create(model)
     }
 
-    //
     @Response()
     async getErrorList(request, response, Cabin) {
         let list = await Cabin.Error.query({})

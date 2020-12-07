@@ -1,5 +1,5 @@
 import Response from '../../../utils/Response.js'
-class TagPackager {
+export default class Tag {
     constructor() {}
     #getModel() {
         return {
@@ -11,7 +11,7 @@ class TagPackager {
     @Response('添加标签成功')
     async addTag(request, response, Cabin) {
         // 1.
-        let user = await Cabin.UserPackager.userCharge(request, response, Cabin)
+        let user = await Cabin.userCharge(request, response, Cabin)
 
         // 2.
         let model = this.#getModel()
@@ -36,7 +36,7 @@ class TagPackager {
     @Response()
     async getPlugList(request, response, Cabin) {
         // 1.
-        let user = await Cabin.UserPackager.userCharge(request, response, Cabin)
+        let user = await Cabin.userCharge(request, response, Cabin)
 
         // 2.默认返回所有商品的规格标签
         let query = { goodId: request.body.goodId || null, tagType: -1 }
@@ -53,7 +53,7 @@ class TagPackager {
     @Response('删除标签成功')
     async deleteTag(request, response, Cabin) {
         // 1.
-        let user = await Cabin.UserPackager.userCharge(request, response, Cabin)
+        let user = await Cabin.userCharge(request, response, Cabin)
 
         // 2.
         await Cabin.Tag.delete(request.body.tagId)

@@ -10,7 +10,7 @@ const socketer = global.socketer
 // *
 try {
     const serverName = process.argv[2]
-    if (!serverName) throw new Error('* 未启动任何node应用')
+    if (!serverName) throw new Error(`* 未找到 ${serverName} 应用`)
     let apps = require('glob').sync('./src/node/apps/*/*.js')
     for (let i in apps) {
         if (serverName === apps[i].split('/').reverse()[1]) {
@@ -29,14 +29,14 @@ try {
         }
     }
 } catch (error) {
-    console.log(error.message)
+    console.log()
+    console.log(`\x1B[41m\x1B[30m${error.message}\x1B[0m`)
+    console.log()
 } finally {
     for (let index in socketer.list) {
         let app = socketer.list[index]
         require(app.path)
         let Runner = global[app.name]
-        if (Runner) {
-            app.instance = new Runner(app.count)
-        }
+        if (Runner) app.instance = new Runner(app.count)
     }
 }

@@ -1,6 +1,5 @@
 import Response from '../../../utils/Response.js'
-function this.
-class OrderPackager {
+export default class Order {
     constructor() {}
     #getModel() {
         return {
@@ -17,7 +16,7 @@ class OrderPackager {
     @Response()
     async addOrder(request, response, Cabin) {
         // 1.
-        let user = await Cabin.UserPackager.userCharge(request, response, Cabin)
+        let user = await Cabin.userCharge(request, response, Cabin)
 
         // 2.
         let model = this.#getModel()
@@ -49,7 +48,7 @@ class OrderPackager {
     @Response()
     async getOrderList(request, response, Cabin) {
         // 1.
-        let user = await Cabin.UserPackager.userCharge(request, response, Cabin)
+        let user = await Cabin.userCharge(request, response, Cabin)
 
         // 2.
         let orderList = await Cabin.Order.query({ byHouseId: request.body.houseId })
@@ -60,7 +59,7 @@ class OrderPackager {
     @Response()
     async updateOrder(request, response, Cabin) {
         // 1.
-        let user = await Cabin.UserPackager.userCharge(request, response, Cabin)
+        let user = await Cabin.userCharge(request, response, Cabin)
 
         // 2.找到这条订单
         let order = await Cabin.Order.get({ _id: request.body.orderId })
@@ -96,7 +95,7 @@ class OrderPackager {
     @Response()
     async changeOrderStatus(request, response, Cabin) {
         // 1.
-        let user = await Cabin.UserPackager.userCharge(request, response, Cabin)
+        let user = await Cabin.userCharge(request, response, Cabin)
 
         // 2.
         let updater = {}
@@ -109,7 +108,7 @@ class OrderPackager {
     @Response()
     async clearOrderGood(request, response, Cabin) {
         // 1.
-        let user = await Cabin.UserPackager.userCharge(request, response, Cabin)
+        let user = await Cabin.userCharge(request, response, Cabin)
 
         // 2.已发货的库存
         let order = await Cabin.Order.get({ _id: request.body.orderId })

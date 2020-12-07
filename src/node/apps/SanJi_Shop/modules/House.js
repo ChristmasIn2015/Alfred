@@ -1,5 +1,5 @@
 import Response from '../../../utils/Response.js'
-class HousePackager {
+export default class House {
     constructor() {}
     #getModel() {
         return {
@@ -11,7 +11,7 @@ class HousePackager {
     @Response('创建仓库成功')
     async addHouse(request, response, Cabin) {
         // 1.
-        let user = await Cabin.UserPackager.userCharge(request, response, Cabin)
+        let user = await Cabin.userCharge(request, response, Cabin)
 
         // 2.
         let query = { shopId: request.body.shopId, userId: user._id, role: 0 }
@@ -29,7 +29,7 @@ class HousePackager {
     @Response()
     async getHouseList(request, response, Cabin) {
         // 1.
-        let user = await Cabin.UserPackager.userCharge(request, response, Cabin)
+        let user = await Cabin.userCharge(request, response, Cabin)
 
         // 2.根据店铺id取得所有仓库
         let list = await Cabin.House.query({ byShopId: request.body.shopId })
