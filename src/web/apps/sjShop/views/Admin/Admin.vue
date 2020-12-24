@@ -170,10 +170,6 @@
                     background: true,
                     content: message,
                 })
-            // this.$Notice.open({
-            //     title: '提示',
-            //     desc: message
-            // });
             window.$warn = (message) =>
                 this.$Message['error']({
                     background: true,

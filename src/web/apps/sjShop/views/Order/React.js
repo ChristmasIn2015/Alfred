@@ -1,8 +1,8 @@
-import Customer from '@/web/apps/sjShop/module/Customer.js'
-import Good from '@/web/apps/sjShop/module/Good.js'
-import GoodFilter from '@/web/apps/sjShop/module/GoodFilter.js'
-import Order from '@/web/apps/sjShop/module/Order.js'
-import Tag from '@/web/apps/sjShop/module/Tag.js'
+import Customer from '@/web/apps/SjShop/module/Customer.js'
+import Good from '@/web/apps/SjShop/module/Good.js'
+import GoodFilter from '@/web/apps/SjShop/module/GoodFilter.js'
+import Order from '@/web/apps/SjShop/module/Order.js'
+import Tag from '@/web/apps/SjShop/module/Tag.js'
 
 export default class React {
     constructor() {

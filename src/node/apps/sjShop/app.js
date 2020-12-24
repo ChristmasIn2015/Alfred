@@ -40,6 +40,7 @@ class Cabin {
 
             // 2 初始化数据库操作员
             this.operatorList = ['Error', 'User', 'Shop', 'Employee', 'House', 'Tag', 'Good', 'GoodTag', 'Order', 'Customer']
+            this.operatorList.push('GoodTag')
             for (let key in this.operatorList) {
                 let dbName = this.operatorList[key]
                 let collection = await this.server.getCollection(dbName)
@@ -105,6 +106,7 @@ class Cabin {
         this.appList.push({ method: 'POST', route: '/sjShop/customer/list', next: this.getCustomerList })
     }
 
+    // * 启动Express服务
     #initExpress() {
         this.expressAPP.all('*', (req, res, next) => {
             res.header('Access-Control-Allow-Origin', '*')

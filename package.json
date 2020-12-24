@@ -5,7 +5,7 @@
     "scripts": {
         "serve": "vue-cli-service serve",
         "server": "webpack --config ./src/node/webpack.config.js && node ./src/node/main.js",
-        "Sanji": "npm run build electron && electron ./src/electron/apps/Sanji.js",
+        "Crow": "npm run build electron && electron ./src/electron/apps/Crow/main.js",
         "build": "vue-cli-service build"
     },
     "dependencies": {

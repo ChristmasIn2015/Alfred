@@ -1,0 +1,224 @@
+// * 弹窗
+.ivu-modal-mask {
+    background-color: $back-0;
+}
+.ivu-modal-content {
+    background-color: $back-2;
+    border-radius: 0.75rem;
+    .ivu-modal-header {
+        padding: 1rem 1.25rem;
+        border-bottom: none;
+        .ivu-modal-header-inner {
+            color: $white-0;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+    }
+    .ivu-modal-body {
+        padding: 1.25rem;
+        .ivu-modal-confirm {
+            .ivu-modal-confirm-head-title {
+                color: $white-0;
+            }
+        }
+    }
+    .ivu-modal-footer {
+        background-color: $back-1;
+        border-top: 1px solid $shadow;
+        border-radius: 0 0 0.75rem 0.75rem;
+        padding: 1rem 1.25rem;
+    }
+}
+
+// * 组合输入框
+.ivu-form {
+    .ivu-form-item {
+        margin-bottom: 0.5rem;
+        .ivu-form-item-content {
+            margin-left: 0 !important;
+        }
+        .ivu-form-item-label {
+            color: $tip-1;
+            font-weight: bold;
+            line-height: 1.5rem;
+            text-align: left;
+        }
+    }
+}
+
+// * 输入框
+.ivu-input-wrapper {
+    .ivu-input {
+        background-color: $back-1;
+        box-shadow: none;
+        border: none;
+        border: 2px solid transparent;
+        border-bottom: 2px solid $tip-0;
+        color: $white-0;
+        font-size: 1rem;
+        height: 2.5rem;
+        border-radius: 0.5rem;
+        &:hover {
+            border-bottom: 2px solid $tip-0;
+        }
+        &:focus {
+            border: 2px solid $main-0;
+        }
+        &::placeholder {
+            color: $tip-0;
+        }
+    }
+    .ivu-input-disabled {
+        color: $tip-1;
+        &:hover {
+            border: 2px solid transparent;
+        }
+    }
+}
+.no-radius {
+    .ivu-input {
+        border-radius: 0;
+        border-bottom: 2px solid transparent;
+    }
+}
+.right-middle {
+    // float: right;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+}
+.ivu-btn-line {
+    margin-bottom: 1rem;
+    .ivu-input-wrapper,
+    .ivu-btn {
+        margin-right: 0.5rem;
+    }
+}
+
+// * 按钮
+.ivu-btn {
+    color: $white-0;
+    height: 2.5rem;
+    border: 2px solid transparent;
+    box-shadow: 1px 1px 1px 1px $shadow !important;
+    .fa {
+        margin-right: 0.25rem;
+    }
+    &:hover {
+        color: $white-0;
+        border: 2px solid transparent;
+    }
+    &:active {
+        box-shadow: 1px 1px 1px 1px $shadow !important;
+    }
+}
+.ivu-btn-small {
+    font-size: 0.75rem;
+    height: 1.875rem;
+}
+.ivu-btn-default,
+.ivu-btn-text {
+    color: $tip-1;
+    background-color: $back-2;
+    &:hover {
+        background-color: $back-2;
+    }
+}
+
+.ivu-btn-primary {
+    background-color: $main-0;
+    border-top: 1px solid $main-1;
+    &:hover {
+        border-top: 1px solid $main-1;
+        background-color: $main-0;
+    }
+}
+.ivu-btn-info {
+    background-color: $blue-0;
+    border-top: 1px solid $blue-1;
+    color: $back-2;
+    &:hover {
+        border-top: 1px solid $blue-1;
+        background-color: $blue-0;
+        color: $back-2;
+    }
+}
+.ivu-btn-success {
+    background-color: $green-0;
+    border-top: 1px solid $green-1;
+    &:hover {
+        border-top: 1px solid $green-1;
+        background-color: $green-0;
+    }
+}
+.ivu-btn-warning {
+    background-color: $orange-0;
+    border-top: 1px solid $orange-1;
+    &:hover {
+        border-top: 1px solid $orange-1;
+        background-color: $orange-0;
+    }
+}
+.ivu-btn-error {
+    background-color: $red-0;
+    border-top: 1px solid $red-1;
+    &:hover {
+        border-top: 1px solid $red-1;
+        background-color: $red-0;
+    }
+}
+
+// *下拉菜单
+.ivu-select-dropdown {
+    background-color: $back-1;
+    padding: 0.25rem 0.5rem;
+    .ivu-dropdown-menu {
+        .ivu-btn {
+            margin-bottom: 0.5rem;
+        }
+    }
+}
+
+// * 表格
+.ivu-table-wrapper {
+    .ivu-table {
+        background-color: $back-1;
+        border-radius: 0.5rem;
+        &::before {
+            background-color: transparent;
+            border-radius: 0.5rem;
+        }
+        .ivu-table-header {
+            background-color: transparent;
+        }
+        .ivu-table-body {
+            background-color: transparent;
+            .ivu-table-row {
+            }
+            .ivu-table-row-hover {
+                background-color: transparent;
+                td {
+                    background-color: transparent;
+                    color: $white-0;
+                }
+            }
+        }
+        th,
+        td {
+            border: 1px solid transparent !important;
+            background-color: transparent !important ;
+            color: $tip-1;
+        }
+    }
+}
+
+// * 加载
+.ivu-spin-fullscreen {
+    background-color: transparent;
+    .ivu-spin-main {
+        .ivu-spin-dot {
+            background-color: $main-0;
+        }
+    }
+}

@@ -10,12 +10,13 @@ export default class Common {
     constructor() {
         this.bindClass('UtilsCalculation', UtilsCalculation) // 0.计算
         this.bindClass('UtilsReact', UtilsReact) // 0.交互
-        this.bindClass('UtilsVaild', UtilsVaild) // 0.时间
-        this.bindClass('UtilsTime', UtilsTime) // 0.校验
+        this.bindClass('UtilsVaild', UtilsVaild) // 0.校验
+        this.bindClass('UtilsTime', UtilsTime) // 0.时间
         this.bindClass('Location', Location) // 1.定位
         this.bindClass('Server', Server) // 2.网络请求
         this.bindClass('Log', Log) // 3.日志
     }
+
     // * 将某个类原型上的所有方法绑定到this的原型上
     bindClass(TargetClassName, TargetClass) {
         if (this.__proto__ && TargetClass.prototype) {
@@ -32,6 +33,7 @@ export default class Common {
             })
         }
     }
+
     //
     getHeaders() {
         let hearder = {
@@ -45,6 +47,7 @@ export default class Common {
             hearder
         )
     }
+
     TryCatch(target, name, descriptor) {
         let sourceFunction = descriptor.value
         descriptor.value = async function() {

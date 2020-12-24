@@ -1,7 +1,8 @@
 .DS_Store
 node_modules
-/src/web/dist
-/src/node/dist
+src/web/dist
+src/node/dist
+src/electron/dist
 
 
 # local env files
