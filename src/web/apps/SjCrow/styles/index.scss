@@ -18,8 +18,12 @@ body,
 @import '@/web/styles/base/flex.scss';
 @import '@/web/styles/base/func.scss';
 @import '@/web/styles/base/animation.scss';
+
 // * 色彩方案
 @import '@/web/styles/color/black-purple.scss';
-// * 功能型CSS
+
+// * 魔改第三方UI
+@import './ui-reset/dash-board-iview.scss';
+
+// *
 @import './dash-board.scss';
-@import './dash-board-iview.scss';

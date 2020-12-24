@@ -1,7 +1,6 @@
 <template>
     <div id="app">
-        <div style="width: 100px; height: 100px; background-color: red;" @click.stop="openDevTool"></div>
-        <div>1222222</div>
+        <router-view />
     </div>
 </template>
 <script>
@@ -9,16 +8,34 @@
         data() {
             return {}
         },
-        mounted() {
-            console.log('this is electron')
-            // const e = require('electron')
-            // console.log('typeof electron', typeof e)
-        },
-        methods: {
-            openDevTool() {
-                $electron.ipcRenderer.send('openDevTool')
-            },
+        mounted() {},
+        methods: {},
+        beforeCreate() {
+            window.$load = {
+                show: () => this.$Spin.show(),
+                hide: () => this.$Spin.hide(),
+            }
+            window.$tip = (message) =>
+                this.$Message['success']({
+                    background: true,
+                    content: message,
+                })
+            window.$warn = (message) =>
+                this.$Message['error']({
+                    background: true,
+                    content: message,
+                })
+            window.$confirm = (message, next) => {
+                this.$Modal.confirm({
+                    title: message,
+                    onOk: next,
+                    okText: '确定',
+                    cancelText: '取消',
+                })
+            }
         },
     }
 </script>
-<style></style>
+<style lang="scss">
+    @import '../../styles/index.scss';
+</style>

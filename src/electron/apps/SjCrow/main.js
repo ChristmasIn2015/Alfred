@@ -1,8 +1,9 @@
 /** *******************************************************************
  * 
  * npm config edit : electron_mirror=https://npm.taobao.org/mirrors/electron/
- * SjCrow 是一个 Electron 应用，内嵌了一个 SjCrow SPA 应用
- * SjCrow SPA 各个模块通过IPC通信可以调用 Node API
+ * SjCrow 
+ * 是一个 Electron 应用，内嵌了一个 SPA 应用
+ * SPA 各个模块通过IPC通信可以调用 Node API
  * 
  * *******************************************************************
  * 
