@@ -1,39 +1,35 @@
-function getConfig() {
-    const isElectron = process.argv[3] === 'electron'
-    let list = []
-    require('glob')
-        .sync('./src/web/apps/*/*.js')
-        .forEach((filePath) => {
-            let entry = {
-                name: filePath.split('/').reverse()[1],
-                filePath,
+const singleApps = ['SjCrow', 'SjShop'] // 希望的应用名称;
+const electronApps = ['SjCrow'] // 默认的Electron内嵌Web名称
+const apps = require('glob').sync('./src/web/apps/*/*.js')
+const isElectron = process.argv[3] === 'electron'
+
+let pages = {}
+for (const key in apps) {
+    let targets = isElectron ? electronApps : singleApps
+    const path = apps[key]
+    const name = path.split('/').reverse()[1]
+
+    targets.forEach((singleAppName) => {
+        if (singleAppName === name) {
+            console.log(`\x1B[42m\x1B[30m 即将构建 ${name} \x1B[0m`)
+            console.log()
+            pages[name] = {
+                entry: path, // Webpack 打包入口
+                template: `src/public/index.html`, // Html-webpack-plugin 插件的模板来源
+                filename: `${name}.html`, // 在 dist/index.html 的输出
+                chunks: ['chunk-vendors', 'chunk-common', name], // 提取出来的通用 chunk 和 vendor chunk。
             }
-            if (isElectron) {
-                entry.name.indexOf('_') === 0 ? list.push(entry) : ''
-            } else {
-                entry.name.indexOf('_') !== 0 ? list.push(entry) : ''
-            }
-        })
-    //
-    // let output = isElectron ? './src/electron/html' : './src/web/dist'
-    let output = './src/web/dist'
-    let pages = {}
-    list.forEach((entry) => {
-        pages[entry.name] = {
-            entry: entry.filePath, // Webpack 打包入口
-            template: `src/public/index.html`, // Html-webpack-plugin 插件的模板来源
-            filename: `${entry.name}.html`, // 在 dist/index.html 的输出
-            chunks: ['chunk-vendors', 'chunk-common', entry.name], // 提取出来的通用 chunk 和 vendor chunk。
         }
     })
-    return {
-        output,
-        pages,
-    }
 }
-const config = getConfig()
+if (Object.keys(pages).length === 0) {
+    console.log(`\x1B[41m\x1B[30m 未找到应用 ${isElectron ? electronApps : singleApps} \x1B[0m`)
+    console.log()
+    process.exit()
+}
+
 module.exports = {
     publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
-    outputDir: config.output,
-    pages: config.pages,
+    outputDir: './src/web/dist',
+    pages,
 }

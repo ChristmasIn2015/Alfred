@@ -11,6 +11,7 @@
         mounted() {},
         methods: {},
         beforeCreate() {
+            document.title = 'SjCrow'
             window.$load = {
                 show: () => this.$Spin.show(),
                 hide: () => this.$Spin.hide(),
@@ -37,5 +38,5 @@
     }
 </script>
 <style lang="scss">
-    @import '../../styles/index.scss';
+    @import './styles/index.scss';
 </style>
