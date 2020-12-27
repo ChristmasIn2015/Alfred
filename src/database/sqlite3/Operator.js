@@ -1,6 +1,6 @@
-// import { ObjectId } from 'mongodb'
+import { ObjectId } from 'mongodb'
 
-// * 这个类提供对 sqlite3 数据库的CRUD原子操作
+// * 这个类提供对 mongodb 数据库的CRUD原子操作
 export default class Operator {
     collection = null
     constructor(collection) {

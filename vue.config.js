@@ -1,14 +1,14 @@
-const singleApps = ['SjCrow', 'SjShop'] // 希望的应用名称;
+const singleApps = ['SjCrow'] // 希望的应用名称;
 const electronApps = ['SjCrow'] // 默认的Electron内嵌Web名称
-const apps = require('glob').sync('./src/web/apps/*/*.js')
 const isElectron = process.argv[3] === 'electron'
+const apps = require('glob').sync('./src/web/apps/*/*.js')
 
 let pages = {}
 for (const key in apps) {
-    let targets = isElectron ? electronApps : singleApps
     const path = apps[key]
     const name = path.split('/').reverse()[1]
 
+    let targets = isElectron ? electronApps : singleApps
     targets.forEach((singleAppName) => {
         if (singleAppName === name) {
             console.log(`\x1B[42m\x1B[30m 即将构建 ${name} \x1B[0m`)
@@ -32,4 +32,11 @@ module.exports = {
     publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
     outputDir: './src/web/dist',
     pages,
+    css: {
+        loaderOptions: {
+            scss: {
+                prependData: `@import "@/web/styles/color/black-purple.scss";`,
+            },
+        },
+    },
 }

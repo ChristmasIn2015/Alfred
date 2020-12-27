@@ -1,10 +1,11 @@
 <template>
-    <div class="layout">
+    <div class="layout flex">
         <LayoutSideBar />
-        <div class="layout-content">
+        <div class="layout-right flex-y">
             <LayoutNav />
-            <div class="content">
-                <router-view />
+            <div class="layout-content">
+                <!-- 各个模块组件 -->
+                <router-view :key="key" />
             </div>
         </div>
     </div>
@@ -16,6 +17,11 @@
     export default {
         data() {
             return {}
+        },
+        computed: {
+            key() {
+                return this.$route.fullPath
+            },
         },
         components: {
             LayoutNav,

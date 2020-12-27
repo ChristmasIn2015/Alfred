@@ -9,7 +9,7 @@
         padding: 1rem 1.25rem;
         border-bottom: none;
         .ivu-modal-header-inner {
-            color: $white-0;
+            color: $font-0;
             font-weight: bold;
             font-size: 1.2rem;
         }
@@ -18,7 +18,7 @@
         padding: 1.25rem;
         .ivu-modal-confirm {
             .ivu-modal-confirm-head-title {
-                color: $white-0;
+                color: $font-0;
             }
         }
     }
@@ -54,7 +54,7 @@
         border: none;
         border: 2px solid transparent;
         border-bottom: 2px solid $tip-0;
-        color: $white-0;
+        color: $font-0;
         font-size: 1rem;
         height: 2.5rem;
         border-radius: 0.5rem;
@@ -98,7 +98,7 @@
 
 // * 按钮
 .ivu-btn {
-    color: $white-0;
+    color: $font-0;
     height: 2.5rem;
     border: 2px solid transparent;
     box-shadow: 1px 1px 1px 1px $shadow !important;
@@ -106,11 +106,14 @@
         margin-right: 0.25rem;
     }
     &:hover {
-        color: $white-0;
+        color: $font-0;
         border: 2px solid transparent;
     }
     &:active {
         box-shadow: 1px 1px 1px 1px $shadow !important;
+    }
+    &::before {
+        background: red !important;
     }
 }
 .ivu-btn-small {
@@ -125,7 +128,6 @@
         background-color: $back-2;
     }
 }
-
 .ivu-btn-primary {
     background-color: $main-0;
     border-top: 1px solid $main-1;
@@ -200,7 +202,7 @@
                 background-color: transparent;
                 td {
                     background-color: transparent;
-                    color: $white-0;
+                    color: $font-0;
                 }
             }
         }
@@ -215,10 +217,42 @@
 
 // * 加载
 .ivu-spin-fullscreen {
-    background-color: transparent;
+    background-color: rgba(0, 0, 0, 0.5);
     .ivu-spin-main {
         .ivu-spin-dot {
             background-color: $main-0;
+        }
+    }
+}
+
+// * 折叠面板
+.ivu-collapse {
+    background-color: transparent;
+    border: 1px solid transparent;
+    > .ivu-collapse-item {
+        border-top: 1px solid transparent;
+        background-color: transparent;
+        border-radius: 0.25rem;
+        margin-bottom: 0.75rem;
+        box-shadow: 1px 1px 1px 1px $shadow !important;
+        .ivu-collapse-header {
+            color: $tip-1;
+            background-color: $back-2;
+            border-radius: 0.25rem;
+            border-bottom: 1px solid transparent !important;
+        }
+        .ivu-collapse-content {
+            border-radius: 0 0 0.25rem 0.25rem;
+            background-color: $back-1;
+            box-shadow: 1px 1px 1px 1px $shadow !important;
+            .ivu-collapse-content-box {
+                color: $tip-1;
+            }
+        }
+    }
+    > .ivu-collapse-item-active {
+        .ivu-collapse-header {
+            border-radius: 0.25rem 0.25rem 0 0 !important;
         }
     }
 }

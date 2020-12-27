@@ -35,7 +35,7 @@ app.on('ready', () => {
     Menu.setApplicationMenu(null)
 
     // 2 加载SPA
-    instance.loadURL(`file://${process.cwd()}/src/web/dist/_SjCrow.html`)
+    instance.loadURL(`file://${process.cwd()}/src/web/dist/SjCrow.html`)
     instance.openDevTools()
     instance.on('closed', () => (global.SanJi = null))
 })

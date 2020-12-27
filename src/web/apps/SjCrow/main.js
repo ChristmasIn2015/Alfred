@@ -15,6 +15,7 @@ import routes from './views/routes'
 const myRoutes = new VueRouter({
     routes,
 })
+window.$router = myRoutes
 
 // 2.Vuex存储
 // import Vuex from 'vuex'
