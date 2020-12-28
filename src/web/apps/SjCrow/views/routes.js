@@ -18,7 +18,7 @@ let routes = [
     {
         component: Layout,
         path: '/',
-        redirect: '/cmd',
+        redirect: '/note',
         children: [
             {
                 component: () => import('@/web/apps/SjCrow/views/Cmd/Cmd.vue'),

@@ -3,7 +3,7 @@
         <LayoutSideBar />
         <div class="layout-right flex-y">
             <LayoutNav />
-            <div class="layout-content">
+            <div class="layout-content no-scroll-bar">
                 <!-- 各个模块组件 -->
                 <router-view :key="key" />
             </div>

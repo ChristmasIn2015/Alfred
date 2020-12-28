@@ -54,7 +54,7 @@ class Cabin {
             this.#initExpress()
         } catch (error) {
             let message = typeof error === 'string' ? error : error.message
-            console.log(getRedLog(message))
+            console.log(`\x1B[41m\x1B[30m${message}\x1B[0m`)
             console.log()
             process.exit()
         }
@@ -158,10 +158,8 @@ class Cabin {
                     for (let key in interfaces[index]) {
                         let value = interfaces[index][key]
                         if (value.family === 'IPv4') {
-                            console.log()
-                            console.log(getGreenLog(' 数据服务链接成功 '), this.server.dbAddress)
-                            console.log(getGreenLog(' Web服务启动成功  '), getLink(`http://${value.address}:${this.socketNumber}`))
-                            console.log()
+                            console.log(`\x1B[42m\x1B[30m 数据服务链接成功 \x1B[0m`, this.server.dbAddress)
+                            console.log(`\x1B[42m\x1B[30m Web服务启动成功 \x1B[0m`, `\x1B[34m http://${value.address}:${this.socketNumber} \x1B[0m`)
                             break
                         }
                     }
@@ -172,24 +170,4 @@ class Cabin {
     }
 }
 // * manager
-global.Server_sjShop = Cabin
-
-//
-function getRedLog(message) {
-    return `\x1B[41m\x1B[30m${message}\x1B[0m`
-}
-function getYellowLog(message) {
-    return `\x1B[43m\x1B[30m${message}\x1B[0m`
-}
-function getBlueLog(message) {
-    return `\x1B[44m\x1B[37m${message}\x1B[0m`
-}
-function getGreenLog(message) {
-    return `\x1B[42m\x1B[30m${message}\x1B[0m`
-}
-function getLink(message) {
-    return `\x1B[34m${message}\x1B[0m`
-}
-function getText(message) {
-    return `\x1B[33m${message}\x1B[0m`
-}
+global.$sjShop = new Cabin(process.argv[2])
