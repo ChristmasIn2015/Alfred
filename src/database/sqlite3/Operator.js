@@ -1,56 +1,36 @@
-import { ObjectId } from 'mongodb'
-
-// * 这个类提供对 mongodb 数据库的CRUD原子操作
+/** ****************************************************************
+ * Operator是数据表的操作员
+ * 需要一个数据库>数据表/集合指针来构造
+ * 提供对数据库>数据表/集合的CRUD原子操作
+ * *****************************************************************
+ * SQL常用数据类型 *size位数 *d规定小数点右侧的最大位数
+ * 1.整数 integer(size) int(size) smallint(size) tinyint(size)
+ * 2.小数 decimal(size,d) numeric(size,d)
+ * 3.固定长度的字符串 char(size)
+ * 4.可变长度的字符串 varchar(size)
+ * 5.日期 date(yyyymmdd)
+ ******************************************************************* */
+// * 这个类
 export default class Operator {
-    collection = null
-    constructor(collection) {
-        this.collection = collection
-    }
-    // 创建
+    constructor(database) {}
+
+    // 创建一条记录
     create(doc) {
-        return new Promise((resolve, reject) => {
-            doc = Object.assign(doc, { _id: String(new ObjectId()), timeString: new Date().toLocaleString('chinese', { hour12: false }) })
-            this.collection.insertOne(doc, { forceServerObjectId: true }, (error, result) => {
-                error ? reject(error.message) : resolve(result.ops[0])
-            })
-        })
+        return new Promise((resolve, reject) => {})
     }
-    // 查询
+    // 查询记录
     get(params) {
-        return new Promise((resolve, reject) => {
-            this.collection.find(params).toArray((error, result) => {
-                error ? reject(error.message) : resolve(result[0] || null)
-            })
-        })
+        return new Promise((resolve, reject) => {})
     }
     query(params) {
-        return new Promise((resolve, reject) => {
-            this.collection.find(params).toArray((error, result) => {
-                error ? reject(error.message) : resolve(result)
-            })
-        })
+        return new Promise((resolve, reject) => {})
     }
-    // 更新
+    // 更新记录
     update(query, updateParams) {
-        return new Promise((resolve, reject) => {
-            updateParams = Object.assign(updateParams, { timeUpdate: Date.now().toLocaleString('chinese', { hour12: false }) })
-            this.collection.updateOne(query, { $set: updateParams }, (error, result) => {
-                error ? reject(error.message) : resolve(result)
-            })
-        })
+        return new Promise((resolve, reject) => {})
     }
-    // 删除
+    // 删除记录
     delete(_id) {
-        return new Promise((resolve, reject) => {
-            this.collection.deleteOne({ _id }, (error, result) => {
-                if (error) {
-                    reject(error)
-                } else if (result.deletedCount !== 1) {
-                    reject(`${_id} 不存在`)
-                } else {
-                    resolve(true)
-                }
-            })
-        })
+        return new Promise((resolve, reject) => {})
     }
 }

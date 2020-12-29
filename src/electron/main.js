@@ -2,8 +2,8 @@
 const appName = process.argv[2]
 
 // 2
-const extra = require('path').join(__dirname, `./dist/${appName}.js`)
-require(extra)
+const hybridge = require('path').join(__dirname, `./dist/${appName}.js`)
+require(hybridge)
 
 // 3
 const { app, BrowserWindow, Menu } = require('electron')
@@ -18,7 +18,7 @@ app.on('ready', () => {
         // resizable: false,
         webPreferences: {
             nodeIntegration: true, // 为了让Vue app在浏览器内核中能够使用到Electron的API
-            preload: require('path').join(__dirname, `preload.js`), // existsSync is not a function
+            preload: require('path').join(__dirname, `preload.js`), // 渲染进程预加载
         },
     })
 

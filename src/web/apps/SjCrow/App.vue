@@ -8,9 +8,7 @@
         data() {
             return {}
         },
-        mounted() {
-            console.log($electron)
-        },
+        mounted() {},
         methods: {},
         beforeCreate() {
             document.title = 'SjCrow'

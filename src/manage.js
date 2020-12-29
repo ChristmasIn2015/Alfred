@@ -44,12 +44,12 @@ function executeAsync(cmd) {
     return exec(cmd, (error, stdout, stderr) => {
         if (error) {
             console.error(error)
-            print.red('---------------- 执行失败 ----------------\n')
+            print.red('---------------- Manage CMD执行失败 ----------------\n')
         } else if (stderr) {
             console.error(stderr)
-            print.yellow('---------------- 执行成功 但存在警告 ----------------\n')
+            print.yellow('---------------- Manage CMD执行成功 但存在警告 ----------------\n')
         } else {
-            print.green('---------------- 执行成功 ----------------\n')
+            print.green('---------------- Manage CMD执行成功 ----------------\n')
         }
     })
 }
@@ -63,7 +63,8 @@ switch (appType) {
     case 'web': {
         // 使用@vue/cli启动一个单页应用
         let target = require('path').join(__dirname, `./web/apps/${appName}/main.js`)
-        cmd = `vue-cli-service serve --open ${target}`
+        cmd = `vue-cli-service serve ${target}`
+        // cmd = `vue-cli-service serve --open ${target}`
         break
     }
     case 'node': {
