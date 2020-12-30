@@ -10,27 +10,117 @@
  * 4.可变长度的字符串 varchar(size)
  * 5.日期 date(yyyymmdd)
  ******************************************************************* */
-// * 这个类
 export default class Operator {
-    constructor(database) {}
+    db = null
+    tableName = null
+    struct = null
+    constructor(database) {
+        this.db = database
+    }
+
+    // 初始化数据库操作员
+    init(tableName, struct) {
+        this.tableName = tableName
+        return new Promise((resolve, reject) => {
+            // 将一个Object转化为SQL数据类型定义字符串
+            let columns = ''
+            for (let key in struct) {
+                if (key === 'id') {
+                    columns += `id INTEGER PRIMARY KEY AUTOINCREMENT, `
+                } else {
+                    if (struct[key] === 'number') columns += `${key} INT, `
+                    if (struct[key] === 'string') columns += `${key} VARCHAR, `
+                }
+            }
+            columns = columns.substring(0, columns.length - 2)
+
+            // *
+            const sql = `CREATE TABLE IF NOT EXISTS ${tableName} (${columns});`
+            this.db.run(sql, function(error) {
+                error ? reject(error) : resolve(this)
+            })
+        })
+    }
 
     // 创建一条记录
-    create(doc) {
-        return new Promise((resolve, reject) => {})
+    create(params) {
+        return new Promise((resolve, reject) => {
+            let columns = ''
+            let values = ''
+            for (let key in params) {
+                columns += `'${key}',`
+                values += `'${params[key]}',`
+            }
+            columns = columns.substring(0, columns.length - 1)
+            values = values.substring(0, values.length - 1)
+
+            // *
+            const sql = `INSERT INTO ${this.tableName} (${columns}) VALUES (${values});`
+            this.db.run(sql, function(error) {
+                error ? reject(error) : resolve(this)
+            })
+        })
     }
+
     // 查询记录
-    get(params) {
-        return new Promise((resolve, reject) => {})
-    }
     query(params) {
-        return new Promise((resolve, reject) => {})
+        return new Promise((resolve, reject) => {
+            // where
+            let querySql = ''
+            for (let key in params) querySql += `${key}='${params[key]}', `
+            querySql = querySql.substring(0, querySql.length - 2)
+
+            // *
+            const sql = `SELECT * FROM ${this.tableName} WHERE ${querySql}`
+            this.db.all(sql, function(error, result) {
+                error ? reject(error) : resolve(result)
+            })
+        })
     }
+    get(params) {
+        return new Promise((resolve, reject) => {
+            // where
+            let querySql = ''
+            for (let key in params) querySql += `${key}='${params[key]}', `
+            querySql = querySql.substring(0, querySql.length - 2)
+
+            // *
+            const sql = `SELECT * FROM ${this.tableName} WHERE ${querySql}`
+            this.db.get(sql, function(error, result) {
+                error ? reject(error) : resolve(result || null)
+            })
+        })
+    }
+
     // 更新记录
-    update(query, updateParams) {
-        return new Promise((resolve, reject) => {})
+    update(query, params) {
+        return new Promise((resolve, reject) => {
+            // where
+            let querySql = ''
+            for (let key in query) querySql += `${key}='${query[key]}', `
+            querySql = querySql.substring(0, querySql.length - 2)
+
+            // what
+            let updateSql = ''
+            for (let key in params) updateSql += `${key}='${params[key]}', `
+            updateSql = updateSql.substring(0, updateSql.length - 2)
+
+            // *
+            const sql = `UPDATE ${this.tableName} SET ${updateSql} WHERE ${querySql}`
+            this.db.run(sql, function(error) {
+                error ? reject(error) : resolve(this)
+            })
+        })
     }
+
     // 删除记录
-    delete(_id) {
-        return new Promise((resolve, reject) => {})
+    delete(id) {
+        return new Promise((resolve, reject) => {
+            // *
+            const sql = `DELETE FROM ${this.tableName} WHERE id = '${id}';`
+            this.db.run(sql, function(error) {
+                error ? reject(error) : resolve(this)
+            })
+        })
     }
 }

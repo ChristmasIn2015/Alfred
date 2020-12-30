@@ -24,6 +24,7 @@
         },
         methods: {
             pickPath(index) {
+                console.log($electron)
                 const side = this.sideList[index]
                 if (this.$route.path === side.path) return
                 this.sideIndex = index

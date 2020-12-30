@@ -3,8 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "dev": "node ./src/manage.js",
-        "packWeb": "vue-cli-service build"
+        "dev": "node ./src/manage.js"
     },
     "dependencies": {
         "axios": "^0.19.2",

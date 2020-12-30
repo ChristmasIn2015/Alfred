@@ -47,7 +47,7 @@ class Cabin {
                 this[dbName] = new Operator(collection)
             }
 
-            // 3 绑定调度员并暴露调度方法
+            // 3 暴露调度员的调度方法给Cabin，其再交给调度员，调度方法需要能找到数据库操作员
             this.#initDispatcher()
 
             // 4 启动Express服务

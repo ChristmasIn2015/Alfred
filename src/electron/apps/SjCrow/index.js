@@ -10,14 +10,13 @@ function ipcBind(TargetClassName, TargetClass) {
     // * 全局创建对象
     if (!global['$hyBridge']) global['$hyBridge'] = {}
     $hyBridge[TargetClassName] = new TargetClass()
-    // * IPC指向全局对象
+    // * 把全局对象的方法全部注册进IPC
     if (TargetClass.prototype) {
         Object.getOwnPropertyNames(TargetClass.prototype).forEach((functionName) => {
             if (functionName === 'constructor') return // continue
             ipcMain.on(functionName, (...args) => {
-                console.log('ipc main', $hyBridge, TargetClassName)
-                let origin = $hyBridge[TargetClassName]
                 // ClassA.Function.apply(ClassB, args) 等价于 ClassB.Function(args)
+                let origin = $hyBridge[TargetClassName]
                 return origin[functionName].apply(origin, args)
             })
         })

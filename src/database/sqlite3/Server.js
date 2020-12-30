@@ -21,11 +21,4 @@ export default class Server {
         if (!this.db) return
         this.db.close()
     }
-
-    // 获取/创建指定数据表
-    getTable(tableName, struct_string) {
-        return new Promise((resolve, reject) => {
-            this.db.run(`create table ${tableName} (id INT);`, (error) => (error ? reject(error) : resolve(true)))
-        })
-    }
 }
