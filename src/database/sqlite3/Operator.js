@@ -35,11 +35,20 @@ export default class Operator {
             columns = columns.substring(0, columns.length - 2)
 
             // *
+            this.struct = struct
+            delete this.struct['id']
+
+            // *
             const sql = `CREATE TABLE IF NOT EXISTS ${tableName} (${columns});`
             this.db.run(sql, function(error) {
                 error ? reject(error) : resolve(this)
             })
         })
+    }
+
+    // 获取字段结构
+    getModel() {
+        return Object.assign({}, this.struct)
     }
 
     // 创建一条记录
@@ -57,6 +66,7 @@ export default class Operator {
             // *
             const sql = `INSERT INTO ${this.tableName} (${columns}) VALUES (${values});`
             this.db.run(sql, function(error) {
+                if (error) error = new Error(`${error.message}, SQL: ${sql}`)
                 error ? reject(error) : resolve(this)
             })
         })
@@ -71,8 +81,10 @@ export default class Operator {
             querySql = querySql.substring(0, querySql.length - 2)
 
             // *
-            const sql = `SELECT * FROM ${this.tableName} WHERE ${querySql}`
+            let sql = `SELECT * FROM ${this.tableName}`
+            if (params && Object.keys(params).length) sql += ` WHERE ${querySql}`
             this.db.all(sql, function(error, result) {
+                if (error) error = new Error(`${error.message}, SQL: ${sql}`)
                 error ? reject(error) : resolve(result)
             })
         })
@@ -87,6 +99,7 @@ export default class Operator {
             // *
             const sql = `SELECT * FROM ${this.tableName} WHERE ${querySql}`
             this.db.get(sql, function(error, result) {
+                if (error) error = new Error(`${error.message}, SQL: ${sql}`)
                 error ? reject(error) : resolve(result || null)
             })
         })
@@ -108,6 +121,7 @@ export default class Operator {
             // *
             const sql = `UPDATE ${this.tableName} SET ${updateSql} WHERE ${querySql}`
             this.db.run(sql, function(error) {
+                if (error) error = new Error(`${error.message}, SQL: ${sql}`)
                 error ? reject(error) : resolve(this)
             })
         })
@@ -119,6 +133,7 @@ export default class Operator {
             // *
             const sql = `DELETE FROM ${this.tableName} WHERE id = '${id}';`
             this.db.run(sql, function(error) {
+                if (error) error = new Error(`${error.message}, SQL: ${sql}`)
                 error ? reject(error) : resolve(this)
             })
         })

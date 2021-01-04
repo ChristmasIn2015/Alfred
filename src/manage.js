@@ -39,9 +39,9 @@ if (!appName) {
  * https://www.cnblogs.com/chyingp/p/node-learning-guide-child_process.html
  * https://zhuanlan.zhihu.com/p/36678971
  * ******************************************************************* */
-const { exec } = require('child_process')
+const { exec, spawn } = require('child_process')
 function executeAsync(cmd) {
-    return exec(cmd, (error, stdout, stderr) => {
+    return exec(cmd, { maxBuffer: 1024 * 1024 * 1024 }, (error, stdout, stderr) => {
         if (error) {
             console.error(error)
             print.red('---------------- Manage CMD执行失败 ----------------\n')

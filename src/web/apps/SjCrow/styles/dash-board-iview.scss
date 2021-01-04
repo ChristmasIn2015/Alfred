@@ -1,6 +1,10 @@
+// * 通用阴影
+.board-shadow {
+    box-shadow: 1px 1px 1px 1px $shadow;
+}
 // * 弹窗
 .ivu-modal-mask {
-    background-color: $back-0;
+    background-color: rgba(0, 0, 0, 0.75);
 }
 .ivu-modal-content {
     background-color: $back-2;

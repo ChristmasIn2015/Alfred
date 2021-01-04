@@ -1,101 +1,82 @@
 <template>
     <div class="note">
-        <div class="note-nav flex-middle-y">
-            <Input placeholder="请输入区域名称" />
-            <Button type="success" size="small">
-                <span class="fa fa-user"></span>
-                <span>新增知识区域</span>
+        <div class="note-nav flex">
+            <Button size="small" v-for="(area, index) in react.areas" :key="index" :type="react.areaIdPicked === area.id ? 'success' : 'default'">
+                <span @click.stop="react.renderShelf(area.id)" @dblclick.stop="react.deleteArea(area)" @contextmenu="react.toggleArea(area)">{{
+                    area.name
+                }}</span>
             </Button>
+            <Button size="small" type="success" @click.stop="react.toggleArea">+</Button>
         </div>
-        <!-- 1 区块 -->
-        <Collapse v-model="blockIndex">
-            <Panel v-for="(block, index) in blockList" :key="index" :name="index.toString()">
-                {{ block.name }}
-                <div slot="content">
-                    <!-- 2 书架 -->
-                    <Collapse>
-                        <Panel v-for="(shelf, _index) in block.shelf" :key="_index">
-                            {{ shelf.name }}
-                            <div class="note-books" slot="content">
-                                <!-- 3 书籍 -->
-                                <div class="note-books-create flex-middle-y">
-                                    <Input placeholder="请输入书籍名称" />
-                                    <Button type="default" size="small">
-                                        <span class="fa fa-user"></span>
-                                        <span>新增书籍</span>
-                                    </Button>
-                                </div>
-                                <Button type="success" size="small" v-for="(book, __index) in shelf.books" :key="__index">{{ book.name }}</Button>
-                            </div>
-                        </Panel>
-                    </Collapse>
-                    <div class="note-shelf-create flex-middle-y">
-                        <Input placeholder="请输入书籍名称" />
-                        <Button type="default" size="small">
-                            <span class="fa fa-user"></span>
-                            <span>新增书架</span>
-                        </Button>
-                    </div>
-                </div>
-            </Panel>
-        </Collapse>
+        <div class="note-nav flex">
+            <Button size="small" v-for="(shelf, index) in shelfs" :key="index">{{ shelf.name }}</Button>
+            <Button size="small" type="success" @click.stop="react.toggleShelf">+</Button>
+        </div>
+        <div class="note-nav flex">
+            <Button size="small" v-for="(book, index) in books" :key="index">{{ book.name }}</Button>
+            <Button size="small" type="success">+</Button>
+        </div>
+        <div class="block no-scroll-bar content"></div>
 
-        <div class="note-tip">数据来源: 本机数据</div>
+        <!-- 知识区域弹窗 -->
+        <Modal v-model="react.areaModal" :title="react.areaModel.name ? `编辑${react.areaModel.name}` : '新增知识区'" width="350">
+            <Form label-position="top">
+                <FormItem label="区域名称">
+                    <Input v-model="react.areaModel.name" placeholder="请输入区域名称" />
+                </FormItem>
+            </Form>
+            <div slot="footer">
+                <Button @click.stop="react.toggleArea">取消</Button>
+                <Button type="success" @click.stop="react.commitMyArea">确定</Button>
+            </div>
+        </Modal>
+
+        <!-- 书架弹窗 -->
+        <Modal v-model="react.shelfModal" :title="react.shelfModel.name ? `编辑${react.shelfModel.name}` : '新增书架'" width="350">
+            <Form label-position="top">
+                <FormItem label="书架名称">
+                    <Input v-model="react.shelfModel.name" placeholder="请输入书架名称" />
+                </FormItem>
+            </Form>
+            <div slot="footer">
+                <Button @click.stop="react.toggleShelf">取消</Button>
+                <Button type="success" @click.stop="react.commitMyShelf">确定</Button>
+            </div>
+        </Modal>
     </div>
 </template>
 
 <script>
+    import React from './React.js'
     export default {
         data() {
             return {
-                blockIndex: '0',
-                blockList: [
-                    {
-                        name: '知识区域1',
-                        shelf: [
-                            { name: '书架1', books: [{ name: '书1', content: 'C://AAAA//bvvv.js' }] },
-                            { name: '书架1', books: [{ name: '书1', content: 'C://AAAA//bvvv.js' }] },
-                        ],
-                    },
-                    {
-                        name: '知识区域2',
-                        shelf: [
-                            { name: '书架1', books: [{ name: '书1', content: 'C://AAAA//bvvv.js' }] },
-                            { name: '书架1', books: [{ name: '书1', content: 'C://AAAA//bvvv.js' }] },
-                            { name: '书架1', books: [{ name: '书1', content: 'C://AAAA//bvvv.js' }] },
-                        ],
-                    },
-                ],
+                react: new React(),
             }
         },
-        mounted() {},
-        methods: {},
+        computed: {
+            shelfs() {
+                return []
+            },
+            books() {
+                return []
+            },
+        },
+        methods: {
+            test() {
+                console.log(123)
+            },
+        },
     }
 </script>
 
 <style lang="scss" scoped>
     .note {
+        height: 100%;
         .note-nav {
-            margin-bottom: 1rem;
-            .ivu-input-wrapper {
-                width: 20rem;
-                margin-right: 1rem;
-            }
-        }
-        .note-books {
             .ivu-btn {
-                margin: 0.5rem 0.5rem 0.5rem 0;
+                margin: 0 0.5rem 0.5rem 0;
             }
-        }
-        .note-tip {
-            color: $font-0;
-        }
-    }
-    .note-shelf-create,
-    .note-books-create {
-        .ivu-input-wrapper {
-            width: 10rem;
-            margin-right: 0.5rem;
         }
     }
 </style>

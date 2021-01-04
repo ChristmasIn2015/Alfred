@@ -5,6 +5,12 @@ import 'font-awesome/css/font-awesome.min.css'
 import ViewUI from 'view-design'
 import 'view-design/dist/styles/iview.css'
 Vue.use(ViewUI)
+// * 富文本编辑器
+import VueQuillEditor from 'vue-quill-editor'
+import 'quill/dist/quill.core.css' // import styles
+import 'quill/dist/quill.snow.css' // for snow theme
+import 'quill/dist/quill.bubble.css' // for bubble theme
+Vue.use(VueQuillEditor)
 // * common
 import '@/web/utils/common.js'
 // ***************************** Vue **********************************

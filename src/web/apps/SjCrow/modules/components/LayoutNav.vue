@@ -3,7 +3,7 @@
         <!-- 登录按钮 -->
         <Button type="default" size="small">
             <span class="fa fa-user"></span>
-            <span>点击登录</span>
+            <span>打开控制台</span>
         </Button>
     </div>
 </template>
