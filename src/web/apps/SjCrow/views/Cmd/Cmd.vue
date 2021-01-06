@@ -1,52 +1,55 @@
 <template>
     <div class="cmd">
         <div class="cmd-nav flex">
-            <Button type="warning" size="small">
+            <Button type="warning" size="small" @click.stop="react.toggleScript($event)">
                 <span class="fa fa-user"></span>
                 <span>新增脚本</span>
             </Button>
         </div>
-        <Collapse v-model="cmdIndex">
-            <Panel v-for="(cmd, index) in cmds" :key="index" :name="index.toString()">
-                {{ cmd.name }}
-                <div slot="content" class="flex-wrap">
-                    <div class="cmd-script" v-for="(script, _index) in cmd.list" :key="_index">
-                        <div class="script-name">{{ script.name }}</div>
-                        <div class="script-origin">{{ script.origin }}</div>
-                        <div class="script-log no-scroll-bar">{{ script.log || '暂无日志' }}</div>
-                        <div class="script-btns flex-x-reverse">
-                            <Button v-show="script.status === 0" type="warning" size="small">执行</Button>
-                            <Button v-show="script.status === 1" type="error" size="small">终止</Button>
-                            <Button v-show="script.status === 0" type="default" size="small">编辑</Button>
-                        </div>
-                    </div>
+        <div class="cmd-content flex-wrap">
+            <div
+                class="content-script"
+                v-for="(script, index) in react.scripts"
+                :key="index"
+                @contextmenu="react.deleteBat(script)"
+                @dblclick="react.toggleScript($event, script)"
+            >
+                <div class="name">{{ script.name }}</div>
+                <div class="path">{{ script.path || '路径异常' }}</div>
+                <div class="log no-scroll-bar">{{ script.log || '暂无日志' }}</div>
+                <!-- * -->
+                <div class="btns flex-x-reverse">
+                    <Button v-if="script.status === 1" type="warning" size="small">执行</Button>
+                    <Button v-else type="error" size="small">终止</Button>
                 </div>
-            </Panel>
-        </Collapse>
+            </div>
+        </div>
+
+        <!-- 弹窗 -->
+        <Modal v-model="react.scriptModal" :title="react.scriptModel.name ? `编辑${react.scriptModel.name}` : '新增脚本'" width="350">
+            <Form label-position="top">
+                <FormItem label="脚本名称">
+                    <Input v-model="react.scriptModel.name" placeholder="请输入脚本名称" />
+                </FormItem>
+                <FormItem label="脚本路径">
+                    <!-- <Input v-model="react.scriptModel.path" placeholder="请输入脚本路径" /> -->
+                    <Button size="small" type="warning" @click.stop="react.pickScript">{{ react.scriptModel.path || '选择文件' }}</Button>
+                </FormItem>
+            </Form>
+            <div slot="footer">
+                <Button @click.stop="react.toggleScript($event)">取消</Button>
+                <Button type="warning" @click.stop="react.commitMyScript">确定</Button>
+            </div>
+        </Modal>
     </div>
 </template>
 
 <script>
+    import React from './React.js'
     export default {
         data() {
             return {
-                cmds: [
-                    {
-                        name: 'Host切换',
-                        list: [
-                            { name: '我的脚本', origin: 'C://AAAA//bvvv.js', log: '执行中...', status: 1 },
-                            { name: '我的脚本', origin: 'C://AAAA//bvvv.js', log: '', status: 0 },
-                        ],
-                    },
-                    {
-                        name: '数据服务',
-                        list: [
-                            { name: '我的脚本', origin: 'C://AAAA//bvvv.js', log: '', status: 0 },
-                            { name: '我的脚本', origin: 'C://AAAA//bvvv.js', log: '执行中', status: 1 },
-                        ],
-                    },
-                ],
-                cmdIndex: '0',
+                react: new React(),
             }
         },
         mounted() {},
@@ -55,36 +58,5 @@
 </script>
 
 <style lang="scss" scoped>
-    .cmd {
-        .cmd-nav {
-            margin-bottom: 1rem;
-        }
-        .cmd-script {
-            box-shadow: 1px 1px 1px 1px $shadow;
-            background-color: $back-1;
-            margin: 0.5rem 1rem 0 0;
-            width: 15rem;
-            max-width: 15rem;
-            padding: 0.5rem;
-            border-radius: 0.25rem;
-            .script-name {
-                font-size: 1rem;
-                color: $font-0;
-            }
-            .script-log {
-                max-height: 10rem;
-                overflow-y: scroll;
-                margin: 0.5rem 0;
-            }
-            .script-btns {
-                .ivu-btn {
-                    margin-left: 0.5rem;
-                    &:last-child {
-                        margin-left: 0;
-                        margin-right: auto;
-                    }
-                }
-            }
-        }
-    }
+    @import './Cmd.scss';
 </style>

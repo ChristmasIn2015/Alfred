@@ -62,6 +62,19 @@ export default class UtilsReact {
         }
         return url
     }
+
+    @Mark('H5获取本地文件')
+    getLocalFile(isMultiple, accept = '*/*', callback) {
+        let tag = document.createElement('input')
+        tag.type = 'file'
+        tag.accept = accept // 'image/*'
+        tag.ref = 'file'
+        tag.style.display = 'none'
+        tag.multiple = isMultiple
+        tag.addEventListener('change', callback)
+        document.getElementById('app').appendChild(tag)
+        tag.click()
+    }
 }
 
 // URL图片下载

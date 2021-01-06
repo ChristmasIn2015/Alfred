@@ -10,12 +10,15 @@ import Operator from '../../../database/sqlite3/Operator.js'
 //
 import Native from './IPC/Native.js'
 import Note from './IPC/Note.js'
+import Bats from './IPC/Bats.js'
 async function start() {
     try {
         // 1.把数据库操作员绑定到主进程的 $db 上
         if (!global['$db']) global['$db'] = {}
         $db['server'] = new Server('SjCrow', require('path').join(process.cwd(), './src/electron/apps/SjCrow/SjCrow.db'))
         await $db.server.start()
+
+        // 1.1 笔记业务需要的数据库
         const LIST_NOTE = [
             { name: 'Area', struct: { id: 'number', name: 'string' } },
             { name: 'Shelf', struct: { id: 'number', name: 'string' } },
@@ -28,11 +31,19 @@ async function start() {
             $db[TableName] = new Operator($db.server.db)
             await $db[TableName].init(TableName, LIST_NOTE[index].struct)
         }
+        // 1.2 脚本业务需要的数据库
+        const LIST_BATS = [{ name: 'Bats', struct: { id: 'number', name: 'string', path: 'string' } }]
+        for (let index in LIST_BATS) {
+            let TableName = LIST_BATS[index].name
+            $db[TableName] = new Operator($db.server.db)
+            await $db[TableName].init(TableName, LIST_BATS[index].struct)
+        }
 
         // 2.把业务调度员绑定到主进程的 $hyBridge 上
         if (!global['$hyBridge']) global['$hyBridge'] = {}
         _ipcBind('Native', Native)
         _ipcBind('Note', Note)
+        _ipcBind('Bats', Bats)
 
         // End
     } catch (error) {

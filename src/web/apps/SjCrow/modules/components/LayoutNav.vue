@@ -3,16 +3,21 @@
         <!-- 登录按钮 -->
         <Button type="default" size="small">
             <span class="fa fa-user"></span>
-            <span>打开控制台</span>
+            <span @click.stop="openMyDevTool">打开控制台</span>
         </Button>
     </div>
 </template>
 <script>
+    import { openDevTool } from '../api.js'
     export default {
         data() {
             return {}
         },
-        methods: {},
+        methods: {
+            openMyDevTool() {
+                openDevTool()
+            },
+        },
     }
 </script>
 <style lang="scss" scoped></style>

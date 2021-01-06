@@ -1,0 +1,30 @@
+.cmd {
+    .cmd-nav {
+        margin-bottom: 1rem;
+    }
+    .cmd-content {
+        .content-script {
+            box-shadow: -1px -1px 1px 1px $shadow;
+            background-color: $back-1;
+            margin: 0 0.5rem 0.25rem 0;
+            width: 15rem;
+            max-width: 15rem;
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+            color: $font-0;
+            word-break: break-all;
+            .name {
+                font-size: 1rem;
+                font-weight: bold;
+            }
+            .path {
+            }
+            .log {
+                height: 10rem;
+                max-height: 10rem;
+                overflow-y: scroll;
+                margin: 0.5rem 0;
+            }
+        }
+    }
+}

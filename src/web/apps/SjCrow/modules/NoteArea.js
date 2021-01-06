@@ -3,7 +3,6 @@ export default function NoteArea(target, name, descriptor) {
     let sourceFunction = descriptor.value
     descriptor.value = function() {
         // * 参数
-        this.areaIndex = 0
         this.areaModal = false
         this.areaModel = {
             id: null,
@@ -21,7 +20,7 @@ export default function NoteArea(target, name, descriptor) {
         sourceFunction.apply(this, arguments)
     }
 }
-function toggleArea(form) {
+function toggleArea(event, form) {
     this.areaModel = form
         ? { id: form.id, name: form.name }
         : {
@@ -57,6 +56,8 @@ function deleteArea(area) {
         try {
             await areaDelete(area.id)
             await this.renderArea()
+            this.shelfIdPicked = null // @NoteShelf
+            this.shelfs = [] // @NoteShelf
             $tip(`删除 ${area.name} 成功`)
         } catch (error) {
             $common.loadOff(error)

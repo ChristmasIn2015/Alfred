@@ -14,7 +14,7 @@
                 sideIndex: null,
                 sideList: [
                     // { name: '工作流', icon: 'fa fa-newspaper-o', type: 'info', path: '/flow' },
-                    // { name: '脚本集合', icon: 'fa fa-users', type: 'warning', path: '/cmd' },
+                    { name: '脚本集合', icon: 'fa fa-users', type: 'warning', path: '/cmd' },
                     { name: '笔记系统', icon: 'fa fa-home', type: 'success', path: '/note' },
                 ],
             }
