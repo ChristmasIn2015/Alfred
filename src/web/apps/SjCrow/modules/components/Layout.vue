@@ -4,8 +4,10 @@
         <div class="layout-right flex-y">
             <LayoutNav />
             <div class="layout-content no-scroll-bar">
-                <!-- 各个模块组件 -->
-                <router-view :key="key" />
+                <!-- 各个模块组件/切换时不重新加载 -->
+                <keep-alive>
+                    <router-view :key="key" />
+                </keep-alive>
             </div>
         </div>
     </div>

@@ -1,8 +1,23 @@
+// * 向主进程发送消息 并等待回应
 async function ipcInvoke(ipcName, params) {
     let result = await $electron.ipcRenderer.invoke(ipcName, params)
-    console.log(ipcName, params, result)
+    console.log({ ipcName, params: params || '未传参数' }, result)
     if (result.code !== 200) throw new Error(result.message)
     return result.data
+}
+// *********************************************************** Native
+export function openDevTool() {
+    return ipcInvoke('openDevTool')
+}
+// *********************************************************** Bat
+export function commitBat(params) {
+    return ipcInvoke('commitBat', params)
+}
+export function getBatList(params) {
+    return ipcInvoke('getBatList', params)
+}
+export function batDelete(batId) {
+    return ipcInvoke('batDelete', batId)
 }
 // *********************************************************** Note
 export function commitArea(params) {
@@ -34,18 +49,4 @@ export function getBookList(params) {
 }
 export function bookDelete(bookId) {
     return ipcInvoke('bookDelete', bookId)
-}
-// *********************************************************** Native
-export function openDevTool() {
-    return ipcInvoke('openDevTool')
-}
-// *********************************************************** Bat
-export function commitBat(params) {
-    return ipcInvoke('commitBat', params)
-}
-export function getBatList(params) {
-    return ipcInvoke('getBatList', params)
-}
-export function batDelete(batId) {
-    return ipcInvoke('batDelete', batId)
 }

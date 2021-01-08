@@ -57,7 +57,7 @@ async function renderBookList(shelfId, bookId) {
                 return Object.assign({ index }, e)
             })
         } else {
-            localStorage['bookSortMap'] = 0
+            localStorage['bookSortMap'] = JSON.stringify(map)
         }
         list.sort(function(pre, next) {
             return pre.index - next.index

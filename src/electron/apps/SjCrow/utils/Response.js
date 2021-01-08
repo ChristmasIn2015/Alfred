@@ -4,7 +4,7 @@ export default (answer = '') => (target, name, descriptor) => {
     descriptor.value = async function(...args) {
         let result = {
             code: null,
-            data: '',
+            data: null,
             message: '',
         }
         try {
@@ -14,7 +14,7 @@ export default (answer = '') => (target, name, descriptor) => {
         } catch (error) {
             result.message = error.message || error
         } finally {
-            return Promise.resolve(result)
+            return result
         }
     }
     return descriptor

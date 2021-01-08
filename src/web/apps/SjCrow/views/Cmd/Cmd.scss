@@ -6,7 +6,7 @@
         .content-script {
             box-shadow: -1px -1px 1px 1px $shadow;
             background-color: $back-1;
-            margin: 0 0.5rem 0.25rem 0;
+            margin: 0 0.5rem 0.5rem 0;
             width: 15rem;
             max-width: 15rem;
             padding: 0.5rem;
@@ -16,14 +16,19 @@
             .name {
                 font-size: 1rem;
                 font-weight: bold;
+                margin-bottom: 0.25rem;
             }
             .path {
+                color: $tip-1;
             }
             .log {
                 height: 10rem;
                 max-height: 10rem;
                 overflow-y: scroll;
                 margin: 0.5rem 0;
+            }
+            .btns {
+                margin-top: auto;
             }
         }
     }

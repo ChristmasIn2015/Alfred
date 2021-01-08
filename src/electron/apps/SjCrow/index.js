@@ -45,6 +45,9 @@ async function start() {
         _ipcBind('Note', Note)
         _ipcBind('Bats', Bats)
 
+        // 3.把通用主动通信方法绑定到主进程的 $hyBridge 上
+        _ipcActive()
+
         // End
     } catch (error) {
         let message = typeof error === 'string' ? error : error.message
@@ -54,8 +57,9 @@ async function start() {
 }
 start()
 // 把调度员的方法全部注册进IPC
+
+const ipcMain = require('electron').ipcMain
 function _ipcBind(TargetClassName, TargetClass) {
-    const ipcMain = require('electron').ipcMain
     $hyBridge[TargetClassName] = new TargetClass()
     if (TargetClass.prototype) {
         Object.getOwnPropertyNames(TargetClass.prototype).forEach((functionName) => {
@@ -67,4 +71,39 @@ function _ipcBind(TargetClassName, TargetClass) {
             })
         })
     }
+}
+// 把主动通信的方法注册进IPC
+function _ipcActive() {
+    // * 执行脚本 主动报告脚本执行情况 params: { index, kill, path }
+    const exec = require('child_process').exec
+    ipcMain.on('excuteCMD', (event, params) => {
+        //
+        // 1.1 创建子进程
+        event.reply('excuteCMD', {
+            index: params.index,
+            message: `<span style="color:green">${new Date().toLocaleString('chinese', { hour12: false })} @任务开始</span>`,
+            running: true,
+        })
+        let child = exec(params.path, { maxBuffer: 1024 * 1024 * 1024 }, (error, stdout, stderr) => {
+            // 1.3 子进程执行CMD结束
+            let result = { index: params.index, message: '', running: true }
+            if (error) {
+                result.message = `<span style="color:red">进程异常↓↓↓</span><br>${error.message}<br>`
+                result.message += `<span style="color:red">${new Date().toLocaleString('chinese', { hour12: false })} @进程异常↑↑↑</span>`
+            } else if (stderr) {
+                result.message = `<span style="color:yellow">${new Date().toLocaleString('chinese', { hour12: false })} @目标程序异常</span>`
+            } else {
+                result.message = `<span style="color:green">${new Date().toLocaleString('chinese', { hour12: false })} @进程任务结束!</span>`
+            }
+            //
+            result.running = false
+            event.reply('excuteCMD', result)
+        })
+
+        // 1.2 监听/报告子进程日志
+        child.stdout.on('data', (message) => {
+            event.reply('excuteCMD', { index: params.index, message: `<span style="color:green">Log: </span>${message}`, running: true })
+            if (message.includes('Merge conflict in')) child.kill() // throw error
+        })
+    })
 }

@@ -41,15 +41,15 @@ if (!appName) {
  * ******************************************************************* */
 const { exec } = require('child_process')
 function executeAsync(cmd) {
-    let child = exec(cmd, { maxBuffer: 1024 * 1024 * 1024 }, (error, stdout, stderr) => {
+    let child = exec(cmd, { maxBuffer: 1024 * 1024 }, (error, stdout, stderr) => {
         if (error) {
             console.error(error)
-            print.red('---------------- Manage CMD执行失败 ----------------\n')
+            print.red('manage.js: 进程执行失败\n')
         } else if (stderr) {
             console.error(stderr)
-            print.yellow('---------------- Manage CMD执行成功 但存在警告 ----------------\n')
+            print.yellow('manage.js: 脚本执行失败\n')
         } else {
-            print.green('---------------- Manage CMD执行成功 ----------------\n')
+            print.green('manage.js: 任务结束\n')
         }
     })
     if (child && cmd) child.stdout.on('data', (data) => console.log(data))

@@ -17,6 +17,8 @@ export default function CmdScript(target, name, descriptor) {
         this.commitMyScript = commitMyScript
         this.renderScripts = renderScripts
         this.deleteBat = deleteBat
+        this.sortCmds = sortCmds
+        this.excuteCMD = excuteCMD
         // *
         sourceFunction.apply(this, arguments)
     }
@@ -58,18 +60,39 @@ async function commitMyScript() {
         $common.loadOff(error)
     }
 }
-
 async function renderScripts() {
     try {
         $load.show()
         let list = await getBatList()
+
+        // **** 本地添加排序功能 ****
+        let map = {
+            max: 0,
+        }
+        if (localStorage['cmdSortMap']) {
+            map = JSON.parse(localStorage['cmdSortMap'])
+            list = list.map((e) => {
+                let index = map[e.id] || 0
+                return Object.assign({ index }, e)
+            })
+        } else {
+            localStorage['cmdSortMap'] = JSON.stringify(map)
+        }
+        list.sort(function(pre, next) {
+            return pre.index - next.index
+        })
+        // **** 本地添加排序功能 End ****
+
+        list.forEach((e) => {
+            e['log'] = ''
+            e['running'] = false
+        })
         this.scripts = Object.assign([], list)
         $load.hide()
     } catch (error) {
         return Promise.reject(error)
     }
 }
-
 function deleteBat(script) {
     $confirm(`确定要删除 ${script.name} 吗`, async () => {
         try {
@@ -80,4 +103,26 @@ function deleteBat(script) {
             $common.loadOff(error)
         }
     })
+}
+function sortCmds(event) {
+    let map = JSON.parse(localStorage['cmdSortMap'])
+    this.scripts.forEach((e) => (map[e.id] = ++map.max))
+    localStorage['cmdSortMap'] = JSON.stringify(map)
+}
+// 通知主进程执行CMD命令
+function excuteCMD(index) {
+    // 0.参数准备
+    this.scripts[index].log = ''
+    this.scripts[index].running = true
+    let target = this.scripts[index]
+    // 1.清空接收器
+    $electron.ipcRenderer.removeAllListeners('excuteCMD')
+    // 2.注册接收器
+    $electron.ipcRenderer.on('excuteCMD', (event, params) => {
+        // params: {index, message, running}
+        this.scripts[params.index].log += `${params.message}<br>`
+        this.scripts[params.index].running = params.running
+    })
+    // 3.发送执行命令
+    $electron.ipcRenderer.send('excuteCMD', { index, kill: false, path: target.path })
 }

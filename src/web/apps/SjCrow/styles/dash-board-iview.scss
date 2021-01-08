@@ -79,6 +79,11 @@
         }
     }
 }
+.ivu-input-type-textarea {
+    .ivu-input {
+        height: 12rem;
+    }
+}
 .no-radius {
     .ivu-input {
         border-radius: 0;
