@@ -18,7 +18,9 @@ export default function CmdScript(target, name, descriptor) {
         this.renderScripts = renderScripts
         this.deleteBat = deleteBat
         this.sortCmds = sortCmds
+        //
         this.excuteCMD = excuteCMD
+        this.killCmd = killCmd
         // *
         sourceFunction.apply(this, arguments)
     }
@@ -85,7 +87,7 @@ async function renderScripts() {
 
         list.forEach((e) => {
             e['log'] = ''
-            e['running'] = false
+            e['pid'] = false
         })
         this.scripts = Object.assign([], list)
         $load.hide()
@@ -113,7 +115,7 @@ function sortCmds(event) {
 function excuteCMD(index) {
     // 0.参数准备
     this.scripts[index].log = ''
-    this.scripts[index].running = true
+    this.scripts[index].pid = '...'
     let target = this.scripts[index]
     // 1.清空接收器
     $electron.ipcRenderer.removeAllListeners('excuteCMD')
@@ -121,8 +123,12 @@ function excuteCMD(index) {
     $electron.ipcRenderer.on('excuteCMD', (event, params) => {
         // params: {index, message, running}
         this.scripts[params.index].log += `${params.message}<br>`
-        this.scripts[params.index].running = params.running
+        this.scripts[params.index].pid = params.pid
     })
     // 3.发送执行命令
     $electron.ipcRenderer.send('excuteCMD', { index, kill: false, path: target.path })
+}
+// 通知主进程结束某个CMD
+function killCmd(pid) {
+    $electron.ipcRenderer.send('excuteCMD', { kill: pid })
 }

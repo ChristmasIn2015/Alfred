@@ -19,7 +19,7 @@
                 <div class="log no-scroll-bar" v-html="script.log"></div>
                 <!-- * -->
                 <div class="btns flex-x-reverse">
-                    <Button v-if="script.running" type="error" size="small">终止</Button>
+                    <Button v-if="script.pid" type="error" size="small" @click.stop="react.killCmd(script.pid)">终止:{{ script.pid }}</Button>
                     <Button v-else type="warning" size="small" @click.stop="react.excuteCMD(index)">执行</Button>
                 </div>
             </div>

@@ -45,7 +45,7 @@ async function start() {
         _ipcBind('Note', Note)
         _ipcBind('Bats', Bats)
 
-        // 3.把通用主动通信方法绑定到主进程的 $hyBridge 上
+        // 3.把通用主动通信方法注册进IPC
         _ipcActive()
 
         // End
@@ -56,8 +56,8 @@ async function start() {
     }
 }
 start()
-// 把调度员的方法全部注册进IPC
 
+// 把调度员的方法全部注册进IPC
 const ipcMain = require('electron').ipcMain
 function _ipcBind(TargetClassName, TargetClass) {
     $hyBridge[TargetClassName] = new TargetClass()
@@ -72,38 +72,58 @@ function _ipcBind(TargetClassName, TargetClass) {
         })
     }
 }
+
 // 把主动通信的方法注册进IPC
 function _ipcActive() {
     // * 执行脚本 主动报告脚本执行情况 params: { index, kill, path }
     const exec = require('child_process').exec
+    if (!global.$childProcess) global['$childProcess'] = {}
     ipcMain.on('excuteCMD', (event, params) => {
+        //
+        // 1.0 结束子进程
+        const pid = params.kill
+        if (pid && global.$childProcess && global.$childProcess[pid]) {
+            console.log('pid', pid, global.$childProcess[pid].killed)
+            global.$childProcess[pid].kill()
+            console.log('kill end', pid, global.$childProcess[pid].killed)
+            return
+        }
         //
         // 1.1 创建子进程
         event.reply('excuteCMD', {
             index: params.index,
             message: `<span style="color:green">${new Date().toLocaleString('chinese', { hour12: false })} @任务开始</span>`,
-            running: true,
+            pid: '...',
         })
-        let child = exec(params.path, { maxBuffer: 1024 * 1024 * 1024 }, (error, stdout, stderr) => {
+        let child = exec(params.path.replace(/\n/g, ' '), { maxBuffer: 1024 * 1024 * 1024 }, (error, stdout, stderr) => {
             // 1.3 子进程执行CMD结束
-            let result = { index: params.index, message: '', running: true }
+            let time = new Date().toLocaleString('chinese', { hour12: false })
+            let result = { index: params.index, message: '', pid: child.pid }
             if (error) {
-                result.message = `<span style="color:red">进程异常↓↓↓</span><br>${error.message}<br>`
-                result.message += `<span style="color:red">${new Date().toLocaleString('chinese', { hour12: false })} @进程异常↑↑↑</span>`
+                result.message = `<span style="color:red">进程异常↓↓↓</span><br>`
+                result.message += `${error.message}<br>`
+                result.message += `<span style="color:red">${time} @进程异常↑↑↑</span>`
             } else if (stderr) {
-                result.message = `<span style="color:yellow">${new Date().toLocaleString('chinese', { hour12: false })} @目标程序异常</span>`
+                result.message = `<span style="color:yellow">${time} @目标程序异常</span>`
             } else {
-                result.message = `<span style="color:green">${new Date().toLocaleString('chinese', { hour12: false })} @进程任务结束!</span>`
+                result.message = `<span style="color:green">${time} @进程任务结束!</span>`
             }
             //
-            result.running = false
+            result.pid = false
             event.reply('excuteCMD', result)
         })
 
         // 1.2 监听/报告子进程日志
         child.stdout.on('data', (message) => {
-            event.reply('excuteCMD', { index: params.index, message: `<span style="color:green">Log: </span>${message}`, running: true })
+            event.reply('excuteCMD', { index: params.index, message: `<span style="color:green">Log: </span>${message}`, pid: child.pid })
             if (message.includes('Merge conflict in')) child.kill() // throw error
         })
+        child.on('exit', (code, signal) => {
+            console.log('child process exited with' + `code ${code} and signal ${signal}`)
+        })
+
+        // * 全局控制子进程
+
+        global.$childProcess[child.pid] = child
     })
 }
