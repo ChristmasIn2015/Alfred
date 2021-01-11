@@ -5,6 +5,7 @@
 -   ✔ Web 应用
 -   ✔ Node 应用
 -   ✔ Electron 应用
+-   项目启动方式请配合 <font color="red">src/manage.js</font> 查看 package.json
 
 ## WebBuilder 期待您与我们共同维护这个项目
 
