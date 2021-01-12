@@ -9,7 +9,7 @@
                 :type="react.areaIdPicked === area.id ? 'success' : 'default'"
                 @click.stop="react.renderShelfList(area.id)"
             >
-                <span @dblclick="react.toggleArea(area)" @contextmenu="react.deleteArea(area)">{{ area.name }}</span>
+                <span @dblclick="react.toggleArea($event, area)" @contextmenu="react.deleteArea(area)">{{ area.name }}</span>
             </Button>
             <Button size="small" @click.stop="react.toggleArea">添加区域</Button>
         </div>
@@ -23,7 +23,7 @@
                 :type="react.shelfIdPicked === shelf.id ? 'success' : 'default'"
                 @click.stop="react.renderBookList(shelf.id)"
             >
-                <span @dblclick="react.toggleShelf(shelf)" @contextmenu="react.deleteShelf(shelf)">{{ shelf.name }}</span>
+                <span @dblclick="react.toggleShelf($event, shelf)" @contextmenu="react.deleteShelf(shelf)">{{ shelf.name }}</span>
             </Button>
             <Button v-if="react.areaIdPicked" size="small" @click.stop="react.toggleShelf">添加书架</Button>
         </div>

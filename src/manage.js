@@ -44,22 +44,25 @@ function executeAsync(cmd) {
     let child = exec(cmd, { maxBuffer: 1024 * 1024 }, (error, stdout, stderr) => {
         if (error) {
             console.error(error)
-            print.red('manage.js: 进程执行失败\n')
+            print.red('manage.js: 进程错误\n')
         } else if (stderr) {
             console.error(stderr)
-            print.yellow('manage.js: 脚本执行失败\n')
+            print.yellow('manage.js: 脚本异常\n')
         } else {
-            print.green('manage.js: 任务结束\n')
+            print.green('manage.js: 进程结束\n')
         }
     })
-    if (child && cmd) child.stdout.on('data', (data) => console.log(data))
-    return child
+    if (child && cmd) {
+        child.stdout.on('data', (data) => console.log(data))
+        child.on('exit', (code, signal) => console.log(`${child.pid} exit by ${code} & ${signal}`))
+    }
+    return { process: child, pid: child.pid }
 }
 /** *******************************************************************
  * 根据命令行输入确定CMD命令
  * 并使用子进程来执行CMD命令
  * ******************************************************************* */
-let child = null
+if (!global.$child_process_map) global['$child_process_map'] = {}
 let cmd = null
 switch (appType) {
     case 'web': {
@@ -88,4 +91,4 @@ switch (appType) {
         break
     }
 }
-child = executeAsync(cmd)
+executeAsync(cmd)

@@ -11,6 +11,7 @@
         "fingerprintjs": "^0.5.3",
         "font-awesome": "^4.7.0",
         "sqlite3": "^5.0.0",
+        "tree-kill": "^1.2.2",
         "view-design": "^4.4.0",
         "vue": "^2.6.11",
         "vue-quill-editor": "^3.0.6",
