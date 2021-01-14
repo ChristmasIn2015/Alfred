@@ -1,20 +1,20 @@
-# WebBuilder
+# Alfred
 
-## WebBuilder 致力于轻松构建
+## Alfred 致力于轻松构建
 
 -   ✔ Web 应用
 -   ✔ Node 应用
 -   ✔ Electron 应用
 -   项目启动方式请配合 <font color="red">src/manage.js</font> 查看 package.json
 
-## WebBuilder 期待您与我们共同维护这个项目
+## Alfred 期待您与我们共同维护这个项目
 
 -   点击右上角的 Fork，该项目会复制到您自己的仓库
 -   git clone 您仓库中的该项目
 -   添加此项目的项目地址，便于本项目 master 获取最新的更新
 
 ```
-git remote add upstream https://github.com/ChristmasIn2015/WebBuilder.git
+git remote add upstream https://github.com/ChristmasIn2015/Alfred.git
 ```
 
 -   查看添加本项目 git 源地址是否成功
