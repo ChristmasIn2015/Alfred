@@ -1,4 +1,4 @@
-import Response from '../../../utils/Response.js'
+import Response from '../../../../database/Response.js'
 export default class Order {
     constructor() {}
     #getModel() {

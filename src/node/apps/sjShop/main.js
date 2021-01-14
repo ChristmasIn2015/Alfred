@@ -1,5 +1,6 @@
 import Server from '../../../database/mongoDB/Server.js'
 import Operator from '../../../database/mongoDB/Operator.js'
+import express from 'express'
 //
 import _Error from './modules/Error.js'
 import User from './modules/User.js'
@@ -12,7 +13,6 @@ import Order from './modules/Order.js'
 import Customer from './modules/Customer.js'
 class Cabin {
     // * 基础
-    express = require('express')
     expressAPP = null
     // * 业务
     socketNumber = null
@@ -24,7 +24,7 @@ class Cabin {
     constructor(socketNumber) {
         if (socketNumber) {
             this.socketNumber = socketNumber
-            this.expressAPP = this.express()
+            this.expressAPP = express()
             this.initCabin() // ASYNC
         } else {
             console.log('请配置正确的端口', socketNumber)

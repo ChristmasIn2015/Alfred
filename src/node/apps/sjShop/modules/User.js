@@ -1,4 +1,4 @@
-import Response from '../../../utils/Response.js'
+import Response from '../../../../database/Response.js'
 const jwt = require('jsonwebtoken')
 const md5 = require('js-md5')
 export default class User {

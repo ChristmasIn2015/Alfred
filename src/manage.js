@@ -52,10 +52,7 @@ function executeAsync(cmd) {
             print.green('manage.js: 进程结束\n')
         }
     })
-    if (child && cmd) {
-        child.stdout.on('data', (data) => console.log(data))
-        child.on('exit', (code, signal) => console.log(`${child.pid} exit by ${code} & ${signal}`))
-    }
+    if (child && cmd) child.stdout.on('data', (data) => console.log(data))
     return { process: child, pid: child.pid }
 }
 /** *******************************************************************
@@ -86,8 +83,8 @@ switch (appType) {
         // 打包Electron应用的高语法JS文件
         // 启动每次唯一的Electron应用
         // cmd = `vue-cli-service build ${target}`
-        cmd = `webpack --config ./src/electron/webpack.config.js && electron ./src/electron/main.js ${appName}`
-        // cmd = `vue-cli-service build ${target} && webpack --config ./src/electron/webpack.config.js && electron ./src/electron/main.js ${appName}`
+        cmd = `webpack --config ./src/electron/webpack.config.js && electron ./src/electron/electron.js ${appName}`
+        // cmd = `vue-cli-service build ${target} && webpack --config ./src/electron/webpack.config.js && electron ./src/electron/electron.js ${appName}`
         break
     }
 }
