@@ -75,6 +75,7 @@ function _ipcBind(TargetClassName, TargetClass) {
 }
 
 // 把主动通信的方法注册进IPC
+const iconv = require('iconv-lite')
 function _ipcActive() {
     // * 执行脚本 主动报告脚本执行情况 params: { index, kill, path }
     ipcMain.on('excuteCMD', (event, params) => {
@@ -92,26 +93,33 @@ function _ipcActive() {
             message: `<span style="color:green">${new Date().toLocaleString('chinese', { hour12: false })} @任务开始</span>`,
             pid: '...',
         })
-        const sub_process = require('child_process').exec(params.path.replace(/\n/g, ' '), { maxBuffer: 1024 * 1024 * 1024 }, (error, stdout, stderr) => {
-            // 1.3 子进程执行CMD结束
-            let time = new Date().toLocaleString('chinese', { hour12: false })
-            let result = { index: params.index, message: '', pid: sub_process.pid }
-            if (error) {
-                result.message = `<span style="color:red">进程异常↓↓↓</span><br>`
-                result.message += `${error.message}<br>`
-                result.message += `<span style="color:red">${time} @进程异常↑↑↑</span>`
-            } else if (stderr) {
-                result.message = `<span style="color:yellow">${time} @目标程序异常</span>`
-            } else {
-                result.message = `<span style="color:green">${time} @进程任务结束!</span>`
+        const sub_process = require('child_process').exec(
+            params.path.replace(/\n/g, ' '),
+            { maxBuffer: 1024 * 1024 * 1024, encoding: 'binary' }, // Binary To UTF-8
+            (error, stdout, stderr) => {
+                // 1.3 子进程执行CMD结束
+                let time = new Date().toLocaleString('chinese', { hour12: false })
+                let result = { index: params.index, message: '', pid: sub_process.pid }
+                if (error) {
+                    error.message = iconv.decode(Buffer.from(error.message, 'binary'), 'cp936') // Binary To UTF-8
+                    result.message = `<span style="color:red">进程异常↓↓↓</span><br>`
+                    result.message += `${error.message}<br>`
+                    result.message += `<span style="color:red">${time} @进程异常↑↑↑</span>`
+                } else if (stderr) {
+                    result.message = `<span style="color:yellow">${time} @目标程序异常</span>`
+                } else {
+                    result.message = `<span style="color:green">${time} @进程任务结束!</span>`
+                }
+                //
+                result.pid = false
+                event.reply('excuteCMD', result)
             }
-            //
-            result.pid = false
-            event.reply('excuteCMD', result)
-        })
+        )
 
         // 1.2 监听/报告子进程日志
+        // sub_process.stdout.setEncoding('utf-8')
         sub_process.stdout.on('data', (message) => {
+            message = iconv.decode(Buffer.from(message, 'binary'), 'cp936') // Binary To UTF-8
             event.reply('excuteCMD', { index: params.index, message: `<span style="color:green">Log: </span>${message}`, pid: sub_process.pid })
             if (message.includes('Merge conflict in')) processKill(sub_process.pid)
         })
