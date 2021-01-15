@@ -4,7 +4,7 @@ export default class Note {
     // ************************************************************************
     @Response('知识区域提交成功')
     async commitArea(event, params) {
-        let model = $db.Area.getModel()
+        let model = $db.Area.getStruct()
         model.name = params.name
         if (params.id) {
             await $db.Area.update({ id: params.id }, model)
@@ -44,14 +44,14 @@ export default class Note {
     // ************************************************************************
     @Response('提交书架成功')
     async commitShelf(event, params) {
-        let model = $db.Shelf.getModel()
+        let model = $db.Shelf.getStruct()
         model.name = params.shelfModel.name
         if (params.shelfModel.id) {
             await $db.Shelf.update({ id: params.shelfModel.id }, model)
         } else {
             let info = await $db.Shelf.create(model)
             // * 更新关系
-            let relation = $db.Relation_AreaShelf.getModel()
+            let relation = $db.Relation_AreaShelf.getStruct()
             relation.areaId = params.areaId
             relation.shelfId = info.lastID
             await $db.Relation_AreaShelf.create(relation)
@@ -90,7 +90,7 @@ export default class Note {
     // ************************************************************************
     @Response('书籍提交成功')
     async commitBook(event, params) {
-        let model = $db.Book.getModel()
+        let model = $db.Book.getStruct()
         model.name = params.bookModel.name
         model.content = params.bookModel.content
         if (params.bookModel.id) {
@@ -98,7 +98,7 @@ export default class Note {
         } else {
             let info = await $db.Book.create(model)
             // * 更新关系
-            let relation = $db.Relation_ShelfBook.getModel()
+            let relation = $db.Relation_ShelfBook.getStruct()
             relation.shelfId = params.shelfId
             relation.bookId = info.lastID
             await $db.Relation_ShelfBook.create(relation)

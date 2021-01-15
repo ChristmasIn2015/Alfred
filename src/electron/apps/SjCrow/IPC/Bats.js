@@ -5,7 +5,7 @@ export default class Bats {
 
     @Response('脚本提交成功')
     async commitBat(event, params) {
-        let model = $db.Bats.getModel()
+        let model = $db.Bats.getStruct()
         model.name = params.name
         model.path = params.path
         if (params.id) {

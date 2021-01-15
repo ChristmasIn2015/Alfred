@@ -1,10 +1,3 @@
-/** **************************************************************
- * 这个脚本会在Electron主进程中加载
- * ***************************************************************
- * Web应该始终通过IPC通信来调用OS-API
- * $electron.ipcRenderer.send(name, params)
- * require('electron').ipcMain.on(name, (event, params)=>{})
- * ***************************************************************/
 import Server from '../../../database/sqlite3/Server.js'
 import Operator from '../../../database/sqlite3/Operator.js'
 import processKill from 'tree-kill'
@@ -12,31 +5,33 @@ import processKill from 'tree-kill'
 import Native from './IPC/Native.js'
 import Note from './IPC/Note.js'
 import Bats from './IPC/Bats.js'
-async function start() {
+//
+async function go() {
     try {
-        // 1.把数据库操作员绑定到主进程的 $db 上
-        if (!global['$db']) global['$db'] = {}
-        $db['server'] = new Server('SjCrow', require('path').join(process.cwd(), './src/electron/apps/SjCrow/SjCrow.db'))
-        await $db.server.start()
+        const DB_ADDRESS = require('path').join(process.cwd(), './src/electron/apps/SjCrow/SjCrow.db')
 
-        // 1.1 笔记业务需要的数据库
+        // 1.链接Sqlite3数据库服务
+        global['$server'] = new Server(DB_ADDRESS)
+        await global['$server'].start()
+        // 2.创建Sqlite3【数据库操作员】
+        global['$db'] = {}
         const LIST_NOTE = [
-            { name: 'Area', struct: { id: 'number', name: 'string' } },
-            { name: 'Shelf', struct: { id: 'number', name: 'string' } },
-            { name: 'Book', struct: { id: 'number', name: 'string', content: 'string' } },
-            { name: 'Relation_AreaShelf', struct: { id: 'number', areaId: 'number', shelfId: 'number' } },
-            { name: 'Relation_ShelfBook', struct: { id: 'number', shelfId: 'number', bookId: 'number' } },
+            { name: 'Area', struct: { name: 'string' } },
+            { name: 'Shelf', struct: { name: 'string' } },
+            { name: 'Book', struct: { name: 'string', content: 'string' } },
+            { name: 'Relation_AreaShelf', struct: { areaId: 'number', shelfId: 'number' } },
+            { name: 'Relation_ShelfBook', struct: { shelfId: 'number', bookId: 'number' } },
         ]
         for (let index in LIST_NOTE) {
             let TableName = LIST_NOTE[index].name
-            $db[TableName] = new Operator($db.server.db)
+            $db[TableName] = new Operator($server.dbServer)
             await $db[TableName].init(TableName, LIST_NOTE[index].struct)
         }
         // 1.2 脚本业务需要的数据库
-        const LIST_BATS = [{ name: 'Bats', struct: { id: 'number', name: 'string', path: 'string' } }]
+        const LIST_BATS = [{ name: 'Bats', struct: { name: 'string', path: 'string' } }]
         for (let index in LIST_BATS) {
             let TableName = LIST_BATS[index].name
-            $db[TableName] = new Operator($db.server.db)
+            $db[TableName] = new Operator($server.dbServer)
             await $db[TableName].init(TableName, LIST_BATS[index].struct)
         }
 
@@ -56,7 +51,7 @@ async function start() {
         process.exit()
     }
 }
-start()
+go()
 
 // 把调度员的方法全部注册进IPC
 const ipcMain = require('electron').ipcMain
