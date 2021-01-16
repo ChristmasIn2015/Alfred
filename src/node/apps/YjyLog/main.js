@@ -8,7 +8,7 @@ async function go() {
     try {
         const SOCKET_NUMBER = process.argv[2]
         if (!SOCKET_NUMBER) throw new Error('请选择端口号')
-        const DB_ADDRESS = 'mongodb://127.0.0.1:27017'
+        const DB_ADDRESS = 'mongodb://127.0.0.1:27017/YjyLog'
 
         // 1.链接MongoDB数据库服务
         global['$server'] = new Server(DB_ADDRESS)
@@ -20,9 +20,10 @@ async function go() {
             //
         ]
         for (let i in operators) {
-            const OperatorName = operators[i]
+            const OperatorName = operators[i].name
             const TablePointer = await global['$server'].getCollection(OperatorName)
             global['$db'][OperatorName] = new Operator(TablePointer)
+            await global['$db'][OperatorName].init(OperatorName, operators[i].struct)
         }
         // 3.初始化控制台/使其绑定【业务调度员】
         global['Cabin'] = null

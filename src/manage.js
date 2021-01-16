@@ -74,7 +74,7 @@ switch (appType) {
         // 执行这个JS文件
         let target = require('path').join(__dirname, `./node/dist/${appName}.js`)
         // cmd = `webpack --config ./src/node/webpack.config.js`
-        cmd = `webpack --config ./src/node/webpack.config.js && node ${target} 7001`
+        cmd = `webpack --config ./src/node/webpack.config.js && node ${target} 7000`
         break
     }
     case 'electron': {

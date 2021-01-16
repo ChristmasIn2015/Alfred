@@ -17,6 +17,7 @@ export default class Operator {
         if (!oldStruct) return
         // 如果 newStruct 补充了新字段，则全量补充这个新字段
         for (let columnName in newStruct) {
+            if (columnName === '_id') continue
             if (columnName === 'id') continue
             if (columnName === 'timeCreate') continue
             if (columnName === 'timeUpdate') continue
@@ -28,6 +29,7 @@ export default class Operator {
         }
         // 如果 newStruct 删除了旧字段，则全量删除这个旧字段
         for (let columnName in oldStruct) {
+            if (columnName === '_id') continue
             if (columnName === 'id') continue
             if (columnName === 'timeCreate') continue
             if (columnName === 'timeUpdate') continue

@@ -3,7 +3,7 @@ const appName = process.argv[2]
 
 // 2
 const hybridge = require('path').join(__dirname, `./dist/${appName}.js`)
-require(hybridge)
+require(hybriappdge)
 
 // 3
 const { app, BrowserWindow, Menu } = require('electron')

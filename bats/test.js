@@ -1,17 +1,17 @@
-const { exec } = require('child_process')
-var iconv = require('iconv-lite')
-let sub_process = exec('echo 中文', { maxBuffer: 1024 * 1024, encoding: 'binary' }, (error, stdout, stderr) => {
-    if (error) {
-        console.log(error.message)
-        console.log('father.js: 进程错误\n')
-    } else if (stderr) {
-        console.log(stderr.message)
-        console.log('father.js: 脚本异常\n')
-    } else {
-        console.log('father.js: 进程结束\n')
-    }
-})
-sub_process.stdout.on('data', (data) => {
-    data = iconv.decode(Buffer.from(data, 'binary'), 'cp936')
-    console.log(data, data.split(''))
-})
+let ws = require('nodejs-websocket')
+
+ws.createServer((connection) => {
+    console.log('有人连接...')
+    connection.on('text', function(result) {
+        console.log('发送消息', result)
+    })
+    connection.on('connect', function(code) {
+        console.log('开启连接', code)
+    })
+    connection.on('close', function(code) {
+        console.log('关闭连接', code)
+    })
+    connection.on('error', function(code) {
+        console.log('异常关闭', code)
+    })
+}).listen(6999)

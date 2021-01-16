@@ -74,10 +74,10 @@ export default class Cabin {
         // 本机IPv4地址
         if (global.process.platform === 'win32') {
             const interfaces = require('os').networkInterfaces()
-            for (let index in interfaces) {
-                if (index === '以太网') {
-                    for (let key in interfaces[index]) {
-                        let value = interfaces[index][key]
+            for (let key in interfaces) {
+                if (key === '以太网' || key === 'WLAN') {
+                    for (let i in interfaces[key]) {
+                        let value = interfaces[key][i]
                         if (value.family === 'IPv4') {
                             this.info['IPv4'] = value.address
                             break
