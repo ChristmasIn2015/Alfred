@@ -3,7 +3,7 @@ const appName = process.argv[2]
 
 // 2
 const hybridge = require('path').join(__dirname, `./dist/${appName}.js`)
-require(hybriappdge)
+require(hybridge)
 
 // 3
 const { app, BrowserWindow, Menu } = require('electron')
@@ -13,8 +13,8 @@ app.on('window-all-closed', () => {
 app.on('ready', () => {
     // 0 实例化窗口
     let instance = new BrowserWindow({
-        width: 1360,
-        height: 768,
+        width: 1560,
+        height: 1000,
         // resizable: false,
         webPreferences: {
             nodeIntegration: true, // 为了让Vue app在浏览器内核中能够使用到Electron的API

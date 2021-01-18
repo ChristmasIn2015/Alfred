@@ -11,15 +11,15 @@ async function ipcInvoke(ipcName, params) {
 export function openDevTool() {
     return ipcInvoke('openDevTool')
 }
-// *********************************************************** Bat
-export function commitBat(params) {
-    return ipcInvoke('commitBat', params)
+// *********************************************************** Cmds
+export function commitLocalCmd(params) {
+    return ipcInvoke('commitLocalCmd', params)
 }
-export function getBatList(params) {
-    return ipcInvoke('getBatList', params)
+export function getLocalCmdList(params) {
+    return ipcInvoke('getLocalCmdList', params)
 }
-export function batDelete(batId) {
-    return ipcInvoke('batDelete', batId)
+export function deleteLocalCmd(batId) {
+    return ipcInvoke('deleteLocalCmd', batId)
 }
 // *********************************************************** Note
 export function commitArea(params) {

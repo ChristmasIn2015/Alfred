@@ -23,6 +23,8 @@ export default class Operator {
         this.TableName = TableName
         this.TableStruct = newStruct
 
+        console.log('newStruct', this.TableStruct)
+
         // 获取当前表结构
         let oldStruct = await this.#getNowStruct()
         // 如果 newStruct 补充了新字段，则全量补充这个数据
@@ -136,6 +138,7 @@ export default class Operator {
 
     // 获取字段结构
     getStruct() {
+        console.log('getStruct', this.TableStruct)
         return Object.assign({}, this.TableStruct)
     }
     #getStructByModel(model) {
@@ -216,6 +219,7 @@ export default class Operator {
         // 1.更新 timeUpdate
         doc = Object.assign(doc, { timeUpdate: Date.now() })
 
+        console.log(doc)
         // what
         let updateSql = ''
         for (let key in doc) updateSql += `${key}='${doc[key]}', `

@@ -4,15 +4,33 @@ export default class Cabin {
     info = {}
     communication = null // null: Electron的IPC通信, express(): Express包装的HTTP通信
     constructor(SOCKET_NUMBER) {
-        this.initCabin(SOCKET_NUMBER)
+        if (SOCKET_NUMBER) {
+            this.initHttpCabin(SOCKET_NUMBER)
+        } else {
+            if (!global['$hyBridge']) global['$hyBridge'] = {}
+        }
     }
     // ============================================================================================================
     // ============================================================================================================
     // ============================================================================================================
     // ============================================================================================================
     // ============================================================================================================
+    // ElectronIPC分配
+    exposeElectronIPC(TargetClassName, TargetClass) {
+        $hyBridge[TargetClassName] = new TargetClass()
+        if (TargetClass.prototype) {
+            Object.getOwnPropertyNames(TargetClass.prototype).forEach((functionName) => {
+                if (functionName === 'constructor') return // continue
+                require('electron').ipcMain.handle(functionName, async (...args) => {
+                    let origin = $hyBridge[TargetClassName]
+                    let result = await origin[functionName].apply(origin, args)
+                    return result
+                })
+            })
+        }
+    }
     // 数据接口分配
-    exposeLink(method, route, next) {
+    exposeHttpRoute(method, route, next) {
         if (this.info.SOCKET_NUMBER) {
             if (method === 'GET') {
                 this.communication.get(route, (request, response) => next(request, response))
@@ -53,12 +71,38 @@ export default class Cabin {
             })
         }
     }
+    bindIpcDispatcher(TargetClassName, TargetClass) {
+        $hyBridge[TargetClassName] = new TargetClass()
+        if (TargetClass.prototype) {
+            Object.getOwnPropertyNames(TargetClass.prototype).forEach((functionName) => {
+                if (functionName === 'constructor') return // continue
+                require('electron').ipcMain.handle(functionName, async (...args) => {
+                    let origin = $hyBridge[TargetClassName]
+                    let result = await origin[functionName].apply(origin, args)
+                    return result
+                })
+            })
+        }
+    }
+    bindAutoIpcDispatcher(TargetClassName, TargetClass) {
+        $hyBridge[TargetClassName] = new TargetClass()
+        if (TargetClass.prototype) {
+            Object.getOwnPropertyNames(TargetClass.prototype).forEach((functionName) => {
+                if (functionName === 'constructor') return // continue
+                require('electron').ipcMain.on(functionName, async (...args) => {
+                    let origin = $hyBridge[TargetClassName]
+                    let result = await origin[functionName].apply(origin, args)
+                    return result
+                })
+            })
+        }
+    }
     // ============================================================================================================
     // ============================================================================================================
     // ============================================================================================================
     // ============================================================================================================
     // ============================================================================================================
-    initCabin(SOCKET_NUMBER) {
+    initHttpCabin(SOCKET_NUMBER) {
         try {
             this.#initInfo(SOCKET_NUMBER)
             this.#initCommunication()

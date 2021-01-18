@@ -52,7 +52,7 @@ export default class WebSocket {
                     sub_process.stdout.on('data', (message) => {
                         message = iconv.decode(Buffer.from(message, 'binary'), 'cp936') // Binary To UTF-8
                         // connection.sendText(message)
-                        // event.reply('excuteCMD', { index: params.index, message: `<span style="color:green">Log: </span>${message}`, pid: sub_process.pid })
+                        // event.reply('excuteLocalCmd', { index: params.index, message: `<span style="color:green">Log: </span>${message}`, pid: sub_process.pid })
                         if (message.includes('Merge conflict in')) processKill(sub_process.pid)
                     })
                 }

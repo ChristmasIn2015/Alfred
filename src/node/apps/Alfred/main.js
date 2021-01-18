@@ -23,17 +23,16 @@ async function go() {
         // 1.链接MongoDB数据库服务
         global['$server'] = new Server(DB_ADDRESS)
         await global['$server'].start()
-        // 2.创建MongoDB【数据库操作员】
+        // 2.创建Alfred的【MongoDB数据库操作员】
         global['$db'] = {}
-        let operators = [
+        const OPERATORS = [
             { name: 'Log', struct: { message: 'object' } },
             //
         ]
-        for (let i in operators) {
-            const OperatorName = operators[i].name
-            const TablePointer = await global['$server'].getCollection(OperatorName)
-            global['$db'][OperatorName] = new Operator(TablePointer)
-            await global['$db'][OperatorName].init(OperatorName, operators[i].struct)
+        for (let i in OPERATORS) {
+            const TablePointer = await global['$server'].getCollection(OPERATORS[i].name)
+            global['$db'][OPERATORS[i].name] = new Operator(TablePointer)
+            await global['$db'][OPERATORS[i].name].init(OPERATORS[i].name, OPERATORS[i].struct)
         }
         // 3.初始化控制台/使其绑定【业务调度员】
         global['Cabin'] = null
@@ -42,10 +41,11 @@ async function go() {
         global['Cabin'].bindDispatcher('Manage', Manage)
         global['Cabin'].bindDispatcher('WebSocket', WebSocket)
         // ....
-        // 4.暴漏调度方法给传输层(1.HttpExpress 2.ElectronIPC)
-        global['Cabin'].exposeLink('GET', '/alfred/buildHTML', global['Cabin'].buildHTML)
-        global['Cabin'].exposeLink('GET', '/alfred/buildServer', global['Cabin'].buildServer)
-        global['Cabin'].exposeLink('GET', '/alfred/getAlfredInfo', global['Cabin'].getAlfredInfo)
+        // 4.暴漏调度方法给Http
+        // @Manage
+        global['Cabin'].exposeHttpRoute('GET', '/alfred/buildHTML', global['Cabin'].buildHTML)
+        global['Cabin'].exposeHttpRoute('GET', '/alfred/buildServer', global['Cabin'].buildServer)
+        global['Cabin'].exposeHttpRoute('GET', '/alfred/getAlfredInfo', global['Cabin'].getAlfredInfo)
         // ....
         console.log('Welcome Home, I am Alfred. ', global['Cabin'].info)
 

@@ -20,42 +20,6 @@ if (!appName) {
     process.exit()
 }
 /** *******************************************************************
- * Node创建子进程方法
- * *******************************************************************
- * 1.child_process.exec(command, options, callback)
- * 创建一个shell，然后在shell里执行命令。
- * 执行完成后，将stdout、stderr作为参数传入回调方法。
- * *******************************************************************
- * 2.child_process.execFile(command, options, callback)
- * 直接执行可执行文件, 没有创建一个新的shell
- * 一些操作，比如I/O重定向，文件glob等不支持。
- * *******************************************************************
- * 3.child_process.fork(modulePath, args, options)
- * 4.child_process.spawn(command, args, options)
- * *******************************************************************
- * 以上四种方法返回一个ChildProcess代表衍生的子进程
- * *******************************************************************
- * 参考文章:
- * https://www.cnblogs.com/chyingp/p/node-learning-guide-child_process.html
- * https://zhuanlan.zhihu.com/p/36678971
- * ******************************************************************* */
-const { exec } = require('child_process')
-function executeAsync(cmd) {
-    let child = exec(cmd, { maxBuffer: 1024 * 1024 }, (error, stdout, stderr) => {
-        if (error) {
-            console.error(error)
-            print.red('manage.js: 进程错误\n')
-        } else if (stderr) {
-            console.error(stderr)
-            print.yellow('manage.js: 脚本异常\n')
-        } else {
-            print.green('manage.js: 进程结束\n')
-        }
-    })
-    if (child && cmd) child.stdout.on('data', (data) => console.log(data))
-    return { process: child, pid: child.pid }
-}
-/** *******************************************************************
  * 根据命令行输入确定CMD命令
  * 并使用子进程来执行CMD命令
  * ******************************************************************* */
@@ -88,4 +52,8 @@ switch (appType) {
         break
     }
 }
-executeAsync(cmd)
+require('./database/ChildProcess.js').processExcuteCmd(cmd, {
+    answer: (answer) => {
+        console.log(answer.message)
+    },
+})
