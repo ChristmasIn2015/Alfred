@@ -8,7 +8,6 @@ export default class CmdsAuto {
         processExcuteCmd(params.cmdString, {
             answer: (answer) => {
                 answer.DTO['listIndex'] = params.index
-                console.log('reply', answer)
                 event.reply('excuteLocalCmd', answer)
             },
         })

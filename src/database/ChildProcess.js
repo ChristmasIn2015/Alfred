@@ -35,18 +35,20 @@ function processExcuteCmd(cmdString, connection) {
             let time = new Date().toLocaleString('chinese', { hour12: false })
             if (error) {
                 // 1.1 回应请求者 此进程异常
+                // error.message = require('iconv-lite').decode(Buffer.from(error.message, 'binary'), 'cp936') // Binary To UTF-8
                 connection.answer({
                     message: _getHtmlLog([`@进程异常`, error.message, `${time} @进程异常`]),
                     DTO: {
-                        pid: sub_process.pid,
+                        pid: null,
                     },
                 })
             } else if (stderr) {
                 // 2.2 回应请求者 执行的程序抛出异常
+                // stderr.message = require('iconv-lite').decode(Buffer.from(stderr.message, 'binary'), 'cp936') // Binary To UTF-8
                 connection.answer({
-                    message: _getHtmlLog([`${time} @目标程序异常`]),
+                    message: _getHtmlLog([stderr.message, `${time} @目标程序异常`]),
                     DTO: {
-                        pid: sub_process.pid,
+                        pid: null,
                     },
                 })
             } else {
@@ -63,6 +65,7 @@ function processExcuteCmd(cmdString, connection) {
 
     // 2 回应请求者 程序打印日志
     sub_process.stdout.on('data', (message) => {
+        message = require('iconv-lite').decode(Buffer.from(message, 'binary'), 'cp936') // Binary To UTF-8
         connection.answer({
             message: _getHtmlLog([`@Log: ${message}`]),
             DTO: {
@@ -75,23 +78,22 @@ function processExcuteCmd(cmdString, connection) {
 function _getHtmlLog(messageList) {
     let html = ''
     messageList.forEach((e) => {
-        if (global.process) {
-            html += `${e} \n`
-        } else {
-            e = require('iconv-lite').decode(Buffer.from(e, 'binary'), 'cp936') // Binary To UTF-8
-            if (e.indexOf('@任务开始') >= 0 || e.indexOf('@进程任务结束!') >= 0) e = `<span style="color:green">${e}</sapn>`
-            if (e.indexOf('@目标程序异常') >= 0) e = `<span style="color:yellow">${e}</sapn>`
-            if (e.indexOf('@进程异常') >= 0) e = `<span style="color:red">${e}</sapn>`
-            if (e.indexOf('@Log: ') >= 0) e = `<span style="color:green">${e}</sapn>`
-            html += `${e}<br>`
-        }
+        // if (global.process) {
+        //     html += `${e} \n`
+        // } else {
+        // e = require('iconv-lite').decode(Buffer.from(e, 'binary'), 'cp936') // Binary To UTF-8
+        if (!e) return
+        if (e.indexOf('@任务开始') >= 0 || e.indexOf('@进程任务结束!') >= 0) e = `<span style="color:green">${e}</sapn>`
+        if (e.indexOf('@目标程序异常') >= 0) e = `<span style="color:yellow">${e}</sapn>`
+        if (e.indexOf('@进程异常') >= 0) e = `<span style="color:red">${e}</sapn>`
+        html += `${e}<br>`
+        // }
     })
     return html
 }
 
 // 2.销毁进程
 function processDestory(processId) {
-    console.log(processId)
     if (typeof processId === 'number') require('tree-kill')(processId)
 }
 module.exports = { processExcuteCmd, processDestory }

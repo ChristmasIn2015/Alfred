@@ -109,10 +109,10 @@ function excuteLocalCmd(index) {
     $electron.ipcRenderer.removeAllListeners('excuteLocalCmd')
     // 2.注册接收器
     $electron.ipcRenderer.on('excuteLocalCmd', (event, answer) => {
-        // answer: { message, DTO:{ pid, index } }
+        // answer: { message, DTO:{ pid, listIndex } }
         console.log('ipcRenderer', answer)
-        this.cmds[answer.DTO.index].log += answer.message
-        this.cmds[answer.DTO.index].pid = answer.DTO.pid
+        this.cmds[answer.DTO.listIndex].log += answer.message
+        this.cmds[answer.DTO.listIndex].pid = answer.DTO.pid
     })
     // 3.发送执行命令
     $electron.ipcRenderer.send('excuteLocalCmd', { cmdString: target.cmdString, index })

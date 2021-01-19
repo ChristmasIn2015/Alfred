@@ -1,12 +1,12 @@
 <template>
     <div class="cmd">
-        <div class="cmd-nav flex">
+        <!-- <div class="cmd-nav flex">
             <Button type="info" size="small" @click.stop="react.toggleCmd($event)">
                 <span class="fa fa-user"></span>
                 <span>新增CMD</span>
             </Button>
-        </div>
-        <draggable v-model="react.cmds" class="cmd-content flex-wrap" @end="reactTo('sortCmds')">
+        </div> -->
+        <!-- <draggable v-model="react.cmds" class="cmd-content flex-wrap" @end="reactTo('sortCmds')">
             <div
                 class="content-script flex-y"
                 v-for="(localCmd, index) in react.cmds"
@@ -16,13 +16,12 @@
             >
                 <div class="name">{{ localCmd.name }}</div>
                 <div class="log no-scroll-bar" v-html="localCmd.log"></div>
-                <!-- * -->
                 <div class="btns flex-x-reverse">
                     <Button v-if="localCmd.pid" type="error" size="small" @click.stop="react.killLocalCmd(localCmd.pid)">终止:{{ localCmd.pid }}</Button>
                     <Button v-else type="info" size="small" @click.stop="react.excuteLocalCmd(index)">执行</Button>
                 </div>
             </div>
-        </draggable>
+        </draggable> -->
 
         <!-- 弹窗 -->
         <Modal v-model="react.cmdModal" :title="react.cmdModel.name ? `编辑${react.cmdModel.name}` : '新增CMD'" width="700">

@@ -5,12 +5,10 @@ export default class Cmds {
 
     @Response('脚本提交成功')
     async commitLocalCmd(event, params) {
-        console.log('commitLocalCmd update params', params)
         let model = $db.Cmds.getStruct()
         model.name = params.name
         model.cmdString = params.cmdString
         if (params.id) {
-            console.log('commitLocalCmd update', model)
             await $db.Cmds.update({ id: params.id }, model)
         } else {
             await $db.Cmds.create(model)

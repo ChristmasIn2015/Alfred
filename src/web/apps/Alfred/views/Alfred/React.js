@@ -10,6 +10,6 @@ export default class React {
     @WebSocket
     @$common.TryCatch
     async initReact() {
-        await this.renderCmds()
+        // await this.renderCmds()
     }
 }
