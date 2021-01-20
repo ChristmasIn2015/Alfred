@@ -51,3 +51,4 @@ async function go() {
     }
 }
 go()
+console.log('Electron go:', process.pid)

@@ -11,7 +11,6 @@ import Server from '../../../database/mongoDB/Server.js'
 import Operator from '../../../database/mongoDB/Operator.js'
 //
 import Log from './modules/Log.js'
-import Manage from './modules/Manage.js'
 import WebSocket from './modules/WebSocket.js'
 
 async function go() {
@@ -26,7 +25,8 @@ async function go() {
         // 2.创建Alfred的【MongoDB数据库操作员】
         global['$db'] = {}
         const OPERATORS = [
-            { name: 'Log', struct: { message: 'object' } },
+            { name: 'Log', struct: { message: '' } },
+            { name: 'Cmds', struct: { name: '', cmdString: '' } },
             //
         ]
         for (let i in OPERATORS) {
@@ -38,14 +38,7 @@ async function go() {
         global['Cabin'] = null
         global['Cabin'] = new Cabin(SOCKET_NUMBER)
         global['Cabin'].bindDispatcher('Log', Log)
-        global['Cabin'].bindDispatcher('Manage', Manage)
         global['Cabin'].bindDispatcher('WebSocket', WebSocket)
-        // ....
-        // 4.暴漏调度方法给Http
-        // @Manage
-        global['Cabin'].exposeHttpRoute('GET', '/alfred/buildHTML', global['Cabin'].buildHTML)
-        global['Cabin'].exposeHttpRoute('GET', '/alfred/buildServer', global['Cabin'].buildServer)
-        global['Cabin'].exposeHttpRoute('GET', '/alfred/getAlfredInfo', global['Cabin'].getAlfredInfo)
         // ....
         console.log('Welcome Home, I am Alfred. ', global['Cabin'].info)
 

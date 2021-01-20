@@ -11,7 +11,7 @@
                 class="content-script flex-y"
                 v-for="(localCmd, index) in react.cmds"
                 :key="index"
-                @contextmenu="react.deleteMyCmd(localCmd)"
+                @contextmenu="react.deleteCmd(localCmd)"
                 @dblclick="react.toggleCmd($event, localCmd)"
             >
                 <div class="name">{{ localCmd.name }}</div>
@@ -36,7 +36,7 @@
             </Form>
             <div slot="footer">
                 <Button @click.stop="react.toggleCmd($event)">取消</Button>
-                <Button type="warning" @click.stop="react.commitMyCmd">确定</Button>
+                <Button type="warning" @click.stop="react.commitCmd(false)">确定</Button>
             </div>
         </Modal>
     </div>

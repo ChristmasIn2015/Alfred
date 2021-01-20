@@ -77,9 +77,14 @@ export default class Cabin {
             Object.getOwnPropertyNames(TargetClass.prototype).forEach((functionName) => {
                 if (functionName === 'constructor') return // continue
                 require('electron').ipcMain.handle(functionName, async (...args) => {
-                    let origin = $hyBridge[TargetClassName]
-                    let result = await origin[functionName].apply(origin, args)
-                    return result
+                    try {
+                        let origin = $hyBridge[TargetClassName]
+                        let result = await origin[functionName].apply(origin, args)
+                        return result
+                    } catch (error) {
+                        console.log(process.pid, error)
+                        process.exit()
+                    }
                 })
             })
         }
@@ -90,9 +95,14 @@ export default class Cabin {
             Object.getOwnPropertyNames(TargetClass.prototype).forEach((functionName) => {
                 if (functionName === 'constructor') return // continue
                 require('electron').ipcMain.on(functionName, async (...args) => {
-                    let origin = $hyBridge[TargetClassName]
-                    let result = await origin[functionName].apply(origin, args)
-                    return result
+                    try {
+                        let origin = $hyBridge[TargetClassName]
+                        let result = await origin[functionName].apply(origin, args)
+                        return result
+                    } catch (error) {
+                        console.log(process.pid, error)
+                        process.exit()
+                    }
                 })
             })
         }

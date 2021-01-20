@@ -23,22 +23,26 @@ if (!appName) {
  * 根据命令行输入确定CMD命令
  * 并使用子进程来执行CMD命令
  * ******************************************************************* */
-if (!global.$child_process_map) global['$child_process_map'] = {}
-let cmd = null
+let cmd = ''
 switch (appType) {
+    case 'build': {
+        // 使用@vue/cli启动一个单页应用
+        let target = require('path').join(__dirname, `./web/apps/${appName}/main.js`)
+        cmd += `vue-cli-service build ${target}`
+        break
+    }
     case 'web': {
         // 使用@vue/cli启动一个单页应用
         let target = require('path').join(__dirname, `./web/apps/${appName}/main.js`)
-        cmd = `vue-cli-service serve ${target}`
-        // cmd = `vue-cli-service serve --open ${target}`
+        cmd += `vue-cli-service serve ${target}`
         break
     }
     case 'node': {
         // 打包Express应用的高语法JS文件
         // 执行这个JS文件
         let target = require('path').join(__dirname, `./node/dist/${appName}.js`)
-        // cmd = `webpack --config ./src/node/webpack.config.js`
-        cmd = `webpack --config ./src/node/webpack.config.js && node ${target} 7000`
+        cmd += `webpack --config ./src/node/webpack.config.js`
+        cmd += `&& node ${target} ${process.argv[4] || 7000}`
         break
     }
     case 'electron': {
@@ -46,13 +50,13 @@ switch (appType) {
         let target = require('path').join(__dirname, `./web/apps/${appName}/main.js`)
         // 打包Electron应用的高语法JS文件
         // 启动每次唯一的Electron应用
-        // cmd = `vue-cli-service build ${target}`
-        cmd = `webpack --config ./src/electron/webpack.config.js && electron ./src/electron/electron.js ${appName}`
-        // cmd = `vue-cli-service build ${target} && webpack --config ./src/electron/webpack.config.js && electron ./src/electron/electron.js ${appName}`
+        // cmd += `vue-cli-service build ${target}`
+        cmd += `webpack --config ./src/electron/webpack.config.js `
+        cmd += `&& electron ./src/electron/electron.js ${appName}`
         break
     }
 }
-require('./database/ChildProcess.js').processExcuteCmd(cmd, {
+require('./database/ChildProcess.js').excuteCmd(cmd, {
     answer: (answer) => {
         console.log(answer.message)
     },

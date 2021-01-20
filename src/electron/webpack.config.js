@@ -1,6 +1,6 @@
 // * 清空dist目录
 const distPath = require('path').join(__dirname, 'dist')
-require('fs-extra').emptyDirSync(distPath)
+// require('fs-extra').emptyDirSync(distPath)
 
 // * 获取所有打包入口
 function getEntrys() {

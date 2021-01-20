@@ -1,9 +1,9 @@
 // * 服务地址
-export const SERVE_ADDRESS = '192.168.0.108'
+export const SERVE_ADDRESS = '10.52.2.35'
 // * 向主进程发送消息 并等待回应
 async function ipcInvoke(ipcName, params) {
     let result = await $electron.ipcRenderer.invoke(ipcName, params)
-    console.log({ ipcName, params: params || '未传参数' }, result)
+    // console.log({ ipcName, params: params || '未传参数' }, result)
     if (result.code !== 200) throw new Error(result.message)
     return result.data
 }
