@@ -25,12 +25,6 @@ if (!appName) {
  * ******************************************************************* */
 let cmd = ''
 switch (appType) {
-    case 'build': {
-        // 使用@vue/cli启动一个单页应用
-        let target = require('path').join(__dirname, `./web/apps/${appName}/main.js`)
-        cmd += `vue-cli-service build ${target}`
-        break
-    }
     case 'web': {
         // 使用@vue/cli启动一个单页应用
         let target = require('path').join(__dirname, `./web/apps/${appName}/main.js`)

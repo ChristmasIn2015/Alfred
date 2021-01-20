@@ -36,6 +36,11 @@ async function go() {
         global['Cabin'].exposeHttpRoute('GET', '/yjy-log/list', global['Cabin'].getLogs)
         // ....
 
+        // 5.绑定Html
+        const htmlPath = require('path').join(process.cwd(), './src/web/dist')
+        const AlfredIndex = require('path').join(process.cwd(), './src/web/dist/YjyLog.html')
+        global['Cabin'].exposeHtml('/YjyLog', htmlPath, AlfredIndex)
+
         // * End
     } catch (error) {
         console.log(error.message)

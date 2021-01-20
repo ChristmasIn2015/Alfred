@@ -41,13 +41,13 @@ export default class Cabin {
         }
     }
     // HTML分配
-    exposeHtml(route, htmlPath) {
+    exposeHtml(route, htmlPath, indexPath) {
         if (this.info.SOCKET_NUMBER) {
             // const vuePath = require('path').join(__dirname, '../dist')
             // this.communication.use(express.static(vuePath))
             // this.communication.get('/sjShop', (request, response) => response.sendFile(`${vuePath}/sjShop.html`))
             this.communication.use(express.static(htmlPath))
-            this.communication.get(route, (request, response) => response.sendFile(htmlPath))
+            this.communication.get(route, (request, response) => response.sendFile(indexPath))
         }
     }
     // ============================================================================================================

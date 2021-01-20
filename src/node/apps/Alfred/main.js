@@ -40,7 +40,12 @@ async function go() {
         global['Cabin'].bindDispatcher('Log', Log)
         global['Cabin'].bindDispatcher('WebSocket', WebSocket)
         // ....
-        console.log('Welcome Home, I am Alfred. ', global['Cabin'].info)
+        // console.log('Welcome Home, I am Alfred. ', global['Cabin'].info)
+
+        // 4.绑定Html
+        const htmlPath = require('path').join(process.cwd(), './src/web/dist')
+        const AlfredIndex = require('path').join(process.cwd(), './src/web/dist/Alfred.html')
+        global['Cabin'].exposeHtml('/alfred', htmlPath, AlfredIndex)
 
         // * End
     } catch (error) {
