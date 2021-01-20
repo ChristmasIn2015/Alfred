@@ -40,7 +40,6 @@ async function go() {
         global['Cabin'].bindDispatcher('Log', Log)
         global['Cabin'].bindDispatcher('WebSocket', WebSocket)
         // ....
-        // console.log('Welcome Home, I am Alfred. ', global['Cabin'].info)
 
         // 4.绑定Html
         const htmlPath = require('path').join(process.cwd(), './src/web/dist')
@@ -48,6 +47,7 @@ async function go() {
         global['Cabin'].exposeHtml('/alfred', htmlPath, AlfredIndex)
 
         // * End
+        console.log('Welcome Home, I am Alfred', global['Cabin'].info)
     } catch (error) {
         console.log('Alfred Error:', error.message)
         process.exit()
