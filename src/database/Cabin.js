@@ -152,7 +152,7 @@ export default class Cabin {
                 res.header('Access-Control-Allow-Methods', '*')
                 next()
             })
-            this.communication.listen(this.info.SOCKET_NUMBER)
+            this.communication.listen(this.info.SOCKET_NUMBER, '0.0.0.0')
         }
     }
 }
