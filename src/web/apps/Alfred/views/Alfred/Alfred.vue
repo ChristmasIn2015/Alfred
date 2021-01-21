@@ -20,7 +20,7 @@
                 <div class="name">{{ remoteCmd.name }}</div>
                 <div class="log no-scroll-bar" v-html="remoteCmd.log"></div>
                 <div class="btns flex-x-reverse">
-                    <Button v-if="remoteCmd.pid" type="error" size="small" @click.stop="react.killRemoteCmd(remoteCmd.id)">终止:{{ remoteCmd.pid }}</Button>
+                    <Button v-if="remoteCmd.pid" type="error" size="small" @click.stop="react.killRemoteCmd(remoteCmd._id)">终止:{{ remoteCmd.pid }}</Button>
                     <Button v-else type="info" size="small" @click.stop="react.excuteRemoteCmd(index)">执行</Button>
                 </div>
             </div>

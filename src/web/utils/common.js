@@ -37,7 +37,7 @@ export default class Common {
     //
     getHeaders() {
         let hearder = {
-            authorization: localStorage['sjShopToken'],
+            authorization: localStorage['qt-shopToken'],
         }
         return Object.assign(
             {

@@ -20,33 +20,5 @@ export default class Log {
         this.log(error) // @Log
     }
 
-    @Mark('向 10.52.2.35 存储一条日志记录, (message) =>void')
-    log(message) {
-        // * isDev
-        // * isArk
-        // * isFz
-        // * isDebug
-        let newKey = $common.getVueUrlParams().commonKey
-        if (newKey === 'isDebug') {
-            console.log(message)
-            axios({
-                method: 'POST',
-                url: 'http://10.52.2.35/sjShop/error/create',
-                data: { message: message },
-                headers: {},
-            })
-            return
-        }
-
-        let key = $common.commonKey
-        if (key === 'isDev') {
-            console.log(message)
-            axios({
-                method: 'POST',
-                url: 'http://10.52.2.35/sjShop/error/create',
-                data: { message: message },
-                headers: {},
-            })
-        }
-    }
+    log() {}
 }
