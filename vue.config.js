@@ -1,5 +1,5 @@
 let config = {
-    publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
+    publicPath: process.env.NODE_ENV === 'production' ? '/' : '/',
     outputDir: './src/web/dist',
     css: {
         loaderOptions: {
