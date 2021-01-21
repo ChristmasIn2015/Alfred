@@ -44,7 +44,7 @@ async function go() {
         // 4.绑定Html
         const htmlPath = require('path').join(process.cwd(), './src/web/dist')
         const AlfredIndex = require('path').join(process.cwd(), './src/web/dist/Alfred.html')
-        global['Cabin'].exposeHtml('/alfred', htmlPath, AlfredIndex)
+        global['Cabin'].exposeHtml('/Alfred', htmlPath, AlfredIndex)
 
         // * End
         console.log('Welcome Home, I am Alfred', global['Cabin'].info)

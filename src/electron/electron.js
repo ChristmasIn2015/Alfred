@@ -26,8 +26,7 @@ app.on('ready', () => {
     Menu.setApplicationMenu(null)
 
     // 2 加载SPA
-    // instance.loadURL(`file://${process.cwd()}/src/web/dist/${appName}.html`)
-    instance.loadURL(`http://localHost:8080/${appName}/#/`)
+    instance.loadURL(`http://42.193.102.196:7000/Alfred/#/`)
     instance.openDevTools()
     instance.on('closed', () => (global.SanJi = null))
 })
