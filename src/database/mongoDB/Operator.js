@@ -18,7 +18,7 @@ export default class Operator {
         // 如果 newStruct 补充了新字段，则全量补充这个新字段
         for (let columnName in newStruct) {
             if (columnName === '_id') continue
-            if (columnName === 'id') continue
+            if (columnName === '_id') continue
             if (columnName === 'timeCreate') continue
             if (columnName === 'timeUpdate') continue
             if (oldStruct[columnName] === undefined) {
@@ -30,7 +30,7 @@ export default class Operator {
         // 如果 newStruct 删除了旧字段，则全量删除这个旧字段
         for (let columnName in oldStruct) {
             if (columnName === '_id') continue
-            if (columnName === 'id') continue
+            if (columnName === '_id') continue
             if (columnName === 'timeCreate') continue
             if (columnName === 'timeUpdate') continue
             if (newStruct[columnName] === undefined) {
@@ -68,9 +68,9 @@ export default class Operator {
     async create(doc) {
         // 1.记录的字段结构一定和init时的结构一致
         doc = this.#getStructByModel(doc)
-        // 2.字段结构一定会有 id timeCreate timeUpdate
+        // 2.字段结构一定会有 _id timeCreate timeUpdate
         const now = Date.now()
-        doc = Object.assign(doc, { id: String(new ObjectId()), timeCreate: now, timeUpdate: now })
+        doc = Object.assign(doc, { _id: String(new ObjectId()), timeCreate: now, timeUpdate: now })
 
         // *.数据库操作
         let result = await this.DBCaller.insertOne(doc, { forceServerObjectId: true })
@@ -96,7 +96,7 @@ export default class Operator {
         // 0.更新的字段一定要是预定义字段
         let struct = this.getStruct()
         for (let key in doc) {
-            if (key === 'id' || key === 'timeCreate' || key === 'timeUpdate') continue
+            if (key === '_id' || key === 'timeCreate' || key === 'timeUpdate') continue
             if (struct[key] === undefined) delete doc[key]
         }
 
@@ -108,9 +108,9 @@ export default class Operator {
         return result
     }
     // 删除
-    async delete(id) {
-        let result = await this.DBCaller.deleteOne({ id })
-        if (result.deletedCount !== 1) throw new Error(`${id} 不存在`)
+    async delete(_id) {
+        let result = await this.DBCaller.deleteOne({ _id })
+        if (result.deletedCount !== 1) throw new Error(`${_id} 不存在`)
         return true
     }
 }

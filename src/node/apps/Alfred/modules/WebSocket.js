@@ -39,8 +39,8 @@ export default class WebSocket {
                     let model = $db.Cmds.getStruct()
                     model.name = order.cmdModel.name
                     model.cmdString = order.cmdModel.cmdString
-                    if (order.cmdModel.id) {
-                        await $db.Cmds.update({ id: order.cmdModel.id }, model)
+                    if (order.cmdModel._id) {
+                        await $db.Cmds.update({ _id: order.cmdModel._id }, model)
                     } else {
                         await $db.Cmds.create(model)
                     }
@@ -51,7 +51,7 @@ export default class WebSocket {
                     this.#answer(null, { type: 'RenderCmdList', list })
                     break
                 case 'DeleteCmd':
-                    await $db.Cmds.delete(order.id)
+                    await $db.Cmds.delete(order._id)
                     this.#answer(null, { type: 'DeleteCmd' })
                     break
                 case 'ExcuteCMD':

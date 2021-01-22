@@ -6,6 +6,7 @@ export default function Cmds(target, name, descriptor) {
         this.cmdModal = false
         this.cmdModel = {
             id: null,
+            _id: null,
             name: '',
             cmdString: '',
         }
@@ -29,8 +30,9 @@ export default function Cmds(target, name, descriptor) {
 
 function toggleCmd(event, form) {
     this.cmdModel = form
-        ? { id: form.id, name: form.name, cmdString: form.cmdString }
+        ? { _id: form._id, id: form.id, name: form.name, cmdString: form.cmdString }
         : {
+              _id: null,
               id: null,
               name: '',
               cmdString: '',
@@ -73,7 +75,7 @@ async function renderCmds(remoteList) {
         if (localStorage['cmdSortMap']) {
             map = JSON.parse(localStorage['cmdSortMap'])
             list = list.map((e) => {
-                let index = map[e.id] || 0
+                let index = map[e.id || e._id] || 0
                 return Object.assign({ index }, e)
             })
         } else {
@@ -99,7 +101,7 @@ function deleteCmd(script, isRemote) {
         try {
             if (isRemote) {
                 // @WsConnection
-                this.connectionOrder({ type: 'DeleteCmd', id: script.id })
+                this.connectionOrder({ type: 'DeleteCmd', _id: script._id })
                 this.connectionOrder({ type: 'RenderCmdList' })
             } else {
                 await deleteLocalCmd(script.id)
@@ -113,7 +115,7 @@ function deleteCmd(script, isRemote) {
 }
 function sortCmds(event) {
     let map = JSON.parse(localStorage['cmdSortMap'])
-    this.cmds.forEach((e) => (map[e.id] = ++map.max))
+    this.cmds.forEach((e) => (map[e.id || e._id] = ++map.max))
     localStorage['cmdSortMap'] = JSON.stringify(map)
 }
 // 通知主进程执行CMD命令
@@ -144,7 +146,7 @@ function excuteRemoteCmd(index) {
     this.cmds[index].log = ''
     this.cmds[index].pid = 'Loading'
     let target = this.cmds[index]
-    this.connectionOrder({ type: 'ExcuteCMD', cmdString: target.cmdString, index, cmdId: target.id })
+    this.connectionOrder({ type: 'ExcuteCMD', cmdString: target.cmdString, index, cmdId: target._id })
 }
 // 远程结束某个CMD
 function killRemoteCmd(cmdId) {
