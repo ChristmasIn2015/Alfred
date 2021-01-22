@@ -3,7 +3,7 @@ node_modules
 src/web/dist
 src/node/dist
 src/electron/dist
-
+publish
 
 # local env files
 .env.local

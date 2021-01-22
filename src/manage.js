@@ -46,7 +46,7 @@ switch (appType) {
         // 启动每次唯一的Electron应用
         // cmd += `vue-cli-service build ${target}`
         cmd += `webpack --config ./src/electron/webpack.config.js `
-        cmd += `&& electron ./src/electron/electron.js ${appName}`
+        cmd += `&& electron ./src/electron.js ${appName}`
         break
     }
 }
