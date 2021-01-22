@@ -1,17 +1,21 @@
 {
     "name": "alfred",
     "version": "0.0.1",
+    "author": "HuangWenQiang",
     "main": "./src/electron.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ChristmasIn2015/Alfred.git"
+    },
     "scripts": {
         "dev": "node ./src/manage.js",
         "build": "vue-cli-service build all",
-        "packAlfred": "webpack --config ./src/electron/webpack.config.js && electron-packager ./ Alfred --win --out ./publish --overwrite"
+        "packAlfred": "webpack --config ./src/electron/webpack.config.js && node ./src/electronPackAlfred.js"
     },
     "dependencies": {
         "@babel/polyfill": "^7.12.1",
         "axios": "^0.21.1",
-        "electron": "^11.2.0",
-        "electron-packager": "^15.2.0",
+        "body-parser": "^1.19.0",
         "express": "^4.17.1",
         "fingerprintjs": "^0.5.3",
         "font-awesome": "^4.7.0",
@@ -23,6 +27,7 @@
         "nodejs-websocket": "^1.7.2",
         "sqlite3": "^5.0.0",
         "tree-kill": "^1.2.2",
+        "update-electron-app": "^2.0.1",
         "view-design": "^4.4.0",
         "vue": "^2.6.11",
         "vue-quill-editor": "^3.0.6",
@@ -41,8 +46,9 @@
         "@vue/cli-plugin-router": "~4.5.0",
         "@vue/cli-service": "~4.5.0",
         "babel-loader": "^8.0.5",
-        "body-parser": "^1.19.0",
         "core-js": "^3.8.1",
+        "electron": "^11.2.0",
+        "electron-packager": "^15.2.0",
         "sass": "^1.26.5",
         "sass-loader": "^8.0.2",
         "vue-template-compiler": "^2.6.11",

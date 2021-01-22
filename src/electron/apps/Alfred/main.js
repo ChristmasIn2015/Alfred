@@ -9,7 +9,8 @@ import CmdsAuto from './modules/CmdsAuto.js'
 //
 async function go() {
     try {
-        const DB_ADDRESS = require('path').join(process.cwd(), './src/electron/apps/Alfred/Alfred.db')
+        const DB_ADDRESS = require('path').join(process.cwd(), 'Alfred.db') // 打包的时候极其要注意这个路径问题
+        // const DB_ADDRESS = require('path').join(process.cwd(), './src/electron/apps/Alfred/Alfred.db')
 
         // 1.链接Sqlite3数据库服务
         global['$server'] = new Server(DB_ADDRESS)
@@ -51,4 +52,3 @@ async function go() {
     }
 }
 go()
-console.log('Electron go:', process.pid)

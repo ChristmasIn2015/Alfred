@@ -1,4 +1,5 @@
 const print = require('./print.js')
+const PATH = require('path')
 /** *******************************************************************
  * 1.构建web应用
  *      npm run dev web SjShop
@@ -27,31 +28,33 @@ let cmd = ''
 switch (appType) {
     case 'web': {
         // 使用@vue/cli启动一个单页应用
-        let target = require('path').join(__dirname, `./web/apps/${appName}/main.js`)
+        let target = PATH.join(__dirname, `./web/apps/${appName}/main.js`)
         cmd += `vue-cli-service serve ${target}`
         break
     }
     case 'node': {
         // 打包Express应用的高语法JS文件
         // 执行这个JS文件
-        let target = require('path').join(__dirname, `./node/dist/${appName}.js`)
+        let target = PATH.join(__dirname, `./node/dist/${appName}.js`)
         cmd += `webpack --config ./src/node/webpack.config.js`
         cmd += `&& node ${target} ${process.argv[4] || 7000}`
         break
     }
     case 'electron': {
         // 使用@vue/cli打包一个单页应用
-        let target = require('path').join(__dirname, `./web/apps/${appName}/main.js`)
+        // cmd += `vue-cli-service build ${PATH.join(__dirname, `./web/apps/${appName}/main.js`)}`
         // 打包Electron应用的高语法JS文件
-        // 启动每次唯一的Electron应用
-        // cmd += `vue-cli-service build ${target}`
         cmd += `webpack --config ./src/electron/webpack.config.js `
+        // 启动每次唯一的Electron应用
         cmd += `&& electron ./src/electron.js ${appName}`
         break
     }
 }
-require('./database/ChildProcess.js').excuteCmd(cmd, {
-    answer: (answer) => {
-        console.log(answer.message)
-    },
-})
+
+if (cmd) {
+    require('./database/ChildProcess.js').excuteCmd(cmd, {
+        answer: (answer) => {
+            console.log(answer.message)
+        },
+    })
+}

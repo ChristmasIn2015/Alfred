@@ -4,7 +4,7 @@ const distPath = require('path').join(__dirname, 'dist')
 
 // * 获取所有打包入口
 function getEntrys() {
-    let list = require('glob').sync('./src/electron/apps/*/*.js')
+    let list = require('glob').sync('./src/electron/apps/*/main.js')
     let entrys = {}
     list.forEach((e) => {
         entrys[`${e.split('/').reverse()[1]}`] = e

@@ -3,4 +3,4 @@
 //     if (count === 10) clearInterval(timer)
 //     console.log(count++)
 // }, 1000)
-console.log(process.argv)
+console.log(process.env.BUILD_TARGET)
