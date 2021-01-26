@@ -161,6 +161,7 @@
         },
         methods: {},
         beforeCreate() {
+            document.title = 'QtShop'
             window.$load = {
                 show: () => this.$Spin.show(),
                 hide: () => this.$Spin.hide(),

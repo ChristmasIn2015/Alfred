@@ -46,7 +46,7 @@ switch (appType) {
         // 打包Electron应用的高语法JS文件
         cmd += `webpack --config ./src/electron/webpack.config.js `
         // 启动每次唯一的Electron应用
-        cmd += `&& electron ./src/electron.js ${appName}`
+        cmd += `&& electron ./src/electron/electron.js ${appName}`
         break
     }
 }

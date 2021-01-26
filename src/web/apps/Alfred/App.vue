@@ -11,7 +11,7 @@
         mounted() {},
         methods: {},
         beforeCreate() {
-            document.title = 'Alfred'
+            document.title = `Alfred ${global['APP_VERSION'] || '*'}`
             window.$load = {
                 show: () => this.$Spin.show(),
                 hide: () => this.$Spin.hide(),

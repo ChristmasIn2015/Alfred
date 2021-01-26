@@ -4,6 +4,7 @@ src/web/dist
 src/node/dist
 src/electron/dist
 publish
+dist
 
 # local env files
 .env.local
