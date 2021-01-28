@@ -1,29 +1,30 @@
 <template>
     <div class="cmd">
         <div class="cmd-nav flex">
-            <Button type="warning" size="small" @click.stop="react.toggleCmd($event)">
+            <Button v-if="react.ws_key" type="info" size="small" @click.stop="react.toggleCmd($event)">
                 <span class="fa fa-user"></span>
                 <span>新增CMD</span>
+            </Button>
+            <Button type="info" size="small" @click.stop="react.initReact">
+                <span>刷新</span>
             </Button>
         </div>
         <draggable v-model="react.cmds" class="cmd-content flex-wrap" @end="reactTo('sortCmds')">
             <div
                 class="content-script flex-y"
-                v-for="(localCmd, index) in react.cmds"
+                v-for="(remoteCmd, index) in react.cmds"
                 :key="index"
-                @contextmenu="react.deleteCmd(localCmd)"
-                @dblclick="react.toggleCmd($event, localCmd)"
+                @contextmenu="react.deleteCmd(remoteCmd, true)"
+                @dblclick="react.toggleCmd($event, remoteCmd)"
             >
-                <div class="name">{{ localCmd.name }}</div>
-                <div class="log no-scroll-bar" v-html="localCmd.log"></div>
-                <!-- * -->
+                <div class="name">{{ remoteCmd.name }}</div>
+                <div class="log no-scroll-bar" v-html="remoteCmd.log"></div>
                 <div class="btns flex-x-reverse">
-                    <Button v-if="localCmd.pid" type="error" size="small" @click.stop="react.killLocalCmd(localCmd.pid)">终止:{{ localCmd.pid }}</Button>
-                    <Button v-else type="warning" size="small" @click.stop="react.excuteLocalCmd(index)">执行</Button>
+                    <Button v-if="remoteCmd.pid" type="error" size="small" @click.stop="react.killRemoteCmd(remoteCmd._id)">终止:{{ remoteCmd.pid }}</Button>
+                    <Button v-else type="info" size="small" @click.stop="react.excuteRemoteCmd(index)">执行</Button>
                 </div>
             </div>
         </draggable>
-        <strong>* 双击编辑 / 右键删除</strong>
 
         <!-- 弹窗 -->
         <Modal v-model="react.cmdModal" :title="react.cmdModel.name ? `编辑${react.cmdModel.name}` : '新增CMD'" width="700">
@@ -37,7 +38,7 @@
             </Form>
             <div slot="footer">
                 <Button @click.stop="react.toggleCmd($event)">取消</Button>
-                <Button type="warning" @click.stop="react.commitCmd(false)">确定</Button>
+                <Button type="info" @click.stop="react.commitCmd(true)">确定</Button>
             </div>
         </Modal>
     </div>
@@ -63,5 +64,5 @@
 </script>
 
 <style lang="scss" scoped>
-    @import './Cmd.scss';
+    @import './DevOps.scss';
 </style>

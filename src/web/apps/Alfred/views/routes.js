@@ -25,16 +25,8 @@ let routes = [
                 path: '/welcome',
             },
             {
-                component: () => import('@/web/apps/Alfred/views/Alfred/Alfred.vue'),
-                path: '/alfred',
-            },
-            {
-                component: () => import('@/web/apps/Alfred/views/Cmd/Cmd.vue'),
-                path: '/cmd',
-            },
-            {
-                component: () => import('@/web/apps/Alfred/views/Note/Note.vue'),
-                path: '/note',
+                component: () => import('@/web/apps/Alfred/views/DevOps/DevOps.vue'),
+                path: '/devops',
             },
         ],
     },
