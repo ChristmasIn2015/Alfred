@@ -23,6 +23,7 @@
                 </div>
             </div>
         </draggable>
+        <strong>* 双击编辑 / 右键删除</strong>
 
         <!-- 弹窗 -->
         <Modal v-model="react.cmdModal" :title="react.cmdModel.name ? `编辑${react.cmdModel.name}` : '新增CMD'" width="700">

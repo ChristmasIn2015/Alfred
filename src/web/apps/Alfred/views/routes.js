@@ -18,8 +18,12 @@ let routes = [
     {
         component: Layout,
         path: '/',
-        redirect: '/alfred',
+        redirect: '/welcome',
         children: [
+            {
+                component: () => import('@/web/apps/Alfred/views/Welcome/Welcome.vue'),
+                path: '/welcome',
+            },
             {
                 component: () => import('@/web/apps/Alfred/views/Alfred/Alfred.vue'),
                 path: '/alfred',

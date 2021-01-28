@@ -1,7 +1,3 @@
-const log = (...message) => {
-    console.log(message)
-    // require('axios').post('http://wqao.top:7001/yjy-log/create', { message })
-}
 const PATH = require('path')
 require('electron-winstaller')
     .createWindowsInstaller({
@@ -12,5 +8,5 @@ require('electron-winstaller')
         exe: 'Alfred.exe',
         noMsi: true,
     })
-    .then(() => log('Electron build success!'))
-    .catch((e) => log(e.message))
+    .then(() => console.log('Electron build success!'))
+    .catch((e) => console.log(e.message))
