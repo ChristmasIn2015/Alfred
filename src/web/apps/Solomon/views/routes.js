@@ -21,15 +21,15 @@ let routes = [
         redirect: '/welcome',
         children: [
             {
-                component: () => import('@/web/apps/Alfred/views/Welcome/Welcome.vue'),
+                component: () => import('@/web/apps/Solomon/views/Welcome/Welcome.vue'),
                 path: '/welcome',
             },
             {
-                component: () => import('@/web/apps/Alfred/views/Cmd/Cmd.vue'),
+                component: () => import('@/web/apps/Solomon/views/Cmd/Cmd.vue'),
                 path: '/cmd',
             },
             {
-                component: () => import('@/web/apps/Alfred/views/Note/Note.vue'),
+                component: () => import('@/web/apps/Solomon/views/Note/Note.vue'),
                 path: '/note',
             },
         ],
