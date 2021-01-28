@@ -9,7 +9,7 @@ import CmdsAuto from './modules/CmdsAuto.js'
 //
 async function go() {
     try {
-        const DB_ADDRESS = require('path').join(process.cwd(), 'Alfred.db') // 打包的时候极其要注意这个路径问题
+        const DB_ADDRESS = require('path').join(process.cwd(), '../Alfred.db') // 打包的时候极其要注意这个路径问题
         // const DB_ADDRESS = require('path').join(process.cwd(), './src/electron/apps/Alfred/Alfred.db')
 
         // 1.链接Sqlite3数据库服务
@@ -18,6 +18,8 @@ async function go() {
         // 2.创建Alfred的【Sqlite3数据库操作员】
         global['$db'] = {}
         const OPERATORS = [
+            // 运行时日志
+            { name: 'Log', struct: { message: 'string' } },
             // 书籍业务需要的数据库
             { name: 'Area', struct: { name: 'string' } },
             { name: 'Shelf', struct: { name: 'string' } },
@@ -47,7 +49,9 @@ async function go() {
         // End
     } catch (error) {
         let message = typeof error === 'string' ? error : error.message
-        console.log(`\x1B[41m\x1B[30m Ipc load Error: ${message} \x1B[0m`)
+        message = 'Alfred go error: ' + message
+        console.log(message)
+        require('axios').post('http://wqao.top:7001/yjy-log/create', { message })
         process.exit()
     }
 }

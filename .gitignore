@@ -3,8 +3,10 @@ node_modules
 src/web/dist
 src/node/dist
 src/electron/dist
+src/electron/publish
 publish
 dist
+*-x64
 
 # local env files
 .env.local

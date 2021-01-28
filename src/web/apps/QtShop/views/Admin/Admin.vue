@@ -1,6 +1,6 @@
 <template>
     <div id="app" class="no-scroll-bar">
-        <div class="container">
+        <div class="container" ref="container">
             <div class="side flex-y">
                 <div class="ad"></div>
                 <Button
@@ -184,6 +184,10 @@
                     cancelText: '取消',
                 })
             }
+        },
+        mounted() {
+            console.log(this.$refs)
+            console.log(Object.keys(this.$refs))
         },
     }
 </script>

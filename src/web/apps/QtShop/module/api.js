@@ -7,7 +7,7 @@ const _server = $common.getServer(
     // 失败
     (error, reject) => reject(error.message),
     // 'http://192.168.0.108:7000'
-    'http://42.193.102.196:7002'
+    'http://wqao.top:7002'
 )
 // ======================================================= 客户
 // * 新增客户

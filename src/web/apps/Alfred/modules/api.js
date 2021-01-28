@@ -1,5 +1,5 @@
 // * 服务地址
-export const SERVE_ADDRESS = '//42.193.102.196'
+export const SERVE_ADDRESS = '//wqao.top'
 // * 向主进程发送消息 并等待回应
 async function ipcInvoke(ipcName, params) {
     let result = await $electron.ipcRenderer.invoke(ipcName, params)

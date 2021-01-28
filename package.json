@@ -1,21 +1,16 @@
 {
     "name": "alfred",
-    "version": "1.0.0",
-    "author": "HuangWenQiang",
-    "main": "./src/electron/electron.js",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/ChristmasIn2015/Alfred.git"
-    },
     "scripts": {
         "dev": "node ./src/manage.js",
         "build": "vue-cli-service build all",
-        "pack": "electron-builder build "
+        "pack_Windows_Alfred": "node ./src/electron/build/electron.pack.js && node ./src/electron/build/electron.build.js"
     },
     "dependencies": {
         "@babel/polyfill": "^7.12.1",
         "axios": "^0.21.1",
         "body-parser": "^1.19.0",
+        "electron-squirrel-startup": "^1.0.0",
+        "electron-winstaller": "^4.0.1",
         "express": "^4.17.1",
         "fingerprintjs": "^0.5.3",
         "font-awesome": "^4.7.0",
@@ -47,31 +42,18 @@
         "@vue/cli-service": "~4.5.0",
         "babel-loader": "^8.0.5",
         "core-js": "^3.8.1",
-        "electron": "^11.2.0",
-        "electron-builder": "^22.9.1",
+        "electron": "^11.2.1",
+        "electron-packager": "^15.2.0",
         "sass": "^1.26.5",
         "sass-loader": "^8.0.2",
         "vue-template-compiler": "^2.6.11",
         "webpack": "^4.43.0",
         "webpack-cli": "^3.3.11"
     },
-    "bulid": {
-        "appID": "com.electron.Alfred",
-        "productName": "Alfred",
-        "directories": {
-            "output": "./publish",
-            "app": "./"
-        },
-        "win": {
-            "target": [
-                {
-                    "target": "nsis",
-                    "arch": [
-                        "x64",
-                        "ia32"
-                    ]
-                }
-            ]
-        }
-    }
+    "main": "./src/electron/electron.js",
+    "author": "HuangWenQiang",
+    "version": "1.0.1",
+    "repository": "https://github.com/ChristmasIn2015/Alfred.git",
+    "productName": "Alfred",
+    "description": "Alfred powered by HuangWenQiang@清泉流响"
 }
