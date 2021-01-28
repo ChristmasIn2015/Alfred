@@ -25,8 +25,7 @@ try {
             },
         })
         MAIN_WINDOW.openDevTools()
-        // MAIN_WINDOW.loadFile(`${PATH.join(__dirname, '../web/dist/Solomon.html')}`)
-        MAIN_WINDOW.loadURL(`http://wqao.top:7000/Solomon/#/`)
+        MAIN_WINDOW.loadURL(`http://wqao.top:7003/Solomon/#/`)
 
         // 关闭顶部窗口
         Menu.setApplicationMenu(null)

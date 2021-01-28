@@ -3,7 +3,7 @@
     "scripts": {
         "dev": "node ./src/manage.js",
         "build": "vue-cli-service build all",
-        "pack_Windows_Alfred": "node ./src/electron/build/electron.pack.js && node ./src/electron/build/electron.build.js"
+        "pack_Windows": "webpack --config ./src/electron/webpack.config.js && node ./src/electron/build/packager.js && node ./src/electron/build/winstaller.js"
     },
     "dependencies": {
         "@babel/polyfill": "^7.12.1",
@@ -58,7 +58,7 @@
     "main": "./src/electron/electron.js",
     "author": "HuangWenQiang",
     "version": "1.0.1",
-    "repository": "https://github.com/ChristmasIn2015/Alfred.git",
-    "productName": "Alfred",
-    "description": "Alfred powered by HuangWenQiang@清泉流响"
+    "repository": "https://github.com/ChristmasIn2015/Solomon.git",
+    "productName": "Solomon",
+    "description": "Solomon powered by HuangWenQiang@清泉流响"
 }

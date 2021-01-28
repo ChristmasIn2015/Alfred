@@ -14,8 +14,8 @@
                 sideIndex: null,
                 sideList: [
                     // { name: '本地运维', icon: 'fa fa-handshake-o', type: 'info', path: '/alfred' },
-                    { name: '脚本集合', icon: 'fa fa-users', type: 'warning', path: '/cmd' },
-                    { name: '笔记系统', icon: 'fa fa-sticky-note', type: 'success', path: '/note' },
+                    // { name: '脚本集合', icon: 'fa fa-users', type: 'warning', path: '/cmd' },
+                    // { name: '笔记系统', icon: 'fa fa-sticky-note', type: 'success', path: '/note' },
                 ],
             }
         },
