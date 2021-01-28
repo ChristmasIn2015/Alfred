@@ -1,4 +1,4 @@
-import Cmds from '@/web/apps/Alfred/modules/Cmds.js'
+import Cmds from '@/web/apps/Solomon/modules/Cmds.js'
 
 export default class React {
     constructor() {

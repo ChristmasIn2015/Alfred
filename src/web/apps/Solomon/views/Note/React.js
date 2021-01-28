@@ -1,6 +1,6 @@
-import NoteArea from '@/web/apps/Alfred/modules/NoteArea.js'
-import NoteShelf from '@/web/apps/Alfred/modules/NoteShelf.js'
-import NoteBook from '@/web/apps/Alfred/modules/NoteBook.js'
+import NoteArea from '@/web/apps/Solomon/modules/NoteArea.js'
+import NoteShelf from '@/web/apps/Solomon/modules/NoteShelf.js'
+import NoteBook from '@/web/apps/Solomon/modules/NoteBook.js'
 
 export default class React {
     constructor() {
