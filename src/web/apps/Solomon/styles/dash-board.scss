@@ -1,0 +1,53 @@
+#app {
+    padding: 2rem;
+    background-color: $back-0;
+    .layout {
+        background-color: $back-2;
+        border-radius: 0.5rem;
+        height: 100%;
+        overflow: hidden;
+        .layout-side {
+            min-width: 9rem;
+            max-width: 9rem;
+            height: 100%;
+            background-color: $back-1;
+            overflow-y: scroll;
+            .ad {
+                min-height: 3rem;
+                max-height: 3rem;
+                line-height: 3rem;
+                color: $tip-2;
+                padding: 0 1rem;
+                font-size: 1.25rem;
+                text-align: center;
+            }
+            .ivu-btn {
+                width: 85%;
+                margin: 0.5rem auto;
+                .fa {
+                    margin-right: 0.5rem;
+                }
+            }
+            .ivu-btn-default {
+                background-color: $back-1;
+            }
+        }
+        .layout-right {
+            width: 100%;
+            .layout-nav {
+                min-height: 3rem;
+                max-height: 3rem;
+                background-color: $back-2;
+                padding: 0 1rem;
+                .ivu-btn {
+                    margin-left: 0.5rem;
+                }
+            }
+            .layout-content {
+                padding: 0.5rem;
+                height: 100%;
+                overflow: auto;
+            }
+        }
+    }
+}

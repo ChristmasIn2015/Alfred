@@ -12,7 +12,7 @@ try {
     }
 
     // 2.APP启动
-    require(PATH.join(__dirname, `./dist/Alfred.js`))
+    require(PATH.join(__dirname, `./dist/Solomon.js`))
     app.on('ready', () => {
         // 实例化窗口
         let MAIN_WINDOW = new BrowserWindow({
@@ -25,8 +25,8 @@ try {
             },
         })
         MAIN_WINDOW.openDevTools()
-        // MAIN_WINDOW.loadFile(`${PATH.join(__dirname, '../web/dist/Alfred.html')}`)
-        MAIN_WINDOW.loadURL(`http://wqao.top:7000/Alfred/#/`)
+        // MAIN_WINDOW.loadFile(`${PATH.join(__dirname, '../web/dist/Solomon.html')}`)
+        MAIN_WINDOW.loadURL(`http://wqao.top:7000/Solomon/#/`)
 
         // 关闭顶部窗口
         Menu.setApplicationMenu(null)
