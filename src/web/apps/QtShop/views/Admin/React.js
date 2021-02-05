@@ -16,7 +16,7 @@ export default class React {
     @Login
     @Shop
     @House
-    @$common.TryCatch
+    @$common.Loading()
     async initReact() {
         await this.initUserInfo() // @Login
         await this.renderShopList() // @Shop
@@ -40,7 +40,7 @@ export default class React {
     }
 
     // 登录框点击确定
-    @$common.TryCatch
+    @$common.Loading()
     async loginModalOk() {
         await this.postLogin() // @Login
         await this.renderShopList() // @Shop
@@ -57,7 +57,7 @@ export default class React {
     }
 
     // 选择店铺
-    @$common.TryCatch
+    @$common.Loading()
     async pickShop(shop) {
         $store.commit('setShopInfo', shop)
         $store.commit('clearHouseInfo')

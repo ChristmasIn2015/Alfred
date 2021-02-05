@@ -6,7 +6,7 @@ export default class React {
     }
     // *
     @Cmds
-    @$common.TryCatch
+    @$common.Loading()
     async initReact() {
         await this.renderCmds()
     }

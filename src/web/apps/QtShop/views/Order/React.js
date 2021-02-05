@@ -68,14 +68,14 @@ export default class React {
     }
     // ============================================================================================
     // 创建订单
-    @$common.TryCatch
+    @$common.Loading()
     async postMyOrder() {
         await this.postOrder(this.customerPicked) // @Order
         this.goodListPicked = []
         this.toggleOrderListModal() // @React
     }
     // 展开订单列表
-    @$common.TryCatch
+    @$common.Loading()
     async toggleOrderListModal() {
         if (!this.orderListModal) await this.renderOrderList() // @Order
         this.orderEditModal = false
@@ -83,7 +83,7 @@ export default class React {
     }
     // ============================================================================================
     // 展开规格列表
-    @$common.TryCatch
+    @$common.Loading()
     async toggleTagModal() {
         await this.renderTagList(this.goodModel.plugList) // @Tag
         this.tagEdit = false // @Tag
@@ -103,7 +103,7 @@ export default class React {
         if (this.goodModal) this.initGoodModel(good) // @Good
     }
     // 商品弹窗 点击确定
-    @$common.TryCatch
+    @$common.Loading()
     async goodModalOk() {
         await this.postGood() // @Good
         await this.renderGoodList() // @Good
@@ -117,7 +117,7 @@ export default class React {
     }
     // ============================================================================================
     // 展开库存列表
-    @$common.TryCatch
+    @$common.Loading()
     async toggleGoodListModal(chargeList = []) {
         if (!this.goodListModal) {
             await this.renderGoodList() // @Good
@@ -149,7 +149,7 @@ export default class React {
         this.goodListModal = false // @Good
     }
     // 清空筛选
-    @$common.TryCatch
+    @$common.Loading()
     async filterClear() {
         this.filterKey = '' // @GoodFilter
         await this.renderGoodList() // @Good
@@ -162,7 +162,7 @@ export default class React {
     }
     // ============================================================================================
     // 展开客户列表
-    @$common.TryCatch
+    @$common.Loading()
     async toggleCustomerModal() {
         if (!this.customerModal) {
             await this.renderCustomerList() // @Customer

@@ -185,10 +185,6 @@
                 })
             }
         },
-        mounted() {
-            console.log(this.$refs)
-            console.log(Object.keys(this.$refs))
-        },
     }
 </script>
 

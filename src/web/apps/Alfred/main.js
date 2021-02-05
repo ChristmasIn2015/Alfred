@@ -6,7 +6,7 @@ import ViewUI from 'view-design'
 import 'view-design/dist/styles/iview.css'
 Vue.use(ViewUI)
 // * common
-import '@/web/utils/common.js'
+import '@/common/pack/common-web.js'
 // ***************************** Vue **********************************
 // 1.使用Vue路由
 import VueRouter from 'vue-router'

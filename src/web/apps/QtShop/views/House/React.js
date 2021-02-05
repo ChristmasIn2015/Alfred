@@ -21,7 +21,7 @@ export default class React {
     @Tag
     @Good
     @GoodFilter
-    @$common.TryCatch
+    @$common.Loading()
     async initReact() {
         await this.renderGoodList() // @Good
         this.renderGoodNameList() // @GoodFilter
@@ -34,7 +34,7 @@ export default class React {
     }
 
     // 展开规格列表
-    @$common.TryCatch
+    @$common.Loading()
     async toggleTagModal() {
         await this.renderTagList(this.goodModel.plugList) // @Tag
         this.tagEdit = false // @Tag
@@ -50,7 +50,7 @@ export default class React {
     }
 
     // 商品弹窗 点击确定
-    @$common.TryCatch
+    @$common.Loading()
     async goodModalOk() {
         await this.postGood() // @Good
         await this.renderGoodList() // @Good
@@ -59,7 +59,7 @@ export default class React {
     }
 
     // 清空筛选
-    @$common.TryCatch
+    @$common.Loading()
     async filterClear() {
         this.filterKey = '' // @GoodFilter
         await this.renderGoodList() // @Good

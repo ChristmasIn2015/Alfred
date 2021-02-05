@@ -17,13 +17,9 @@ export default function Shop(target, name, descriptor) {
 }
 // * 渲染店铺列表
 async function renderShopList() {
-    try {
-        let data = await getShopList()
-        this.shopList = Object.assign([], data.shopList)
-        this.officeList = Object.assign([], data.officeList)
-    } catch (error) {
-        return Promise.reject(error)
-    }
+    let data = await getShopList()
+    this.shopList = Object.assign([], data.shopList)
+    this.officeList = Object.assign([], data.officeList)
 }
 // * 创建店铺
 async function createMyShop() {

@@ -10,7 +10,7 @@ export default class React {
     @NoteArea
     @NoteShelf
     @NoteBook
-    @$common.TryCatch
+    @$common.Loading()
     async initReact() {
         await this.renderArea() // @NoteArea
     }

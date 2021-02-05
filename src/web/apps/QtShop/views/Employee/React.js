@@ -13,7 +13,7 @@ export default class React {
     }
     // *
     @Employee
-    @$common.TryCatch
+    @$common.Loading()
     async initReact() {
         await this.renderEmployeeList() // @Employee
     }

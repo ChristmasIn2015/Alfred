@@ -9,7 +9,7 @@ export default class React {
     // *
     @Cmds
     @WsConnection
-    @$common.TryCatch
+    @$common.Loading()
     async initReact() {
         await this.connectionBuild(`ws://${SERVE_ADDRESS}:6999`)
         this.connectionOrder({ type: 'RenderCmdList' })

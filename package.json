@@ -2,6 +2,7 @@
     "name": "alfred",
     "scripts": {
         "dev": "node ./src/manage.js",
+        "esPack": "node ./src/common/esbuild.config.js",
         "build": "vue-cli-service build all",
         "pack_Windows": "webpack --config ./src/electron/webpack.config.js && node ./src/electron/build/packager.js && node ./src/electron/build/winstaller.js"
     },
@@ -44,6 +45,7 @@
         "core-js": "^3.8.1",
         "electron": "^11.2.1",
         "electron-packager": "^15.2.0",
+        "esbuild": "^0.8.40",
         "sass": "^1.26.5",
         "sass-loader": "^8.0.2",
         "vue-template-compiler": "^2.6.11",

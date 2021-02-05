@@ -22,24 +22,20 @@ export default function Login(target, name, descriptor) {
 
 // 判断是否登录，如果没有登录则唤起登录框
 function iAmLogined() {
-    let token = localStorage['qt-shopToken'] ? true : false
+    let token = localStorage['token-qqlx-alfred'] ? true : false
     if (!token) this.loginModal = true
     return token
 }
 
 // 登录
 async function postLogin() {
-    try {
-        if (!this.userModel.phone) throw new Error('手机号码不能为空')
-        if (!this.userModel.password) throw new Error('密码不能为空')
-        let info = await shopUserLogin(this.userModel.name, this.userModel.phone, this.userModel.password)
-        localStorage['qt-shopToken'] = info.authorization
-        $store.commit('setUserInfo', info)
-        $tip('登录成功')
-        this.loginModal = false
-    } catch (error) {
-        return Promise.reject(error)
-    }
+    if (!this.userModel.phone) throw new Error('手机号码不能为空')
+    if (!this.userModel.password) throw new Error('密码不能为空')
+    let info = await shopUserLogin(this.userModel.name, this.userModel.phone, this.userModel.password)
+    localStorage['token-qqlx-alfred'] = info.authorization
+    $store.commit('setUserInfo', info)
+    $tip('登录成功')
+    this.loginModal = false
 }
 
 // 初始化用户信息
@@ -51,7 +47,7 @@ async function initUserInfo() {
         this.loginModal = false
     } catch (error) {
         this.loginModal = true
-        localStorage['qt-shopToken'] = ''
+        localStorage['token-qqlx-alfred'] = ''
         $store.commit('clearUserInfo')
         $store.commit('clearShopInfo')
         $store.commit('clearHouseInfo')
@@ -61,7 +57,7 @@ async function initUserInfo() {
 
 // 清空本地用户/店铺/仓库数据
 function clearUserInfo() {
-    localStorage['qt-shopToken'] = ''
+    localStorage['token-qqlx-alfred'] = ''
     $store.commit('clearUserInfo')
     $store.commit('clearShopInfo')
     $store.commit('clearHouseInfo')
