@@ -4,17 +4,6 @@ export default class UtilsWebReact {
         // this.windowFinger = global ? 'runByNodeJs' : new Fingerprint({ canvas: true }).get()
     }
 
-    handleHtmlError(): void {
-        window.onerror = (message, source, lineno, colno, error) => $common.log(message)
-    }
-
-    loadOff(error: Error): void {
-        let message: string = error.message
-        window['$warn'](message)
-        window['$load'].hide()
-        window['$common'].log(message)
-    }
-
     getHeaders(): object {
         const HEADER = {
             'Cache-Control': 'no-cache',
@@ -24,20 +13,44 @@ export default class UtilsWebReact {
         return HEADER
     }
 
+    loadOff(error: Error): void {
+        let message: string = error.message
+        window['$warn'](message)
+        window['$load'].hide()
+        window['$common'].log(message)
+    }
+
     // 修饰器
-    Loading() {
-        return function(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-            let sourceFunction = descriptor.value
+    Loading(): (target: any, propertyKey: string, descriptor: PropertyDescriptor) => void {
+        return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
+            const sourceFunction = descriptor.value
             descriptor.value = async function() {
                 try {
                     window['$load'].show()
                     await sourceFunction.apply(this, arguments)
                     window['$load'].hide()
                 } catch (error) {
-                    $common.loadOff(error)
+                    window['$common'].loadOff(error)
                 }
             }
         }
+    }
+
+    // 获取URL参数
+    getVueUrlParams() {
+        let vueHash = decodeURIComponent(location.href)
+        vueHash = vueHash.substring(vueHash.indexOf('?') + 1, vueHash.length)
+        let map = {}
+        vueHash.split('&').forEach((e) => {
+            let temp = e.split('=')
+            map[temp[0]] = temp[1]
+        })
+        return map
+    }
+
+    // 监听HTML报错
+    handleHtmlError(): void {
+        window.onerror = (message, source, lineno, colno, error) => window['$common'].log(message)
     }
 
     // getWindowFinger() {

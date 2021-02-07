@@ -8,6 +8,7 @@
     },
     "dependencies": {
         "@babel/polyfill": "^7.12.1",
+        "@types/mongodb": "^3.6.6",
         "axios": "^0.21.1",
         "body-parser": "^1.19.0",
         "electron-squirrel-startup": "^1.0.0",
@@ -19,7 +20,6 @@
         "iconv-lite": "^0.6.2",
         "js-md5": "^0.7.3",
         "jsonwebtoken": "^8.5.1",
-        "mongodb": "^3.6.3",
         "nodejs-websocket": "^1.7.2",
         "sqlite3": "^5.0.0",
         "tree-kill": "^1.2.2",

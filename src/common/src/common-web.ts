@@ -1,9 +1,9 @@
 import { Common } from '../modules/Common'
-import UtilsWebReact from '../modules/Utils/UtilsWebReact'
+import UtilsReactWeb from '../modules/Utils/UtilsReactWeb'
 class WebCommon extends Common {
     constructor() {
         super()
-        this.bindClass(this, 'UtilsWebReact', UtilsWebReact)
+        this.bindClass(this, 'UtilsReactWeb', UtilsReactWeb)
     }
 }
 window['$common'] = new WebCommon()

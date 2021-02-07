@@ -15,20 +15,6 @@ export default class Cabin {
     // ============================================================================================================
     // ============================================================================================================
     // ============================================================================================================
-    // ElectronIPC分配
-    exposeElectronIPC(TargetClassName, TargetClass) {
-        $hyBridge[TargetClassName] = new TargetClass()
-        if (TargetClass.prototype) {
-            Object.getOwnPropertyNames(TargetClass.prototype).forEach((functionName) => {
-                if (functionName === 'constructor') return // continue
-                require('electron').ipcMain.handle(functionName, async (...args) => {
-                    let origin = $hyBridge[TargetClassName]
-                    let result = await origin[functionName].apply(origin, args)
-                    return result
-                })
-            })
-        }
-    }
     // 数据接口分配
     exposeHttpRoute(method, route, next) {
         if (this.info.SOCKET_NUMBER) {

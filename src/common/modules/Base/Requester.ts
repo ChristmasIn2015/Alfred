@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-//
+// 声明
 enum RequesterModel {
     GET = 'GET',
     POST = 'POST',
