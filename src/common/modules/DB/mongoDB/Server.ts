@@ -1,4 +1,4 @@
-import { DBServable, TableCaller } from '../DBType'
+import { DBServable, TableCaller } from '../../Type'
 import { MongoClient, MongoError } from 'mongodb'
 
 export default class Server implements DBServable {

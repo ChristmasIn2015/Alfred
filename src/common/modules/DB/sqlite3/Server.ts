@@ -1,4 +1,4 @@
-import { DBServable, TableCaller } from '../DBType'
+import { DBServable, TableCaller } from '../../Type'
 
 export default class Server implements DBServable {
     DBAddress: string = ''

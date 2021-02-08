@@ -4,7 +4,7 @@
  * 提供对数据库>数据表/集合的CRUD原子操作
  ******************************************************************* */
 import { ObjectId } from 'mongodb'
-import { DBOperatable, TableCaller, TableStruct } from '../DBType'
+import { DBOperatable, TableCaller, TableStruct } from '../../Type'
 
 export default class Operator implements DBOperatable {
     // MongoDB
