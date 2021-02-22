@@ -38,24 +38,6 @@ export default class CabinExpress implements ClassBindable {
     // Express
     // Express
     // Express
-    // Express：数据接口分配
-    expressRoute(method, route, next) {
-        if (this.cabinInfo.SOCKET_NUMBER) {
-            if (method === 'GET') {
-                this.cabinHandler.get(route, (request, response) => next(request, response))
-            }
-            if (method === 'POST') {
-                this.cabinHandler.post(route, require('body-parser').json(), (request, response) => next(request, response))
-            }
-        }
-    }
-    // Express：HTML分配
-    expressHtml(route, htmlPath, indexPath) {
-        if (this.cabinInfo.SOCKET_NUMBER) {
-            this.cabinHandler.use(express.static(htmlPath))
-            this.cabinHandler.get(route, (request, response) => response.sendFile(indexPath))
-        }
-    }
     // Express：初始化Express
     express(SOCKET_NUMBER: number): void {
         // 初始化该控制台信息
@@ -74,6 +56,24 @@ export default class CabinExpress implements ClassBindable {
                 next()
             })
             this.cabinHandler.listen(SOCKET_NUMBER, '0.0.0.0')
+        }
+    }
+    // Express：数据接口分配
+    expressRoute(method, route, next) {
+        if (this.cabinInfo.SOCKET_NUMBER) {
+            if (method === 'GET') {
+                this.cabinHandler.get(route, (request, response) => next(request, response))
+            }
+            if (method === 'POST') {
+                this.cabinHandler.post(route, require('body-parser').json(), (request, response) => next(request, response))
+            }
+        }
+    }
+    // Express：HTML分配
+    expressHtml(route, htmlPath, indexPath) {
+        if (this.cabinInfo.SOCKET_NUMBER) {
+            this.cabinHandler.use(express.static(htmlPath))
+            this.cabinHandler.get(route, (request, response) => response.sendFile(indexPath))
         }
     }
 }

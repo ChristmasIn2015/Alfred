@@ -5,8 +5,8 @@ import Dispatcher_Log from './dispatchers/Dispatcher_Log.js'
 
 async function go() {
     try {
-        const SOCKET_NUMBER = process.argv[2]
-        if (!SOCKET_NUMBER) throw new Error('请选择端口号')
+        const SOCKET_NUMBER = parseInt(process.argv[2])
+        if (!SOCKET_NUMBER) throw new Error(`please chose a socket number, now is ${SOCKET_NUMBER}`)
 
         // 1.链接MongoDB数据库服务
         let Cabin = new CabinExpress()
@@ -22,16 +22,17 @@ async function go() {
         global['$common'].bindClass(Cabin, 'Dispatcher_Log', Dispatcher_Log)
         // ....
 
-        // 4.暴漏调度方法给传输层
+        // 4.使用express暴漏调度方法给传输层
+        Cabin.express(SOCKET_NUMBER)
         global['Cabin'] = Cabin // ts 找不到 bindClass 后的方法
         Cabin.expressRoute('POST', '/yjy-log/create', global['Cabin'].createLog)
         Cabin.expressRoute('GET', '/yjy-log/list', global['Cabin'].getLogs)
         // ....
 
-        // 5.绑定Html
-        const htmlPath = require('path').join(process.cwd(), './src/web/dist')
-        const YjyLogIndex = require('path').join(process.cwd(), './src/web/dist/YjyLog.html')
-        Cabin.expressHtml('/yjyLog', htmlPath, YjyLogIndex)
+        // 5.绑定Html（YjyLog没有前端页面）
+        // const htmlPath = require('path').join(process.cwd(), './src/web/dist')
+        // const YjyLogIndex = require('path').join(process.cwd(), './src/web/dist/YjyLog.html')
+        // Cabin.expressHtml('/yjyLog', htmlPath, YjyLogIndex)
 
         // * End
         console.log(Cabin.cabinInfo)

@@ -1,8 +1,8 @@
-import { DBServable, TableCaller } from '../Type'
+import { DBServable } from '../Type'
 
 export default class ServerSqlite3 implements DBServable {
     DBAddress: string = ''
-    DBOrigin: TableCaller = null
+    DBOrigin: object = null
 
     constructor(dbAddress: string) {
         this.DBAddress = dbAddress
@@ -16,7 +16,7 @@ export default class ServerSqlite3 implements DBServable {
         })
     }
 
-    getTableCaller(TableName: string): Promise<TableCaller> {
+    getTableCaller(TableName: string): Promise<object> {
         return Promise.resolve(this.DBOrigin)
     }
 }

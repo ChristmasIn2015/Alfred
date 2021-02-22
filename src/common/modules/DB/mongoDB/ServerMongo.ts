@@ -1,4 +1,4 @@
-import { DBServable, TableCaller } from '../Type'
+import { DBServable } from '../Type'
 import { MongoClient, MongoError } from 'mongodb'
 
 export default class ServerMongo implements DBServable {
@@ -25,7 +25,7 @@ export default class ServerMongo implements DBServable {
     }
 
     // 获取/创建指定数据集合
-    getTableCaller(TableName: string): Promise<TableCaller> {
+    getTableCaller(TableName: string): Promise<object> {
         return new Promise((resolve, reject) => {
             this.DBOrigin.collection(TableName, { strict: true }, (error1, collection) => {
                 if (error1) {

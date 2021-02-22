@@ -58,7 +58,7 @@ export function excuteCmd(command: string, answer: CmdCallback): ProcessId {
     // 2 回应请求者 :子进程创建成功
     const Encoding = 'latin1'
     SubProcess.stdout.setEncoding(SubProcess.stdout.readableEncoding)
-    const Decoding = 'utf8' // 'cp936'
+    const Decoding = 'utf8' // 调试用cp936 上线用utf8
     const Title = `@Node(${process.pid}) Cmd(${SubProcess.pid}) ${Encoding}=>${Decoding}:Start`
     const IconvLite = require('iconv-lite')
     answer({

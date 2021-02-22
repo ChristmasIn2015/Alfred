@@ -486,22 +486,6 @@ var CabinExpress = class {
       await global["$db"][OperatorName].init(OperatorName, tablerList[i].struct);
     }
   }
-  expressRoute(method, route, next) {
-    if (this.cabinInfo.SOCKET_NUMBER) {
-      if (method === "GET") {
-        this.cabinHandler.get(route, (request, response) => next(request, response));
-      }
-      if (method === "POST") {
-        this.cabinHandler.post(route, require("body-parser").json(), (request, response) => next(request, response));
-      }
-    }
-  }
-  expressHtml(route, htmlPath, indexPath) {
-    if (this.cabinInfo.SOCKET_NUMBER) {
-      this.cabinHandler.use(import_express.default.static(htmlPath));
-      this.cabinHandler.get(route, (request, response) => response.sendFile(indexPath));
-    }
-  }
   express(SOCKET_NUMBER) {
     this.cabinInfo = {
       SOCKET_NUMBER,
@@ -517,6 +501,22 @@ var CabinExpress = class {
         next();
       });
       this.cabinHandler.listen(SOCKET_NUMBER, "0.0.0.0");
+    }
+  }
+  expressRoute(method, route, next) {
+    if (this.cabinInfo.SOCKET_NUMBER) {
+      if (method === "GET") {
+        this.cabinHandler.get(route, (request, response) => next(request, response));
+      }
+      if (method === "POST") {
+        this.cabinHandler.post(route, require("body-parser").json(), (request, response) => next(request, response));
+      }
+    }
+  }
+  expressHtml(route, htmlPath, indexPath) {
+    if (this.cabinInfo.SOCKET_NUMBER) {
+      this.cabinHandler.use(import_express.default.static(htmlPath));
+      this.cabinHandler.get(route, (request, response) => response.sendFile(indexPath));
     }
   }
 };
@@ -554,15 +554,16 @@ var Dispatcher_Log_default = Dispatcher_Log;
 // src/node/apps/YjyLog/main.ts
 async function go() {
   try {
-    const SOCKET_NUMBER = process.argv[2];
+    const SOCKET_NUMBER = parseInt(process.argv[2]);
     if (!SOCKET_NUMBER)
-      throw new Error("\u8BF7\u9009\u62E9\u7AEF\u53E3\u53F7");
+      throw new Error(`please chose a socket number, now is ${SOCKET_NUMBER}`);
     let Cabin = new CabinExpress_default();
     await Cabin.dbLink("mongodb://127.0.0.1:27017/YjyLog");
     await Cabin.dbTabler([
       {name: "Log", struct: {message: "object"}}
     ]);
     global["$common"].bindClass(Cabin, "Dispatcher_Log", Dispatcher_Log_default);
+    Cabin.express(SOCKET_NUMBER);
     global["Cabin"] = Cabin;
     Cabin.expressRoute("POST", "/yjy-log/create", global["Cabin"].createLog);
     Cabin.expressRoute("GET", "/yjy-log/list", global["Cabin"].getLogs);
