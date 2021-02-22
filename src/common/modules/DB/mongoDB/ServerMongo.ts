@@ -1,11 +1,11 @@
-import { DBServable, TableCaller } from '../../Type'
+import { DBServable, TableCaller } from '../Type'
 import { MongoClient, MongoError } from 'mongodb'
 
-export default class Server implements DBServable {
+export default class ServerMongo implements DBServable {
     DBAddress: string = ''
     DBOrigin: any = null
 
-    constructor(DBAddress: string = 'mongodb://127.0.0.1:27017') {
+    constructor(DBAddress: string) {
         this.DBAddress = DBAddress
     }
 

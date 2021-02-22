@@ -4,19 +4,19 @@
  * 提供对数据库>数据表/集合的CRUD原子操作
  ******************************************************************* */
 import { ObjectId } from 'mongodb'
-import { DBOperatable, TableCaller, TableStruct } from '../../Type'
+import { DBOperatable } from '../Type'
 
-export default class Operator implements DBOperatable {
+export default class OperatorMongo implements DBOperatable {
     // MongoDB
     TableName = null
     TableStruct = null
     TableCaller = null
-    constructor(caller: TableCaller) {
+    constructor(caller: object) {
         this.TableCaller = caller
     }
 
     // 初始化某表操作员
-    async init(TableName: string, newStruct: TableStruct): Promise<boolean> {
+    async init(TableName: string, newStruct: object): Promise<any> {
         this.TableName = TableName
         this.TableStruct = newStruct
 
@@ -92,7 +92,6 @@ export default class Operator implements DBOperatable {
         let result = await this.TableCaller.updateMany(query, { $set: doc })
         return result
     }
-    // 删除
     async delete(id): Promise<boolean> {
         let result = await this.TableCaller.deleteOne({ _id: id })
         if (result.deletedCount !== 1) throw new Error(`${id} 不存在`)
@@ -103,14 +102,14 @@ export default class Operator implements DBOperatable {
     // ============================================================================
     // ============================================================================
     // ============================================================================
-    async getOldStruct(): Promise<TableStruct> {
+    async getOldStruct(): Promise<object> {
         const OldStruct = await this.get({})
         return OldStruct
     }
-    getStruct(): TableStruct {
+    getStruct(): object {
         return Object.assign({}, this.TableStruct)
     }
-    model2TableStruct(newModel): TableStruct {
+    model2TableStruct(newModel): object {
         let struct = this.getStruct()
         for (let key in struct) newModel[key] !== undefined ? (struct[key] = newModel[key]) : ''
         return struct

@@ -8,7 +8,7 @@ export default class UtilsWebReact {
         const HEADER = {
             'Cache-Control': 'no-cache',
             'Content-type': 'application/json',
-            authorization: localStorage['token-qqlx-alfred'],
+            authorization: localStorage['token-qqlx'],
         }
         return HEADER
     }

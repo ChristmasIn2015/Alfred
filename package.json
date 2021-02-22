@@ -1,7 +1,7 @@
 {
     "name": "alfred",
     "scripts": {
-        "dev": "node ./src/manage.js",
+        "dev": "npm run esPack && node ./src/common/pack/manage.js",
         "esPack": "node ./src/common/esbuild.config.js",
         "build": "vue-cli-service build all",
         "pack_Windows": "webpack --config ./src/electron/webpack.config.js && node ./src/electron/build/packager.js && node ./src/electron/build/winstaller.js"
@@ -20,6 +20,7 @@
         "iconv-lite": "^0.6.2",
         "js-md5": "^0.7.3",
         "jsonwebtoken": "^8.5.1",
+        "mongodb": "^3.6.4",
         "nodejs-websocket": "^1.7.2",
         "sqlite3": "^5.0.0",
         "tree-kill": "^1.2.2",

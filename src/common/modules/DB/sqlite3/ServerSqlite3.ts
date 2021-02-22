@@ -1,6 +1,6 @@
-import { DBServable, TableCaller } from '../../Type'
+import { DBServable, TableCaller } from '../Type'
 
-export default class Server implements DBServable {
+export default class ServerSqlite3 implements DBServable {
     DBAddress: string = ''
     DBOrigin: TableCaller = null
 

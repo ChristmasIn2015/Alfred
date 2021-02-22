@@ -5,8 +5,6 @@ enum RequesterModel {
     GET = 'GET',
     POST = 'POST',
 }
-
-//
 class Axios {
     public DEFAULT_HEADER: object = {}
     constructor(public BASE_URL: string, private COMPLETE: (result) => void) {
@@ -32,7 +30,6 @@ class Axios {
         }
     }
 }
-
 export default class Requester {
     constructor() {}
 

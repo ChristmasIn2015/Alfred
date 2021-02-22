@@ -9,7 +9,7 @@ export type CmdAnswer = {
     text: string
     html: string
 }
-export type CmdCallback = (CmdAnswer: CmdAnswer) => any
+export type CmdCallback = (CmdAnswer: CmdAnswer) => void
 enum LogColor {
     WHITE = 'white',
     GREEN = 'green',
@@ -23,7 +23,7 @@ enum LogColor {
 // **************************************************************************
 // **************************************************************************
 // 1.执行一个CMD任务
-export function cmd(command: string, answer: CmdCallback): ProcessId {
+export function excuteCmd(command: string, answer: CmdCallback): ProcessId {
     // 终止敏感操作
     command = command.replace(/\n/g, ' ')
     if (_isDanger(command)) {
@@ -75,14 +75,14 @@ export function cmd(command: string, answer: CmdCallback): ProcessId {
             text: Text,
             html: _log2Html(LogColor.WHITE, Text),
         })
-        if (message.includes('Merge conflict')) cmdKill(SubProcess.pid) // 进程终止会触发进程的error事件
+        if (message.includes('Merge conflict')) killCmd(SubProcess.pid) // 进程终止会触发进程的error事件
     })
 
     return SubProcess.pid
 }
 
 // 2.销毁进程
-export function cmdKill(processId: number): void {
+export function killCmd(processId: number): void {
     require('tree-kill')(processId)
 }
 function _isDanger(command: string): boolean {

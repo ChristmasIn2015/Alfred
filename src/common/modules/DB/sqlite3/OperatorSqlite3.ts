@@ -10,9 +10,9 @@
  * 4.可变长度的字符串 varchar(size)
  * 5.日期 date(yyyymmdd)
  ******************************************************************* */
-import { DBOperatable, TableCaller, TableStruct } from '../../Type'
+import { DBOperatable, TableCaller, TableStruct } from '../Type'
 
-export default class Operator implements DBOperatable {
+export default class OperatorSqlite3 implements DBOperatable {
     // Sqlite3
     TableName = null
     TableStruct = null

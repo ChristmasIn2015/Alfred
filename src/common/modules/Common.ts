@@ -6,9 +6,7 @@ import UtilsCalculation from './Utils/UtilsCalculation'
 
 export interface ClassBindable {
     OriginMap: Map<string, object>
-    bindClass(Target: ClassBindable, OriginName: string, Origin: any): void
 }
-
 export class Common implements ClassBindable {
     OriginMap: Map<string, object> = new Map()
     constructor() {
@@ -19,7 +17,7 @@ export class Common implements ClassBindable {
         this.bindClass(this, 'UtilsCalculation', UtilsCalculation) // 计算
     }
 
-    // 将A类上的所有方法绑定到B类上, 且通过B调用的A方法中, this指向A而不是B
+    // 将A类上的所有方法绑定到B类Target上, 且通过B调用的A方法中, this指向A而不是B
     bindClass(Target: ClassBindable, OriginName: string, Origin: any): void {
         if (Origin instanceof Function) {
             // 1.在A类上创建B对象

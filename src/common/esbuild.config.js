@@ -1,14 +1,13 @@
 // NodeJs依赖
 const PATH = require('path')
 
-// 打包src下所有ts文件
+// 打包ts下所有ts文件
 require('glob')
-    .sync(PATH.join(__dirname, './src/*.ts'))
+    .sync(PATH.join(__dirname, './ts/*.ts'))
     .forEach((e) => {
         const name = e.split('/').reverse()[0]
         esBuild([e], `./src/common/pack/${name.replace('.ts', '.js')}`, name)
     })
-console.log()
 
 function esBuild(entryPoints, outfile, originName) {
     const now = Date.now()
@@ -34,9 +33,10 @@ function esBuild(entryPoints, outfile, originName) {
     const size = parseInt(require('fs').statSync(outfile).size / 1024)
     console.log(
         //
-        '\n',
+        `${size}KB`,
+        `${isWeb ? 'web: ' : 'node: '}${Date.now() - now}ms: `,
         originName,
-        `: ${size}KB`,
-        `${isWeb ? 'web: ' : 'node: '}${Date.now() - now}ms`
+        `\x1B[42m\x1B[30m build success \x1B[0m`,
+        '\n'
     )
 }
