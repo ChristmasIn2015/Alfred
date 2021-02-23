@@ -12,4 +12,9 @@ export default class UtilsCalculation {
         s = Math.round(s * 10000) / 10000
         return s.toFixed(2)
     }
+
+    // 将Origin对象完全转为Wanna对象的结构, 同时进行赋值
+    wannaObject(origin: object, wanna: object) {
+        return origin
+    }
 }

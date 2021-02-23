@@ -39,12 +39,13 @@ export default class CabinExpress implements ClassBindable {
     // Express
     // Express
     // Express：初始化Express
-    express(SOCKET_NUMBER: number): void {
+    express(SOCKET_NUMBER: number, APP_NAME: string): void {
         // 初始化该控制台信息
         this.cabinInfo = {
-            SOCKET_NUMBER,
             CabinHandler: 'express',
+            APP_NAME,
             IPv4: global['$common'].getIPv4(),
+            SOCKET_NUMBER,
         }
         // 初始化Express
         if (SOCKET_NUMBER) {

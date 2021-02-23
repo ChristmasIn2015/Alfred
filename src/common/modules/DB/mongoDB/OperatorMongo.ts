@@ -7,7 +7,6 @@ import { ObjectId } from 'mongodb'
 import { DBOperatable } from '../Type'
 
 export default class OperatorMongo implements DBOperatable {
-    // MongoDB
     TableName = null
     TableStruct = null
     TableCaller = null
@@ -16,36 +15,41 @@ export default class OperatorMongo implements DBOperatable {
     }
 
     // 初始化某表操作员
+    // 初始化某表操作员
+    // 初始化某表操作员
+    // 初始化某表操作员
     async init(TableName: string, newStruct: object): Promise<any> {
         this.TableName = TableName
-        this.TableStruct = newStruct
+        this.TableStruct = Object.assign({}, newStruct)
+        for (let key in this.TableStruct) this.TableStruct[key] = null
 
-        // 获取当前表结构
-        const OldStruct = await this.getOldStruct()
-        if (!OldStruct) return true
-        // 如果 newStruct 补充了新字段，则全量补充这个新字段
-        for (let columnName in newStruct) {
-            if (columnName === '_id') continue
-            if (columnName === 'timeCreate') continue
-            if (columnName === 'timeUpdate') continue
-            if (OldStruct[columnName] === undefined) {
-                let newColumn = {}
-                newColumn[columnName] = null
-                await this.TableCaller.updateMany({}, { $set: newColumn })
-            }
+        // 初始化某表操作员：获取当前表结构
+        const oldStruct = await this.getOldStruct()
+        // 初始化某表操作员：如果 newStruct 补充了新字段，则全量补充这个新字段
+        for (let column_new in newStruct) {
+            if (column_new === 'id') continue
+            if (column_new === '_id') continue
+            if (column_new === 'timeCreate') continue
+            if (column_new === 'timeUpdate') continue
+            if (oldStruct[column_new]) continue
+            let DTO = {}
+            DTO[column_new] = null
+            console.log('create', column_new)
+            await this.TableCaller.updateMany({}, { $set: DTO })
         }
-        // 如果 newStruct 删除了旧字段，则全量删除这个旧字段
-        for (let columnName in OldStruct) {
-            if (columnName === '_id') continue
-            if (columnName === 'timeCreate') continue
-            if (columnName === 'timeUpdate') continue
-            if (newStruct[columnName] === undefined) {
-                let newColumn = {}
-                newColumn[columnName] = null
-                await this.TableCaller.updateMany({}, { $unset: newColumn })
-            }
+        // 初始化某表操作员：如果 newStruct 删除了旧字段，则全量删除这个旧字段
+        for (let column_old in oldStruct) {
+            if (column_old === 'id') continue
+            if (column_old === '_id') continue
+            if (column_old === 'timeCreate') continue
+            if (column_old === 'timeUpdate') continue
+            if (newStruct[column_old]) continue
+            let DELETE = {}
+            DELETE[column_old] = null
+            console.log('delete', column_old)
+            await this.TableCaller.updateMany({}, { $unset: DELETE })
         }
-        // NoSQL不需要预定义表结构
+        // 初始化某表操作员：NoSQL不需要预定义表结构
     }
     // ============================================================================
     // ============================================================================
@@ -103,15 +107,18 @@ export default class OperatorMongo implements DBOperatable {
     // ============================================================================
     // ============================================================================
     async getOldStruct(): Promise<object> {
-        const OldStruct = await this.get({})
-        return OldStruct
+        let result = await this.get({})
+        for (let key in result) result[key] = true
+        return result || {}
     }
     getStruct(): object {
         return Object.assign({}, this.TableStruct)
     }
     model2TableStruct(newModel): object {
-        let struct = this.getStruct()
-        for (let key in struct) newModel[key] !== undefined ? (struct[key] = newModel[key]) : ''
-        return struct
+        let create = this.getStruct() || {}
+        for (let key in create) {
+            newModel[key] ? (create[key] = newModel[key]) : ''
+        }
+        return create
     }
 }

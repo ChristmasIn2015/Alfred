@@ -19,15 +19,6 @@ var __toModule = (module2) => {
     return module2;
   return __exportStar(__defProp(module2 != null ? __create(__getProtoOf(module2)) : {}, "default", {value: module2, enumerable: true}), module2);
 };
-var __decorate = (decorators, target, key, kind) => {
-  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc(target, key) : target;
-  for (var i = decorators.length - 1, decorator; i >= 0; i--)
-    if (decorator = decorators[i])
-      result = (kind ? decorator(target, key, result) : decorator(result)) || result;
-  if (kind && result)
-    __defProp(target, key, result);
-  return result;
-};
 
 // src/common/modules/Base/Log.ts
 var Log = class {
@@ -535,51 +526,17 @@ var CabinExpress = class {
 };
 var CabinExpress_default = CabinExpress;
 
-// src/node/apps/YjyLog/dispatchers/Dispatcher_Log.ts
-var Response = global["$common"].Response;
-var Dispatcher_Log = class {
-  constructor() {
-  }
-  async createLog(request, response) {
-    await global["$db"].Log.create({
-      ip: request.ip,
-      message: request.body.message
-    });
-  }
-  async getLogs(request, response) {
-    let list = await global["$db"].Log.query({});
-    list = list.reverse().slice(0, 50);
-    list.forEach((e) => {
-      e["timeCreateChinese"] = new Date(e.timeCreate).toLocaleString();
-      e["timeUpdateChinese"] = new Date(e.timeUpdate).toLocaleString();
-    });
-    return list;
-  }
-};
-__decorate([
-  Response("\u6DFB\u52A0\u65E5\u5FD7\u6210\u529F")
-], Dispatcher_Log.prototype, "createLog", 1);
-__decorate([
-  Response()
-], Dispatcher_Log.prototype, "getLogs", 1);
-var Dispatcher_Log_default = Dispatcher_Log;
-
-// src/node/apps/YjyLog/main.ts
+// src/node/apps/Solomon/main.ts
 async function go() {
   try {
     const SOCKET_NUMBER = parseInt(process.argv[2]);
     if (!SOCKET_NUMBER)
       throw new Error(`please chose a socket number, now is ${SOCKET_NUMBER}`);
     let Cabin = new CabinExpress_default();
-    await Cabin.dbLink("mongodb://127.0.0.1:27017/YjyLog");
-    await Cabin.dbTabler([
-      {name: "Log", struct: {ip: "number", message: "object"}}
-    ]);
-    global["$common"].bindClass(Cabin, "Dispatcher_Log", Dispatcher_Log_default);
-    Cabin.express(SOCKET_NUMBER, "YjyLog");
-    global["Cabin"] = Cabin;
-    Cabin.expressRoute("POST", "/yjy-log/create", global["Cabin"].createLog);
-    Cabin.expressRoute("GET", "/yjy-log/list", global["Cabin"].getLogs);
+    Cabin.express(SOCKET_NUMBER, "Solomon");
+    const htmlPath = require("path").join(process.cwd(), "./src/web/dist");
+    const SolomonIndex = require("path").join(process.cwd(), "./src/web/dist/Solomon.html");
+    Cabin.expressHtml("/solomon", htmlPath, SolomonIndex);
     console.log(Cabin.cabinInfo);
   } catch (error) {
     console.log(error.message);

@@ -15,7 +15,7 @@ async function go() {
         // 2.创建YjyLog的数据库及其操作员
         await Cabin.dbTabler([
             //
-            { name: 'Log', struct: { message: 'object' } },
+            { name: 'Log', struct: { ip: 'number', message: 'object' } },
         ])
 
         // 3.绑定业务的调度员
@@ -23,7 +23,7 @@ async function go() {
         // ....
 
         // 4.使用express暴漏调度方法给传输层
-        Cabin.express(SOCKET_NUMBER)
+        Cabin.express(SOCKET_NUMBER, 'YjyLog')
         global['Cabin'] = Cabin // ts 找不到 bindClass 后的方法
         Cabin.expressRoute('POST', '/yjy-log/create', global['Cabin'].createLog)
         Cabin.expressRoute('GET', '/yjy-log/list', global['Cabin'].getLogs)
