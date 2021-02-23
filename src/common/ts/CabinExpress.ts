@@ -3,14 +3,21 @@ import { ClassBindable } from '../modules/Common'
 //
 import ServerMongo from '../modules/DB/mongoDB/ServerMongo'
 import OperatorMongo from '../modules/DB/mongoDB/OperatorMongo'
-import express from 'express'
 
 export default class CabinExpress implements ClassBindable {
     cabinDB = null
     cabinInfo = null
     cabinHandler = null // Express
     OriginMap: Map<string, object> = new Map() // ClassBindable
-    constructor() {}
+    //
+    EXPRESS = null
+    BODY_PARSE = null
+    NODE_HTTP_PROXY = null
+    constructor() {
+        this.EXPRESS = require('express')
+        this.BODY_PARSE = require('body-parser')
+        this.NODE_HTTP_PROXY = require('http-proxy').createProxyServer()
+    }
 
     // 数据库
     // 数据库
@@ -49,7 +56,7 @@ export default class CabinExpress implements ClassBindable {
         }
         // 初始化Express
         if (SOCKET_NUMBER) {
-            this.cabinHandler = express()
+            this.cabinHandler = this.EXPRESS()
             this.cabinHandler.all('*', (request, response, next) => {
                 response.header('Access-Control-Allow-Origin', '*')
                 response.header('Access-Control-Allow-Headers', '*')
@@ -60,21 +67,44 @@ export default class CabinExpress implements ClassBindable {
         }
     }
     // Express：数据接口分配
-    expressRoute(method, route, next) {
-        if (this.cabinInfo.SOCKET_NUMBER) {
-            if (method === 'GET') {
-                this.cabinHandler.get(route, (request, response) => next(request, response))
+    expressRoute(method: string, route: string, next: (request, response) => any, proxyTarget?: string) {
+        if (!this.cabinInfo.SOCKET_NUMBER) return
+        const DO_Next = (request, response) => {
+            if (proxyTarget) {
+                // 转发给其他服务
+                console.log('Proxy', proxyTarget)
+                this.NODE_HTTP_PROXY.web(request, response, { target: proxyTarget })
+            } else {
+                // 使用当前进程的服务
+                next(request, response)
             }
-            if (method === 'POST') {
-                this.cabinHandler.post(route, require('body-parser').json(), (request, response) => next(request, response))
-            }
+        }
+        switch (method) {
+            case 'GET':
+                this.cabinHandler.get(route, DO_Next)
+                break
+            case 'POST':
+                this.cabinHandler.post(route, this.BODY_PARSE.json(), DO_Next)
+                break
         }
     }
     // Express：HTML分配
     expressHtml(route, htmlPath, indexPath) {
-        if (this.cabinInfo.SOCKET_NUMBER) {
-            this.cabinHandler.use(express.static(htmlPath))
-            this.cabinHandler.get(route, (request, response) => response.sendFile(indexPath))
-        }
+        if (this.cabinInfo.SOCKET_NUMBER) return
+        this.cabinHandler.use(this.EXPRESS.static(htmlPath))
+        this.cabinHandler.get(route, (request, response) => response.sendFile(indexPath))
+    }
+    // Express: 暴漏一个地址, 进行反向代理
+    expressProxy(origin: string, target: string) {
+        if (!this.cabinInfo.SOCKET_NUMBER) return
+        // switch (method) {
+        //     case 'GET':
+        //         break
+        //     case 'POST':
+        //         break
+        // }
+        // this.NODE_HTTP_PROXY.createProxyServer().web(req, res, {
+        //     target,
+        // })
     }
 }

@@ -8,14 +8,14 @@ async function go() {
         const SOCKET_NUMBER = parseInt(process.argv[2])
         if (!SOCKET_NUMBER) throw new Error(`please chose a socket number, now is ${SOCKET_NUMBER}`)
 
-        // 1.链接MongoDB数据库服务
+        // 1.链接MongoDB数据库服务，并创建数据库
         let Cabin = new CabinExpress()
         await Cabin.dbLink('mongodb://127.0.0.1:27017/YjyLog')
 
-        // 2.创建YjyLog的数据库及其操作员
+        // 2.创建YjyLog的数据表及其操作员
         await Cabin.dbTabler([
             //
-            { name: 'Log', struct: { ip: 'number', message: 'object' } },
+            { name: 'Log', struct: { ip: 'string', message: 'object' } },
         ])
 
         // 3.绑定业务的调度员
