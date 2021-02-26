@@ -3,8 +3,8 @@
  * 需要一个数据库>数据表/集合指针来构造
  * 提供对数据库>数据表/集合的CRUD原子操作
  ******************************************************************* */
+///<reference path='../../../../../type.d.ts' />
 import { ObjectId } from 'mongodb'
-import { DBOperatable } from '../Type'
 
 export default class OperatorMongo implements DBOperatable {
     TableName = null

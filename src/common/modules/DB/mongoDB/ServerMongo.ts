@@ -1,4 +1,3 @@
-import { DBServable } from '../Type'
 import { MongoClient, MongoError } from 'mongodb'
 
 export default class ServerMongo implements DBServable {

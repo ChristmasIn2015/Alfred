@@ -1,5 +1,6 @@
 const Response = global['$common'].Response
-export default class Dispatcher_Log {
+const AlfredLogin = global['$common'].AlfredLogin
+export default class Yjy_Log {
     constructor() {}
 
     @Response('添加日志成功')
@@ -10,6 +11,7 @@ export default class Dispatcher_Log {
         })
     }
 
+    @AlfredLogin()
     @Response()
     async getLogs(request, response) {
         let list = await global['$db'].Log.query({})

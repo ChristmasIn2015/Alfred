@@ -37,7 +37,7 @@ export default class Requester {
         return new Axios(BASE_URL, COMPLETE)
     }
 
-    async fetch(url: string, method: RequesterModel.GET | RequesterModel.POST = RequesterModel.GET, params: object = {}, config: object = {}): Promise<any> {
+    async fetch(url: string, method?: RequesterModel.GET | RequesterModel.POST, params?: object, config?: object): Promise<any> {
         // $common.log({ fetch: requestParams })
         let result = await axios({
             method,

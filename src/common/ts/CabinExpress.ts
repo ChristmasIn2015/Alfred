@@ -1,23 +1,26 @@
-import { DBTabler } from '../modules/DB/Type'
-import { ClassBindable } from '../modules/Common'
 //
 import ServerMongo from '../modules/DB/mongoDB/ServerMongo'
 import OperatorMongo from '../modules/DB/mongoDB/OperatorMongo'
 
 export default class CabinExpress implements ClassBindable {
-    cabinDB = null
-    cabinInfo = null
-    cabinHandler = null // Express
-    OriginMap: Map<string, object> = new Map() // ClassBindable
     //
-    EXPRESS = null
-    BODY_PARSE = null
-    NODE_HTTP_PROXY = null
-    constructor() {
-        this.EXPRESS = require('express')
-        this.BODY_PARSE = require('body-parser')
-        this.NODE_HTTP_PROXY = require('http-proxy').createProxyServer()
-    }
+    VUE_PATH = require('path').join(process.cwd(), './src/web/dist')
+    BinderMap: Map<string, object> = new Map() // ClassBindable
+    //
+    cabinDB = null
+    cabinHandler = null // Express
+    cabinInfo: {
+        CabinHandler: string
+        APP_NAME: string
+        IPv4: string
+        SOCKET_NUMBER: number
+    } = null
+    //
+    BODY_PARSE = require('body-parser')
+    EXPRESS = require('express')
+    EXPRESS_PROXY = require('http-proxy-middleware').createProxyMiddleware
+    EXPRESS_AHTHO = {}
+    constructor() {}
 
     // 数据库
     // 数据库
@@ -61,50 +64,34 @@ export default class CabinExpress implements ClassBindable {
                 response.header('Access-Control-Allow-Origin', '*')
                 response.header('Access-Control-Allow-Headers', '*')
                 response.header('Access-Control-Allow-Methods', '*')
-                next()
+                // TODO 未来这里要做防攻击处理
+                next() // 执行其他 express/use 队列任务
             })
+            this.cabinHandler.use(this.EXPRESS.static(this.VUE_PATH))
             this.cabinHandler.listen(SOCKET_NUMBER, '0.0.0.0')
         }
     }
-    // Express：数据接口分配
-    expressRoute(method: string, route: string, next: (request, response) => any, proxyTarget?: string) {
-        if (!this.cabinInfo.SOCKET_NUMBER) return
-        const DO_Next = (request, response) => {
-            if (proxyTarget) {
-                // 转发给其他服务
-                console.log('Proxy', proxyTarget)
-                this.NODE_HTTP_PROXY.web(request, response, { target: proxyTarget })
-            } else {
-                // 使用当前进程的服务
-                next(request, response)
-            }
-        }
-        switch (method) {
-            case 'GET':
-                this.cabinHandler.get(route, DO_Next)
-                break
-            case 'POST':
-                this.cabinHandler.post(route, this.BODY_PARSE.json(), DO_Next)
-                break
-        }
+    // Express：请求转发，即反向代理
+    expressProxy(proxyRoute: string, target: string) {
+        // /some/route <= ipv4:80 <= other serve
+        const option = { target, changeOrigin: true }
+        this.cabinHandler.use(proxyRoute, this.EXPRESS_PROXY(option))
     }
     // Express：HTML分配
-    expressHtml(route, htmlPath, indexPath) {
-        if (this.cabinInfo.SOCKET_NUMBER) return
-        this.cabinHandler.use(this.EXPRESS.static(htmlPath))
+    expressHtml(route: string, indexPath: string) {
+        if (!this.cabinInfo.SOCKET_NUMBER) return
         this.cabinHandler.get(route, (request, response) => response.sendFile(indexPath))
     }
-    // Express: 暴漏一个地址, 进行反向代理
-    expressProxy(origin: string, target: string) {
+    // Express：数据接口分配
+    expressRoute(method: string, route: string, next: (request, response) => any) {
         if (!this.cabinInfo.SOCKET_NUMBER) return
-        // switch (method) {
-        //     case 'GET':
-        //         break
-        //     case 'POST':
-        //         break
-        // }
-        // this.NODE_HTTP_PROXY.createProxyServer().web(req, res, {
-        //     target,
-        // })
+        switch (method) {
+            case 'GET':
+                this.cabinHandler.get(route, (request, response) => next(request, response))
+                break
+            case 'POST':
+                this.cabinHandler.post(route, this.BODY_PARSE.json(), (request, response) => next(request, response))
+                break
+        }
     }
 }

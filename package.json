@@ -1,10 +1,10 @@
 {
     "name": "alfred",
     "scripts": {
-        "dev": "npm run esPack && node ./src/common/pack/manage.js",
-        "esPack": "node ./src/common/esbuild.config.js",
-        "build": "vue-cli-service build all",
-        "pack_Windows": "webpack --config ./src/electron/webpack.config.js && node ./src/electron/build/packager.js && node ./src/electron/build/winstaller.js"
+        "dev": "node ./src/common/pack/manage.js",
+        "packCommon": "node ./src/common/esbuild.config.js",
+        "pacuVue": "vue-cli-service build all",
+        "packWindows": "webpack --config ./src/electron/webpack.config.js && node ./src/electron/build/packager.js && node ./src/electron/build/winstaller.js"
     },
     "dependencies": {
         "@types/mongodb": "^3.6.6",
@@ -15,6 +15,7 @@
         "express": "^4.17.1",
         "font-awesome": "^4.7.0",
         "fs-extra": "^9.1.0",
+        "http-proxy-middleware": "^1.0.6",
         "iconv-lite": "^0.6.2",
         "js-md5": "^0.7.3",
         "jsonwebtoken": "^8.5.1",

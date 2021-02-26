@@ -1,5 +1,3 @@
-import { DBServable } from '../Type'
-
 export default class ServerSqlite3 implements DBServable {
     DBAddress: string = ''
     DBOrigin: object = null
