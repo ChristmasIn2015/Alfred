@@ -8,7 +8,7 @@ async function go() {
         const SOCKET_NUMBER = parseInt(process.argv[2])
         if (!SOCKET_NUMBER) throw new Error(`Please chose your socket number, now is ${SOCKET_NUMBER}`)
 
-        // 1.链接MongoDB数据库服务，并创建数据库
+        // 1.链接MongoDB数据库服务，并创建数据库YjyLog
         let Cabin = new CabinExpress()
         await Cabin.dbLink('mongodb://127.0.0.1:27017/YjyLog')
 
@@ -25,6 +25,7 @@ async function go() {
         // 4.使用express暴漏调度方法给传输层
         Cabin.express(SOCKET_NUMBER, 'YjyLog')
         global['Cabin'] = Cabin // ts 找不到 bindClass 后的方法
+        // @Yjy_Log
         Cabin.expressRoute('POST', '/yjy-log/create', global['Cabin'].createLog)
         Cabin.expressRoute('GET', '/yjy-log/list', global['Cabin'].getLogs)
         // ....

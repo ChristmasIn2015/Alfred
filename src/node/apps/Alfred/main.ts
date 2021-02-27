@@ -30,13 +30,18 @@ async function go() {
         // 3.绑定业务的调度员
         global['$common'].bindClass(Cabin, 'Alfred_User', Alfred_User)
 
-        // 4.1 暴漏调度方法给Express
+        // 4.1 暴漏调度方法给传输层
         Cabin.express(SOCKET_NUMBER, 'alfred')
         global['Cabin'] = Cabin // ts 找不到 bindClass 后的方法
+        // @Alfred_User
         Cabin.expressRoute('POST', '/alfred/user/login', global['Cabin'].login)
         Cabin.expressRoute('POST', '/alfred/user/info', global['Cabin'].getUserInfo)
 
         // 4.2 反向代理
+        // @DevOps
+        const DevOps = `http://${Cabin.cabinInfo.IPv4}:7000`
+        Cabin.expressProxy('/dev-ops', DevOps, true)
+        // @YjyLog
         const YjyLog = `http://${Cabin.cabinInfo.IPv4}:7001`
         Cabin.expressProxy('/yjy-log/list', YjyLog)
         Cabin.expressProxy('/yjy-log/create', YjyLog)

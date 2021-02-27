@@ -10,31 +10,7 @@
         },
         mounted() {},
         methods: {},
-        beforeCreate() {
-            document.title = `Alfred ${global['APP_VERSION'] || '*'}`
-            window.$load = {
-                show: () => this.$Spin.show(),
-                hide: () => this.$Spin.hide(),
-            }
-            window.$toast = (message) =>
-                this.$Message['success']({
-                    background: true,
-                    content: message,
-                })
-            window.$warn = (message) =>
-                this.$Message['error']({
-                    background: true,
-                    content: message,
-                })
-            window.$confirm = (message, next) => {
-                this.$Modal.confirm({
-                    title: message,
-                    onOk: next,
-                    okText: '确定',
-                    cancelText: '取消',
-                })
-            }
-        },
+        beforeCreate() {},
     }
 </script>
 <style lang="scss">

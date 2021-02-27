@@ -4,7 +4,7 @@ export default class UtilsNodeReact {
         this.IPv4 = this.getIPv4()
     }
 
-    // 登录修饰器
+    // HTTP登录修饰器
     AlfredLogin() {
         const IPv4 = this.IPv4
         return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
@@ -24,6 +24,32 @@ export default class UtilsNodeReact {
                         data: null,
                         message: `登录信息异常: ${error.message}`,
                     })
+                }
+            }
+        }
+    }
+
+    // WebSocket登录修饰器
+    AlfredLoginWS() {
+        const IPv4 = this.IPv4
+        return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
+            const sourceFunction = descriptor.value
+            descriptor.value = async function(...args) {
+                const request = args[0]
+                try {
+                    let data = await global['$common'].fetch(`http://${IPv4}:80/alfred/user/info`, 'POST', null, {
+                        // authorization: request.header('authorization'),
+                    })
+                    if (data.code !== 200) throw new Error(`${data.message}(code:${data.code})`)
+                    await sourceFunction.apply(this, args)
+                } catch (error) {
+                    // response.send({
+                    //     code: null,
+                    //     data: null,
+                    //     message: `登录信息异常: ${error.message}`,
+                    // })
+                    global['$common'].log(error.message)
+                    console.log(error.message)
                 }
             }
         }

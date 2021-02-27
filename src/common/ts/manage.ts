@@ -33,7 +33,8 @@ let cmd = ''
 switch (appType) {
     case 'web': {
         // 使用@vue/cli启动一个单页应用
-        let target = PATH.join(__dirname, `./web/apps/${appName}/main.js`)
+        let target = PATH.join(process.cwd(), `./src/web/apps/${appName}/main.js`)
+        console.log(target)
         cmd += `vue-cli-service serve ${target}`
         break
     }
@@ -54,5 +55,5 @@ switch (appType) {
     //         break
     //     }
 }
-import { excuteCmd, CmdAnswer } from './cmd'
+import { excuteCmd } from './cmd'
 if (cmd) excuteCmd(cmd, (answer: CmdAnswer) => console.log(answer.text))
