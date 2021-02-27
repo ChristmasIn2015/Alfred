@@ -1,9 +1,5 @@
 <template>
-    <div>
-        I am DevOps
-
-        <v-btn color="secondary" elevation="8">点击登录</v-btn>
-    </div>
+    <div>I am Log</div>
 </template>
 <script>
     export default {

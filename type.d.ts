@@ -1,11 +1,16 @@
-//
-export interface DBServable {
+// 使得一个类可绑定其他类
+interface ClassBindable {
+    BinderMap: Map<string, object>
+}
+// 使得一个类可以和数据库进行交互
+interface DBServable {
     DBAddress: string
     DBOrigin: any
     start(): Promise<boolean>
     getTableCaller(TableName: string): Promise<object>
 }
-export interface DBOperatable {
+// 使得一个类成为数据库CRUD操作员
+interface DBOperatable {
     TableName: string
     TableStruct: object
     TableCaller: object
@@ -22,8 +27,20 @@ export interface DBOperatable {
     getStruct(): object
     model2TableStruct(newModel: object): object
 }
-//
-export interface DBTabler {
+// 使得一个类成为数据库CRUD操作员
+type DBTabler = {
     name: string
     struct: object
+}
+// 使得一个类成为数据库CRUD操作员
+type WebSocketOrder = {
+    connectionKey: string // 长链接Id
+    orderName: string // 如CreateCMD等
+    DTO: object
+}
+//
+type CmdAnswer = {
+    pid: number
+    text: string
+    html: string
 }

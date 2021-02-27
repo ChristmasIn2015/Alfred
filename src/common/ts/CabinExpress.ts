@@ -1,23 +1,29 @@
-import { DBTabler } from '../modules/DB/Type'
-import { ClassBindable } from '../modules/Common'
 //
 import ServerMongo from '../modules/DB/mongoDB/ServerMongo'
 import OperatorMongo from '../modules/DB/mongoDB/OperatorMongo'
 
 export default class CabinExpress implements ClassBindable {
-    cabinDB = null
-    cabinInfo = null
-    cabinHandler = null // Express
-    OriginMap: Map<string, object> = new Map() // ClassBindable
     //
-    EXPRESS = null
-    BODY_PARSE = null
-    NODE_HTTP_PROXY = null
-    constructor() {
-        this.EXPRESS = require('express')
-        this.BODY_PARSE = require('body-parser')
-        this.NODE_HTTP_PROXY = require('http-proxy').createProxyServer()
-    }
+    VUE_PATH = require('path').join(process.cwd(), './src/web/dist')
+    BinderMap: Map<string, object> = new Map() // ClassBindable
+    //
+    cabinDB = null
+    cabinHandler = null // Express
+    cabinInfo: {
+        CabinHandler: string
+        APP_NAME: string
+        IPv4: string
+        SOCKET_NUMBER: number
+    } = null
+    //
+    BODY_PARSE = require('body-parser')
+    EXPRESS = require('express')
+    EXPRESS_PROXY = require('http-proxy-middleware').createProxyMiddleware
+    //
+    NODE_WEBSOCKET = require('nodejs-websocket')
+    NODE_WEBSOCKET_ConnectionMAP = {}
+    NODE_WEBSOCKET_OrderMAP = {}
+    constructor() {}
 
     // 数据库
     // 数据库
@@ -41,6 +47,7 @@ export default class CabinExpress implements ClassBindable {
             await global['$db'][OperatorName].init(OperatorName, tablerList[i].struct)
         }
     }
+
     // Express
     // Express
     // Express
@@ -61,50 +68,97 @@ export default class CabinExpress implements ClassBindable {
                 response.header('Access-Control-Allow-Origin', '*')
                 response.header('Access-Control-Allow-Headers', '*')
                 response.header('Access-Control-Allow-Methods', '*')
-                next()
+                // TODO 未来这里要做防攻击处理
+                next() // 执行其他 express/use 队列任务
             })
+            this.cabinHandler.use(this.EXPRESS.static(this.VUE_PATH))
             this.cabinHandler.listen(SOCKET_NUMBER, '0.0.0.0')
         }
     }
-    // Express：数据接口分配
-    expressRoute(method: string, route: string, next: (request, response) => any, proxyTarget?: string) {
-        if (!this.cabinInfo.SOCKET_NUMBER) return
-        const DO_Next = (request, response) => {
-            if (proxyTarget) {
-                // 转发给其他服务
-                console.log('Proxy', proxyTarget)
-                this.NODE_HTTP_PROXY.web(request, response, { target: proxyTarget })
-            } else {
-                // 使用当前进程的服务
-                next(request, response)
-            }
-        }
-        switch (method) {
-            case 'GET':
-                this.cabinHandler.get(route, DO_Next)
-                break
-            case 'POST':
-                this.cabinHandler.post(route, this.BODY_PARSE.json(), DO_Next)
-                break
-        }
+    // Express：请求转发，即反向代理
+    expressProxy(proxyRoute: string, target: string, ws?: boolean) {
+        // /some/route <= ipv4:80 <= other serve
+        const option = { target, changeOrigin: true, ws }
+        this.cabinHandler.use(proxyRoute, this.EXPRESS_PROXY(option))
     }
     // Express：HTML分配
-    expressHtml(route, htmlPath, indexPath) {
-        if (this.cabinInfo.SOCKET_NUMBER) return
-        this.cabinHandler.use(this.EXPRESS.static(htmlPath))
+    expressHtml(route: string, indexPath: string) {
+        if (!this.cabinInfo.SOCKET_NUMBER) return
         this.cabinHandler.get(route, (request, response) => response.sendFile(indexPath))
     }
-    // Express: 暴漏一个地址, 进行反向代理
-    expressProxy(origin: string, target: string) {
+    // Express：数据接口分配
+    expressRoute(method: string, route: string, next: (request, response) => any) {
         if (!this.cabinInfo.SOCKET_NUMBER) return
-        // switch (method) {
-        //     case 'GET':
-        //         break
-        //     case 'POST':
-        //         break
-        // }
-        // this.NODE_HTTP_PROXY.createProxyServer().web(req, res, {
-        //     target,
-        // })
+        switch (method) {
+            case 'GET':
+                this.cabinHandler.get(route, (request, response) => next(request, response))
+                break
+            case 'POST':
+                this.cabinHandler.post(route, this.BODY_PARSE.json(), (request, response) => next(request, response))
+                break
+        }
     }
+
+    // WebSocket
+    // WebSocket
+    // WebSocket
+    // WebSocket
+    // WebSocket：建立一个长链接
+    websocket(SOCKET_NUMBER: number, APP_NAME: string): Promise<any> {
+        // 初始化该控制台信息
+        this.cabinInfo = {
+            CabinHandler: 'websocket',
+            APP_NAME,
+            IPv4: global['$common'].getIPv4(),
+            SOCKET_NUMBER,
+        }
+        // 初始化长链接
+        return new Promise((resolve, reject) => {
+            if (!SOCKET_NUMBER) {
+                reject(`请选择端口号:${SOCKET_NUMBER}`)
+                return
+            }
+            this.cabinHandler = this.NODE_WEBSOCKET.createServer((connection) => {
+                const KEY = connection.key
+                // 标记当前链接
+                this.NODE_WEBSOCKET_ConnectionMAP[KEY] = connection
+                // 接受/处理客户端发送的消息
+                connection.on('text', async (order: WebSocketOrder) => {
+                    try {
+                        if (typeof order !== 'string') return
+                        order = JSON.parse(order)
+                        order['connectionKey'] = KEY
+                        const next = this.NODE_WEBSOCKET_OrderMAP[order.orderName]
+                        if (!order.orderName || !next) return
+                        await next(order)
+                    } catch (error) {
+                        this.websocketAnswer({ connectionKey: KEY, orderName: `${order.orderName}/error`, DTO: error.message })
+                    }
+                })
+                // 链接主动/被动关闭
+                connection.on('close', (code) => {
+                    delete this.NODE_WEBSOCKET_ConnectionMAP[KEY]
+                })
+                // 链接异常
+                connection.on('error', (code) => {
+                    delete this.NODE_WEBSOCKET_ConnectionMAP[KEY]
+                })
+            })
+            this.cabinHandler.listen(SOCKET_NUMBER)
+            resolve(true)
+        })
+    }
+    // 添加长链接命令的处理方法
+    websocketRoute(orderName: string, next: () => Promise<any>) {
+        if (!orderName) return
+        this.NODE_WEBSOCKET_OrderMAP[orderName] = next
+    }
+    // 对某个链接主动发送消息
+    websocketAnswer(order: WebSocketOrder) {
+        const connection = this.NODE_WEBSOCKET_ConnectionMAP[order.connectionKey]
+        if (!connection) return
+        connection.sendText(JSON.stringify(order))
+    }
+    // 对现有的所有长链接广播
+    websocketBoardCast(order: WebSocketOrder) {}
 }

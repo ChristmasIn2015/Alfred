@@ -1,14 +1,14 @@
 <template>
     <div>
-        I am DevOps
-
-        <v-btn color="secondary" elevation="8">点击登录</v-btn>
+        <div v-for="(item, i) in list" :key="i">I am User =>{{ i }}</div>
     </div>
 </template>
 <script>
     export default {
         data() {
-            return {}
+            return {
+                list: new Array(100).fill(true),
+            }
         },
         methods: {},
         beforeCreate() {},

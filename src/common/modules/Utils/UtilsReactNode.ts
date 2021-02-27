@@ -1,17 +1,70 @@
 export default class UtilsNodeReact {
-    constructor() {}
+    IPv4 = null
+    constructor() {
+        this.IPv4 = this.getIPv4()
+    }
+
+    // HTTP登录修饰器
+    AlfredLogin() {
+        const IPv4 = this.IPv4
+        return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
+            const sourceFunction = descriptor.value
+            descriptor.value = async function(...args) {
+                const request = args[0]
+                const response = args[1]
+                try {
+                    let data = await global['$common'].fetch(`http://${IPv4}:80/alfred/user/info`, 'POST', null, {
+                        authorization: request.header('authorization'),
+                    })
+                    if (data.code !== 200) throw new Error(`${data.message}(code:${data.code})`)
+                    await sourceFunction.apply(this, args)
+                } catch (error) {
+                    response.send({
+                        code: null,
+                        data: null,
+                        message: `登录信息异常: ${error.message}`,
+                    })
+                }
+            }
+        }
+    }
+
+    // WebSocket登录修饰器
+    AlfredLoginWS() {
+        const IPv4 = this.IPv4
+        return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
+            const sourceFunction = descriptor.value
+            descriptor.value = async function(...args) {
+                const request = args[0]
+                try {
+                    let data = await global['$common'].fetch(`http://${IPv4}:80/alfred/user/info`, 'POST', null, {
+                        // authorization: request.header('authorization'),
+                    })
+                    if (data.code !== 200) throw new Error(`${data.message}(code:${data.code})`)
+                    await sourceFunction.apply(this, args)
+                } catch (error) {
+                    // response.send({
+                    //     code: null,
+                    //     data: null,
+                    //     message: `登录信息异常: ${error.message}`,
+                    // })
+                    global['$common'].log(error.message)
+                    console.log(error.message)
+                }
+            }
+        }
+    }
 
     // Express返回值修饰器
-    Response(answer: string = null): (target: any, propertyKey: string, descriptor: PropertyDescriptor) => void {
+    Response(answer: string = '') {
         return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
             const sourceFunction = descriptor.value
             descriptor.value = async function(...args) {
                 let result = {
                     code: null,
-                    data: '',
+                    data: null,
                     message: '',
                 }
-                let response = args[1]
                 try {
                     let data = await sourceFunction.apply(this, args)
                     result.code = 200
@@ -19,6 +72,7 @@ export default class UtilsNodeReact {
                 } catch (error) {
                     result.message = error.message || error
                 } finally {
+                    const response = args[1]
                     response.send(result)
                 }
             }

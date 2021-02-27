@@ -12,7 +12,7 @@ require('glob')
 function esBuild(entryPoints, outfile, originName) {
     const now = Date.now()
     require('esbuild').buildSync({
-        // minify: true,
+        minify: true,
         bundle: true,
         platform: 'node',
         target: ['node10.8'],

@@ -1,9 +1,5 @@
 <template>
-    <div>
-        I am DevOps
-
-        <v-btn color="secondary" elevation="8">点击登录</v-btn>
-    </div>
+    <div></div>
 </template>
 <script>
     export default {
@@ -14,4 +10,4 @@
         beforeCreate() {},
     }
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss"></style>

@@ -1,13 +1,16 @@
 let config = {
     publicPath: process.env.NODE_ENV === 'production' ? '/' : '/',
     outputDir: './src/web/dist',
+
     css: {
-        loaderOptions: {
-            scss: {
-                prependData: `@import "@/web/styles/color/black-purple.scss";`,
-            },
-        },
+        // loaderOptions: {
+        //     scss: {
+        //         prependData: `@import "@/web/styles/color/black-purple.scss";`,
+        //     },
+        // },
     },
+
+    transpileDependencies: ['vuetify'],
 }
 //
 if (process.argv[2] === 'build') {

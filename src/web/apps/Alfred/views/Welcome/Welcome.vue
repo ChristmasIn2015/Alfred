@@ -1,5 +1,5 @@
 <template>
-    <div></div>
+    <div>I am welcome</div>
 </template>
 <script>
     export default {
@@ -10,4 +10,4 @@
         beforeCreate() {},
     }
 </script>
-<style lang="scss"></style>
+<style lang="scss" scoped></style>

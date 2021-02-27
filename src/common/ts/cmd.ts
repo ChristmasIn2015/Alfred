@@ -3,13 +3,6 @@
 // **************************************************************************
 // **************************************************************************
 // 0.声明
-export type ProcessId = number
-export type CmdAnswer = {
-    pid: number
-    text: string
-    html: string
-}
-export type CmdCallback = (CmdAnswer: CmdAnswer) => void
 enum LogColor {
     WHITE = 'white',
     GREEN = 'green',
@@ -23,7 +16,7 @@ enum LogColor {
 // **************************************************************************
 // **************************************************************************
 // 1.执行一个CMD任务
-export function excuteCmd(command: string, answer: CmdCallback): ProcessId {
+export function excuteCmd(command: string, answer: (CmdAnswer: CmdAnswer) => void): number {
     // 终止敏感操作
     command = command.replace(/\n/g, ' ')
     if (_isDanger(command)) {
@@ -42,14 +35,14 @@ export function excuteCmd(command: string, answer: CmdCallback): ProcessId {
         const NOW = global['$common'].getFullTime().full
         let Answer: CmdAnswer = {
             pid: null,
-            text: `${Title} 任务结束`,
+            text: `${Title} Task end`,
             html: _log2Html(LogColor.GREEN, Title, ``, NOW),
         }
         if (error) {
-            Answer.text = `${Title} 进程异常:${error.message}`
+            Answer.text = `${Title} Command error:${error.message}`
             Answer.html = _log2Html(LogColor.RED, Title, Answer.text, NOW)
         } else if (stderr) {
-            Answer.text = `${Title} 任务异常:${stderr.message}`
+            Answer.text = `${Title} Task error:${stderr.message}`
             Answer.html = _log2Html(LogColor.RED, Title, Answer.text, NOW)
         }
         answer(Answer)
@@ -59,7 +52,7 @@ export function excuteCmd(command: string, answer: CmdCallback): ProcessId {
     const Encoding = 'latin1'
     SubProcess.stdout.setEncoding(SubProcess.stdout.readableEncoding)
     const Decoding = 'utf8' // 调试用cp936 上线用utf8
-    const Title = `@Node(${process.pid}) Cmd(${SubProcess.pid}) ${Encoding}=>${Decoding}:Start`
+    const Title = `@Node(${process.pid}) Cmd(${SubProcess.pid}) Start：${Encoding}=>${Decoding}`
     const IconvLite = require('iconv-lite')
     answer({
         pid: SubProcess.pid,

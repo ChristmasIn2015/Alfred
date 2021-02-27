@@ -3,8 +3,8 @@
  * 需要一个数据库>数据表/集合指针来构造
  * 提供对数据库>数据表/集合的CRUD原子操作
  ******************************************************************* */
+///<reference path='../../../../../type.d.ts' />
 import { ObjectId } from 'mongodb'
-import { DBOperatable } from '../Type'
 
 export default class OperatorMongo implements DBOperatable {
     TableName = null
@@ -34,7 +34,7 @@ export default class OperatorMongo implements DBOperatable {
             if (oldStruct[column_new]) continue
             let DTO = {}
             DTO[column_new] = null
-            console.log('create', column_new)
+            // console.log('create', column_new)
             await this.TableCaller.updateMany({}, { $set: DTO })
         }
         // 初始化某表操作员：如果 newStruct 删除了旧字段，则全量删除这个旧字段
@@ -46,7 +46,7 @@ export default class OperatorMongo implements DBOperatable {
             if (newStruct[column_old]) continue
             let DELETE = {}
             DELETE[column_old] = null
-            console.log('delete', column_old)
+            // console.log('delete', column_old)
             await this.TableCaller.updateMany({}, { $unset: DELETE })
         }
         // 初始化某表操作员：NoSQL不需要预定义表结构
