@@ -1,4 +1,5 @@
 const Response = global['$common'].Response
+const AlfredLogin = global['$common'].AlfredLogin
 export default class Dispatcher_User {
     JWT = null
     JWT_KEY = 'wqao'
@@ -30,8 +31,10 @@ export default class Dispatcher_User {
         }
 
         // 4.更新数据库中的Token
-        const sign = { nickname: request.body.nickname, account, authoTime: Date.now() }
+        const now = Date.now()
+        const sign = { account, authoTime: now }
         await global['$db'].User.update(userQuery, {
+            authoTime: now,
             authorization: this.JWT.sign(sign, this.JWT_KEY),
         })
 
@@ -62,5 +65,19 @@ export default class Dispatcher_User {
             nickname: user.nickname,
             account: user.account,
         }
+    }
+
+    @AlfredLogin()
+    @Response('获取用户列表成功')
+    async getUserList(request, response) {
+        let list = await global['$db'].User.query({})
+        return list.map((e) => {
+            return {
+                nickname: e.nickname,
+                account: e.account,
+                timeCreateChinese: new Date(e.timeCreate).toLocaleString(),
+                timeUpdateChinese: new Date(e.timeUpdate).toLocaleString()
+            }
+        }).reverse()
     }
 }

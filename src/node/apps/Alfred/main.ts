@@ -36,6 +36,7 @@ async function go() {
         // @Alfred_User
         Cabin.expressRoute('POST', '/alfred/user/login', global['Cabin'].login)
         Cabin.expressRoute('POST', '/alfred/user/info', global['Cabin'].getUserInfo)
+        Cabin.expressRoute('GET', '/alfred/user/list', global['Cabin'].getUserList)
 
         // 4.2 反向代理
         // @DevOps

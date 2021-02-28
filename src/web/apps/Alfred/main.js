@@ -16,6 +16,10 @@ import routes from './views/routes'
 const myRoutes = new VueRouter({
     routes,
 })
+myRoutes.beforeEach((to, from, next) => {
+    if (to.path !== '/' && !localStorage['token-qqlx']) next({ path: '/' })
+    else next()
+})
 window.$router = myRoutes
 
 // 2.Vuex存储

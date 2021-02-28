@@ -13,6 +13,7 @@ export default function Login(target, name, descriptor) {
         this.iAmLogined = iAmLogined
         this.postLogin = postLogin
         this.initUserInfo = initUserInfo
+        this.clearLocalUserInfo = clearLocalUserInfo
         // *
         sourceFunction.apply(this, arguments)
     }
@@ -28,13 +29,17 @@ function iAmLogined() {
 
 // 登录
 async function postLogin() {
-    if (!this.userModel.account) throw new Error('账号不能为空')
-    if (!this.userModel.nickname) throw new Error('密码不能为空')
-    let info = await alfredUserLogin(this.userModel)
-    localStorage['token-qqlx'] = info.authorization
-    $store.commit('setUserInfo', info)
-    $tip('登录成功')
-    this.loginModal = false
+    try {
+        if (!this.userModel.account) throw new Error('账号不能为空')
+        if (!this.userModel.password) throw new Error('密码不能为空')
+        let info = await alfredUserLogin(this.userModel)
+        localStorage['token-qqlx'] = info.authorization
+        $store.commit('setUserInfo', info)
+        $tip('登录成功')
+        this.loginModal = false
+    } catch (error) {
+        $common.loadOff(error)
+    }
 }
 
 // 初始化用户信息
@@ -42,4 +47,9 @@ async function initUserInfo() {
     $store.commit('clearUserInfo')
     let info = await getUserInfo()
     $store.commit('setUserInfo', info)
+}
+
+function clearLocalUserInfo() {
+    $store.commit('clearUserInfo')
+    localStorage['token-qqlx'] = ''
 }

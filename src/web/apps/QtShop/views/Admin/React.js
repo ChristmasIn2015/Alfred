@@ -1,6 +1,7 @@
 import Login from '@/web/apps/QtShop/module/Login.js'
 import Shop from '@/web/apps/QtShop/module/Shop.js'
 import House from '@/web/apps/QtShop/module/House.js'
+import Vuetify from '@/web/apps/Alfred/module/Vuetify.js'
 
 export default class React {
     constructor() {
@@ -13,6 +14,7 @@ export default class React {
         this.initReact()
     }
 
+    @Vuetify
     @Login
     @Shop
     @House

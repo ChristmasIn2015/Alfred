@@ -9,7 +9,6 @@ let config = {
         //     },
         // },
     },
-
     transpileDependencies: ['vuetify'],
 }
 //
