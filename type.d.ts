@@ -32,13 +32,13 @@ type DBTabler = {
     name: string
     struct: object
 }
-// 使得一个类成为数据库CRUD操作员
+// 长链接通信格式
 type WebSocketOrder = {
     connectionKey: string // 长链接Id
     orderName: string // 如CreateCMD等
-    DTO: object
+    DTO: any
 }
-//
+// 命令行通信格式
 type CmdAnswer = {
     pid: number
     text: string

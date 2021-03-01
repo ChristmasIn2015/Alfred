@@ -1,5 +1,6 @@
 type TimeDTO = {
     year: string
+    month: string
     day: string
     hour: string
     min: string
@@ -15,6 +16,7 @@ export default class UtilsTime {
     private getTimeDTO(): TimeDTO {
         const DTO: TimeDTO = {
             year: '',
+            month: '',
             day: '',
             hour: '',
             min: '',
@@ -64,7 +66,7 @@ export default class UtilsTime {
     getFullTime(mills: number = Date.now()): TimeDTO {
         let DTO = this.getHHMMSS()
         DTO.year = new Date(mills).getFullYear().toString()
-        DTO.full = `${DTO.year} ${DTO.full}`
+        DTO.full = `${this.getYYMMDD(mills)} ${DTO.full}`
         return DTO
     }
 

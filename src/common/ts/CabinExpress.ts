@@ -78,6 +78,7 @@ export default class CabinExpress implements ClassBindable {
     // Express：请求转发，即反向代理
     expressProxy(proxyRoute: string, target: string, ws?: boolean) {
         // /some/route <= ipv4:80 <= other serve
+        ws = ws ? true : false
         const option = { target, changeOrigin: true, ws }
         this.cabinHandler.use(proxyRoute, this.EXPRESS_PROXY(option))
     }
@@ -138,11 +139,15 @@ export default class CabinExpress implements ClassBindable {
                 // 链接主动/被动关闭
                 connection.on('close', (code) => {
                     delete this.NODE_WEBSOCKET_ConnectionMAP[KEY]
+                    this.websocketAnswer({ connectionKey: KEY, orderName: `/connection/close`, DTO: '服务已关闭' })
                 })
                 // 链接异常
                 connection.on('error', (code) => {
                     delete this.NODE_WEBSOCKET_ConnectionMAP[KEY]
                 })
+                // 通知链接成功
+                this.websocketAnswer({ connectionKey: KEY, orderName: `/connection/success`, DTO: null })
+                // console.log('create KEY success !!!', Object.keys(this.NODE_WEBSOCKET_ConnectionMAP))
             })
             this.cabinHandler.listen(SOCKET_NUMBER)
             resolve(true)
@@ -160,5 +165,11 @@ export default class CabinExpress implements ClassBindable {
         connection.sendText(JSON.stringify(order))
     }
     // 对现有的所有长链接广播
-    websocketBoardCast(order: WebSocketOrder) {}
+    websocketBoardCast(order: WebSocketOrder) {
+        for (let key in this.NODE_WEBSOCKET_ConnectionMAP) {
+            const connection = this.NODE_WEBSOCKET_ConnectionMAP[key]
+            if (!connection) continue
+            connection.sendText(JSON.stringify(order))
+        }
+    }
 }

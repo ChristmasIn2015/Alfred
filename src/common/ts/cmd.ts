@@ -28,7 +28,6 @@ export function excuteCmd(command: string, answer: (CmdAnswer: CmdAnswer) => voi
         })
         return
     }
-
     // 1 创建子进程
     const SubProcess = require('child_process').exec(command, { maxBuffer: 1024 * 1024 * 1024 }, (error, stdout, stderr) => {
         const Title = `@Node(${process.pid}) Cmd(${SubProcess.pid})`
@@ -36,7 +35,7 @@ export function excuteCmd(command: string, answer: (CmdAnswer: CmdAnswer) => voi
         let Answer: CmdAnswer = {
             pid: null,
             text: `${Title} Task end`,
-            html: _log2Html(LogColor.GREEN, Title, ``, NOW),
+            html: _log2Html(LogColor.GREEN, Title, `${Title} Task end`, NOW),
         }
         if (error) {
             Answer.text = `${Title} Command error:${error.message}`
@@ -49,10 +48,10 @@ export function excuteCmd(command: string, answer: (CmdAnswer: CmdAnswer) => voi
     })
 
     // 2 回应请求者 :子进程创建成功
-    const Encoding = 'latin1'
+    const Encoding = 'latin1' // 默认 utf8 latin1/binary
     SubProcess.stdout.setEncoding(SubProcess.stdout.readableEncoding)
-    const Decoding = 'utf8' // 调试用cp936 上线用utf8
-    const Title = `@Node(${process.pid}) Cmd(${SubProcess.pid}) Start：${Encoding}=>${Decoding}`
+    const Decoding = 'utf8' // cp936 utf8
+    const Title = `@Node(${process.pid}) Cmd(${SubProcess.pid}) Task start：${Encoding}=>${Decoding}`
     const IconvLite = require('iconv-lite')
     answer({
         pid: SubProcess.pid,
@@ -87,6 +86,6 @@ function _isDanger(command: string): boolean {
 }
 function _log2Html(color: LogColor, ...message: string[]) {
     let html = ''
-    message.forEach((log) => (html += `<span style="color:${color}">${log}</sapn><br>`))
+    message.forEach((log) => (html += `<div style="color:${color}">${log}</div>`))
     return html
 }

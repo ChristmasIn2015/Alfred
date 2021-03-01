@@ -28,7 +28,10 @@ async function go() {
         // @DevOps_Cmd
         Cabin.websocketRoute('/createRemoteCmd', global['Cabin'].createRemoteCmd)
         Cabin.websocketRoute('/getRemoteCmdList', global['Cabin'].getRemoteCmdList)
+        Cabin.websocketRoute('/deleteRemoteCmd', global['Cabin'].deleteRemoteCmd)
+        Cabin.websocketRoute('/updateRemoteCmd', global['Cabin'].updateRemoteCmd)
         Cabin.websocketRoute('/excuteRemoteCmd', global['Cabin'].excuteRemoteCmd)
+        Cabin.websocketRoute('/killRemoteCmd', global['Cabin'].killRemoteCmd)
         // ....
 
         // * End

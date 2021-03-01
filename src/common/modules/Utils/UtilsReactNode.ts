@@ -4,7 +4,7 @@ export default class UtilsNodeReact {
         this.IPv4 = this.getIPv4()
     }
 
-    // HTTP登录修饰器
+    // HTTP-登录修饰器
     AlfredLogin() {
         const IPv4 = this.IPv4
         return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
@@ -29,33 +29,7 @@ export default class UtilsNodeReact {
         }
     }
 
-    // WebSocket登录修饰器
-    AlfredLoginWS() {
-        const IPv4 = this.IPv4
-        return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
-            const sourceFunction = descriptor.value
-            descriptor.value = async function(...args) {
-                const request = args[0]
-                try {
-                    let data = await global['$common'].fetch(`http://${IPv4}:80/alfred/user/info`, 'POST', null, {
-                        // authorization: request.header('authorization'),
-                    })
-                    if (data.code !== 200) throw new Error(`${data.message}(code:${data.code})`)
-                    await sourceFunction.apply(this, args)
-                } catch (error) {
-                    // response.send({
-                    //     code: null,
-                    //     data: null,
-                    //     message: `登录信息异常: ${error.message}`,
-                    // })
-                    global['$common'].log(error.message)
-                    console.log(error.message)
-                }
-            }
-        }
-    }
-
-    // Express返回值修饰器
+    // HTTP-Express返回值修饰器
     Response(answer: string = '') {
         return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
             const sourceFunction = descriptor.value
@@ -74,6 +48,51 @@ export default class UtilsNodeReact {
                 } finally {
                     const response = args[1]
                     response.send(result)
+                }
+            }
+        }
+    }
+
+    // WebSocket登录修饰器
+    WsAlfredLogin() {
+        const IPv4 = this.IPv4
+        return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
+            const sourceFunction = descriptor.value
+            descriptor.value = async function(...args) {
+                let order: WebSocketOrder = args[0]
+                try {
+                    let info = await global['$common'].fetch(`http://${IPv4}:80/alfred/user/info`, 'POST', null, {
+                        authorization: order.DTO.authorization,
+                    })
+                    if (info.code !== 200) throw new Error(`${info.message}`)
+                    if (info.data._id !== '6038744a70d56c2988731d69') throw new Error('您不是管理员')
+                    await sourceFunction.apply(this, args)
+                } catch (error) {
+                    order.orderName = '/request/authorization'
+                    order.DTO = error.message || error || '您的权限不足'
+                    global['Cabin'].websocketAnswer(order)
+                }
+            }
+        }
+    }
+    // WebSocket返回值修饰器
+    WsResponse(answer: string = '', boardCast: boolean = false) {
+        return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
+            const sourceFunction = descriptor.value
+            descriptor.value = async function(...args) {
+                let order: WebSocketOrder = args[0]
+                try {
+                    let DTO = await sourceFunction.apply(this, args)
+                    order.DTO = DTO || answer || null
+                } catch (error) {
+                    order.orderName = '/request/fail'
+                    order.DTO = error.message || error
+                } finally {
+                    if (boardCast) {
+                        global['Cabin'].websocketBoardCast(order)
+                    } else {
+                        global['Cabin'].websocketAnswer(order)
+                    }
                 }
             }
         }

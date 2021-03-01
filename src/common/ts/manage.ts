@@ -56,4 +56,9 @@ switch (appType) {
     //     }
 }
 import { excuteCmd } from './cmd'
-if (cmd) excuteCmd(cmd, (answer: CmdAnswer) => console.log(answer.text))
+if (cmd)
+    excuteCmd(cmd, (answer: CmdAnswer) => {
+        if (answer.text.indexOf('[HPM] Client disconnected') > -1) return
+        if (answer.text.indexOf('[HPM] Upgrading to WebSocket') > -1) return
+        console.log(answer.text)
+    })

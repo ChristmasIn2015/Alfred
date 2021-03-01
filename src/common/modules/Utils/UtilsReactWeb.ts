@@ -18,10 +18,11 @@ export default class UtilsWebReact {
         window['$warn'](message)
         window['$load'].hide()
         window['$common'].log(message)
+        console.log(message)
     }
 
     // 修饰器
-    Loading(): (target: any, propertyKey: string, descriptor: PropertyDescriptor) => void {
+    Loadding(): (target: any, propertyKey: string, descriptor: PropertyDescriptor) => void {
         return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
             const sourceFunction = descriptor.value
             descriptor.value = async function() {
