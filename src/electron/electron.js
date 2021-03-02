@@ -28,8 +28,8 @@ try {
             },
         })
         MAIN_WINDOW.openDevTools()
-        MAIN_WINDOW.loadURL(`http://10.52.2.35:8080`)
-        // MAIN_WINDOW.loadURL(`http://wqao.top/solomon/#/`)
+        // MAIN_WINDOW.loadURL(`http://10.52.2.35:8080`)
+        MAIN_WINDOW.loadURL(`http://wqao.top/alfred/#/`)
 
         // 关闭顶部窗口
         Menu.setApplicationMenu(null)

@@ -25,7 +25,8 @@ export default class ReactDevOps {
         try {
             $load.show()
             this.wsClose() // @WsHandler
-            await this.wsLink('ws://10.52.2.35/dev-ops') // @WsHandler
+            // await this.wsLink('ws://10.52.2.35/dev-ops') // @WsHandler
+            await this.wsLink('ws://wqao.top/dev-ops') // @WsHandler
             this.renderCmdList() // ASYNC @Cmd
             $load.hide()
         } catch (error) {

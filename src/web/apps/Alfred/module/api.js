@@ -1,5 +1,6 @@
 const requester = $common.getRequester(
-    'http://10.52.2.35',
+    // 'http://10.52.2.35',
+    'http://wqao.top',
     // 成功
     async (result) => {
         if (result.code !== 200) throw new Error(result.message)
