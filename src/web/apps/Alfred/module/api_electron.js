@@ -1,10 +1,9 @@
-// * 服务地址
-export const SERVE_ADDRESS = '//wqao.top'
 // * 向主进程发送消息 并等待回应
 async function ipcInvoke(ipcName, params) {
-    let result = await $electron.ipcRenderer.invoke(ipcName, params)
+    let result = await window['$electron'].ipcRenderer.invoke(ipcName, params)
     // console.log({ ipcName, params: params || '未传参数' }, result)
     if (result.code !== 200) throw new Error(result.message)
+    // console.log(result.data)
     return result.data
 }
 // *********************************************************** Native
@@ -21,7 +20,7 @@ export function getLocalCmdList(params) {
 export function deleteLocalCmd(batId) {
     return ipcInvoke('deleteLocalCmd', batId)
 }
-// *********************************************************** Note
+// *********************************************************** Area
 export function commitArea(params) {
     return ipcInvoke('commitArea', params)
 }
@@ -31,7 +30,7 @@ export function getAreaList() {
 export function areaDelete(areaId) {
     return ipcInvoke('areaDelete', areaId)
 }
-// *********************************************************** Note
+// *********************************************************** Shelf
 export function commitShelf(params) {
     return ipcInvoke('commitShelf', params)
 }
@@ -41,7 +40,7 @@ export function getShelfList(params) {
 export function shelfDelete(shelfId) {
     return ipcInvoke('shelfDelete', shelfId)
 }
-// *********************************************************** Note
+// *********************************************************** Book
 export function commitBook(params) {
     params.bookModel.content = params.bookModel.content.replace(/\'/g, '')
     return ipcInvoke('commitBook', params)

@@ -14,7 +14,6 @@ export default function WsHandler(target, name, descriptor) {
         // *
         sourceFunction.apply(this, arguments)
     }
-    return descriptor
 }
 // 建立长链接
 function wsLink(WS_ADDRESS) {
@@ -32,7 +31,7 @@ function wsLink(WS_ADDRESS) {
         WS.onmessage = (event) => {
             try {
                 const order = JSON.parse(event.data)
-                console.log('ws receive', order)
+                // console.log('ws receive', order)
                 const CODE = order.orderName
                 if (CODE === '/connection/success') {
                     this.WS = WS
@@ -73,7 +72,7 @@ function wsPostOrder(orderName, DTO) {
             DTO,
         }
         this.WS.send(JSON.stringify(order))
-        console.log('wsPostOrder', order)
+        // console.log('wsPostOrder', order)
     } catch (error) {
         $common.loadOff(error)
     }

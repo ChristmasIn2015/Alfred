@@ -1,4 +1,4 @@
-export default function DevOps(target, name, descriptor) {
+export default function WsCmd(target, name, descriptor) {
     let sourceFunction = descriptor.value
     descriptor.value = function() {
         // * params
@@ -9,20 +9,17 @@ export default function DevOps(target, name, descriptor) {
             name: '',
             command: '',
         }
-        this.cmdLogModal = false
-        this.cmdLogHTML = null
         //
         // * function
         this.toggleCmdModal = toggleCmdModal
         this.renderCmdList = renderCmdList
         this.cmdModalAction = cmdModalAction
         this.deleteCmd = deleteCmd
-        this.excuteRemoteCmd = excuteRemoteCmd
-        this.killRemoteCmd = killRemoteCmd
+        this.excuteCmd = excuteCmd
+        this.killCmd = killCmd
         // *
         sourceFunction.apply(this, arguments)
     }
-    return descriptor
 }
 function toggleCmdModal(event, CmdModelEdit) {
     this.cmdModal = !this.cmdModal
@@ -54,12 +51,12 @@ function deleteCmd(cmd) {
         this.wsPostOrder('/deleteRemoteCmd', { _id: cmd._id, name: cmd.name })
     })
 }
-function excuteRemoteCmd(logListIndex, cmd) {
+function excuteCmd(logListIndex, cmd) {
     // @WsHandler
     this.cmds[logListIndex].log = '<div color="red">发送执行命令中</div>'
     this.wsPostOrder('/excuteRemoteCmd', Object.assign({ logListIndex }, cmd))
 }
-function killRemoteCmd(logListIndex, pid) {
+function killCmd(logListIndex, pid) {
     // @WsHandler
     if (!pid) return
     this.wsPostOrder('/killRemoteCmd', { logListIndex, pid })

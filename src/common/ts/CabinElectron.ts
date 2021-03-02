@@ -1,141 +1,47 @@
-import express from 'express'
+import ServerSqlite3 from '../modules/DB/sqlite3/ServerSqlite3'
+import OperatorSqlite3 from '../modules/DB/sqlite3/OperatorSqlite3'
+export default class CabinElectron implements ClassBindable {
+    //
+    BinderMap: Map<string, object> = new Map() // ClassBindable
+    //
+    cabinDB = null
+    cabinHandler = null // 暂时没用到
+    //
+    constructor() {}
 
-export default class CabinElectron {
-    info = {}
-    communication = null
-    constructor(SOCKET_NUMBER) {
-        // if (SOCKET_NUMBER) {
-        //     this.initHttpCabin(SOCKET_NUMBER)
-        // } else {
-        //     if (!global['$hyBridge']) global['$hyBridge'] = {}
-        // }
+    // 数据库
+    // 数据库
+    // 数据库
+    // 数据库
+    // 数据库：和本地数据库服务进行链接
+    async dbLink(DBAddress: string): Promise<any> {
+        // mongodb://127.0.0.1:27017/dbName
+        this.cabinDB = new ServerSqlite3(DBAddress)
+        await this.cabinDB.start()
     }
-    // ============================================================================================================
-    // ============================================================================================================
-    // ============================================================================================================
-    // ============================================================================================================
-    // ============================================================================================================
-    // 数据接口分配
-    // exposeHttpRoute(method, route, next) {
-    //     if (this.info.SOCKET_NUMBER) {
-    //         if (method === 'GET') {
-    //             this.communication.get(route, (request, response) => next(request, response))
-    //         }
-    //         if (method === 'POST') {
-    //             this.communication.post(route, require('body-parser').json(), (request, response) => next(request, response))
-    //         }
-    //     }
-    // }
-    // HTML分配
-    // exposeHtml(route, htmlPath, indexPath) {
-    //     if (this.info.SOCKET_NUMBER) {
-    //         this.communication.use(express.static(htmlPath))
-    //         this.communication.get(route, (request, response) => response.sendFile(indexPath))
-    //     }
-    // }
-    // ============================================================================================================
-    // ============================================================================================================
-    // ============================================================================================================
-    // ============================================================================================================
-    // ============================================================================================================
-    // 把调度员的方法绑定到Cabin上
-    // bindDispatcher(TargetClassName, TargetClass) {
-    //     if (this.__proto__ && TargetClass.prototype) {
-    //         // 1.在this的原型上创建目标对象
-    //         this.__proto__[TargetClassName] = new TargetClass()
-    //         // 2.在this的原型上绑定目标对象的所有方法
-    //         Object.getOwnPropertyNames(TargetClass.prototype).forEach((functionName) => {
-    //             if (functionName === 'docs') return // continue
-    //             if (functionName === 'constructor') return // continue
-    //             this.__proto__[functionName] = (...args) => {
-    //                 let origin = this.__proto__[TargetClassName]
-    //                 return origin[functionName].apply(origin, args)
-    //             }
-    //         })
-    //     }
-    // }
-    // bindIpcDispatcher(TargetClassName, TargetClass) {
-    //     $hyBridge[TargetClassName] = new TargetClass()
-    //     if (TargetClass.prototype) {
-    //         Object.getOwnPropertyNames(TargetClass.prototype).forEach((functionName) => {
-    //             if (functionName === 'constructor') return // continue
-    //             require('electron').ipcMain.handle(functionName, async (...args) => {
-    //                 try {
-    //                     let origin = $hyBridge[TargetClassName]
-    //                     let result = await origin[functionName].apply(origin, args)
-    //                     return result
-    //                 } catch (error) {
-    //                     console.log(process.pid, error)
-    //                     process.exit()
-    //                 }
-    //             })
-    //         })
-    //     }
-    // }
-    // bindAutoIpcDispatcher(TargetClassName, TargetClass) {
-    //     $hyBridge[TargetClassName] = new TargetClass()
-    //     if (TargetClass.prototype) {
-    //         Object.getOwnPropertyNames(TargetClass.prototype).forEach((functionName) => {
-    //             if (functionName === 'constructor') return // continue
-    //             require('electron').ipcMain.on(functionName, async (...args) => {
-    //                 try {
-    //                     let origin = $hyBridge[TargetClassName]
-    //                     let result = await origin[functionName].apply(origin, args)
-    //                     return result
-    //                 } catch (error) {
-    //                     console.log(process.pid, error)
-    //                     process.exit()
-    //                 }
-    //             })
-    //         })
-    //     }
-    // }
-    // ============================================================================================================
-    // ============================================================================================================
-    // ============================================================================================================
-    // ============================================================================================================
-    // ============================================================================================================
-    // initHttpCabin(SOCKET_NUMBER) {
-    //     try {
-    //         this.#initInfo(SOCKET_NUMBER)
-    //         this.#initCommunication()
-    //     } catch (error) {
-    //         console.log(error.message)
-    //         process.exit()
-    //     }
-    // }
-    // 初始化该控制台信息
-    // #initInfo(SOCKET_NUMBER) {
-    //     // 服务端口
-    //     this.info['SOCKET_NUMBER'] = SOCKET_NUMBER
-    //     // 本机IPv4地址
-    //     if (global.process.platform === 'win32') {
-    //         const interfaces = require('os').networkInterfaces()
-    //         for (let key in interfaces) {
-    //             if (key === '以太网' || key === 'WLAN') {
-    //                 for (let i in interfaces[key]) {
-    //                     let value = interfaces[key][i]
-    //                     if (value.family === 'IPv4') {
-    //                         this.info['IPv4'] = value.address
-    //                         break
-    //                     }
-    //                 }
-    //                 break
-    //             }
-    //         }
-    //     }
-    // }
-    // 初始化控制台通信核心
-    // #initCommunication() {
-    //     if (this.info.SOCKET_NUMBER) {
-    //         this.communication = express()
-    //         this.communication.all('*', (req, res, next) => {
-    //             res.header('Access-Control-Allow-Origin', '*')
-    //             res.header('Access-Control-Allow-Headers', '*')
-    //             res.header('Access-Control-Allow-Methods', '*')
-    //             next()
-    //         })
-    //         this.communication.listen(this.info.SOCKET_NUMBER, '0.0.0.0')
-    //     }
-    // }
+    // 数据库：创建表 及其操作员
+    async dbTabler(tablerList: DBTabler[]): Promise<any> {
+        if (!global['$db']) global['$db'] = {}
+        if (!this.cabinDB) throw new Error('数据库服务不存在')
+        //
+        for (let i in tablerList) {
+            const OperatorName = tablerList[i].name
+            const TablePointer = await this.cabinDB.getTableCaller(OperatorName)
+            global['$db'][OperatorName] = new OperatorSqlite3(TablePointer)
+            await global['$db'][OperatorName].init(OperatorName, tablerList[i].struct)
+        }
+    }
+
+    // Electron
+    // Electron
+    // Electron
+    // Electron
+    // Electron：数据接口分配
+    electronRoute(route: string, next: (...args) => any) {
+        global['$electron'].ipcMain.handle(route, (...args) => next(...args))
+    }
+    // Electron：长链接分配
+    electronAliveRoute(route: string, next: (...args) => any) {
+        global['$electron'].ipcMain.on(route, (...args) => next(...args))
+    }
 }

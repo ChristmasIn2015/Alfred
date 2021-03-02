@@ -1,7 +1,7 @@
 {
-    "name": "alfred",
+    "name": "qqlx",
     "version": "1.0.1",
-    "description": "Solomon powered by HuangWenQiang@清泉流响",
+    "description": "清泉流响",
     "author": "HuangWenQiang",
     "scripts": {
         "dev": "node ./src/common/pack/manage.js",
@@ -44,7 +44,7 @@
         "@vue/cli-plugin-babel": "~4.5.0",
         "@vue/cli-plugin-router": "~4.5.0",
         "@vue/cli-service": "~4.5.0",
-        "electron": "^11.2.1",
+        "electron": "^11.3.0",
         "electron-packager": "^15.2.0",
         "esbuild": "^0.8.40",
         "sass": "^1.32.0",
@@ -53,6 +53,6 @@
         "vue-template-compiler": "^2.6.12",
         "vuetify-loader": "^1.7.0"
     },
-    "productName": "Solomon",
+    "productName": "QQLX-Admin",
     "repository": "https://github.com/ChristmasIn2015/Solomon.git"
 }

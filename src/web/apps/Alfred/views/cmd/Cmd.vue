@@ -5,14 +5,14 @@
         <!-- Nav -->
         <!-- Nav -->
         <div>
-            <v-btn class="mr-2" color="green" @click.stop="react.wsReLink">刷新</v-btn>
-            <v-btn color="orange" @click.stop="react.toggleCmdModal($event)">新增</v-btn>
+            <v-btn class="mr-2" color="orange" @click.stop="react.toggleCmdModal($event)">新增CMD</v-btn>
+            <v-btn color="green" @click.stop="react.openLocalDevTool">打开控制台</v-btn>
         </div>
         <!-- List -->
         <!-- List -->
         <!-- List -->
         <!-- List -->
-        <div class="mt-2 d-flex flex-wrap">
+        <draggable v-model="react.cmds" class="mt-2 d-flex flex-wrap" @end.stop="react.sortCmds">
             <v-card
                 class="ma-1"
                 width="256"
@@ -35,7 +35,7 @@
                     </v-tooltip>
                 </v-card-actions>
             </v-card>
-        </div>
+        </draggable>
         <!-- 新增/编辑远程命令的弹窗 -->
         <!-- 新增/编辑远程命令的弹窗 -->
         <!-- 新增/编辑远程命令的弹窗 -->
@@ -45,33 +45,31 @@
                 <v-card-title>远程命令</v-card-title>
                 <v-card-text>
                     <v-form ref="form">
-                        <v-text-field v-model="react.cmdModel.name" label="远程命令名称" hint="请输入命令名称" />
-                        <v-textarea v-model="react.cmdModel.command" outlined label="远程命令内容" />
+                        <v-text-field v-model="react.cmdModel.name" label="本地命令名称" hint="请输入命令名称" />
+                        <v-textarea v-model="react.cmdModel.command" outlined label="本地命令内容" />
                     </v-form>
                 </v-card-text>
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn text @click.stop="react.toggleCmdModal($event)">取消</v-btn>
-                    <v-btn color="green" dark @click.stop="react.cmdModalAction">{{ react.cmdModel._id ? `编辑` : '新增远程命令' }}</v-btn>
+                    <v-btn color="green" dark @click.stop="react.cmdModalAction">{{ react.cmdModel._id ? `编辑` : '新增本地命令' }}</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
     </div>
 </template>
 <script>
-    import ReactDevOps from './React.js'
+    import draggable from 'vuedraggable'
+    import ReactCmd from './React.js'
     export default {
         data() {
             return {
-                react: new ReactDevOps(),
+                react: new ReactCmd(),
             }
         },
-        methods: {
-            reactTo(method) {
-                this.react[method]()
-            },
-        },
+        methods: {},
         beforeCreate() {},
+        components: { draggable },
     }
 </script>
 <style lang="scss" scoped></style>

@@ -6,7 +6,8 @@ export default class ReactAPP {
     menus = [
         { name: '用户列表', icon: 'fa-users', color: 'red', path: '/user/list' },
         { name: '日志列表', icon: 'fa-bell', color: 'indigo', path: '/log/list' },
-        { name: '远程运维', icon: 'fa-cogs', color: 'purple', path: '/devops/list' },
+        { name: '远程运维', icon: 'fa-cogs', color: 'purple', path: '/cmd/remote/list' },
+        { name: '本地CMD', icon: 'fa-cubes', color: 'purple', path: '/cmd/local/list' },
     ]
     nowMenuIndex = -1
     constructor() {
@@ -47,6 +48,12 @@ export default class ReactAPP {
         }
         const target = this.menus[index]
         if (target) {
+            if (target.path === '/cmd/local/list' && !window['$electron']) {
+                $warn('请在清泉流响客户端中打开')
+                this.nowMenuIndex = -1
+                $router.push({ path: '/' })
+                return
+            }
             if ($router.app._route.path === target.path) return
             this.nowMenuIndex = index
             $router.push({ path: target.path })

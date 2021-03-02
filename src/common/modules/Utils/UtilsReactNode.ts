@@ -5,6 +5,9 @@ export default class UtilsNodeReact {
     }
 
     // HTTP-登录修饰器
+    // HTTP-登录修饰器
+    // HTTP-登录修饰器
+    // HTTP-登录修饰器
     AlfredLogin() {
         const IPv4 = this.IPv4
         return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
@@ -28,8 +31,10 @@ export default class UtilsNodeReact {
             }
         }
     }
-
-    // HTTP-Express返回值修饰器
+    // Express返回值修饰器
+    // Express返回值修饰器
+    // Express返回值修饰器
+    // Express返回值修饰器
     Response(answer: string = '') {
         return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
             const sourceFunction = descriptor.value
@@ -54,6 +59,9 @@ export default class UtilsNodeReact {
     }
 
     // WebSocket登录修饰器
+    // WebSocket登录修饰器
+    // WebSocket登录修饰器
+    // WebSocket登录修饰器
     WsAlfredLogin() {
         const IPv4 = this.IPv4
         return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
@@ -75,6 +83,9 @@ export default class UtilsNodeReact {
             }
         }
     }
+    // WebSocket返回值修饰器
+    // WebSocket返回值修饰器
+    // WebSocket返回值修饰器
     // WebSocket返回值修饰器
     WsResponse(answer: string = '', boardCast: boolean = false) {
         return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
@@ -98,6 +109,32 @@ export default class UtilsNodeReact {
         }
     }
 
+    // Electron返回值修饰器
+    ElectronResponse(answer: string = '') {
+        return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
+            const sourceFunction = descriptor.value
+            descriptor.value = async function(...args) {
+                let result = {
+                    code: null,
+                    data: null,
+                    message: '',
+                }
+                try {
+                    let data = await sourceFunction.apply(this, args)
+                    result.code = 200
+                    result.data = data || answer
+                } catch (error) {
+                    result.message = error.message || error
+                } finally {
+                    return result
+                }
+            }
+        }
+    }
+
+    // 获取本机Ipv4地址
+    // 获取本机Ipv4地址
+    // 获取本机Ipv4地址
     // 获取本机Ipv4地址
     getIPv4(): string {
         let address = null
@@ -119,6 +156,9 @@ export default class UtilsNodeReact {
         return address
     }
 
+    // NodeCmd命令行彩色打印
+    // NodeCmd命令行彩色打印
+    // NodeCmd命令行彩色打印
     // NodeCmd命令行彩色打印
     printRed(message: string): void {
         console.log(`\x1B[41m\x1B[30m${message}\x1B[0m`)

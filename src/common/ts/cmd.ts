@@ -48,8 +48,8 @@ export function excuteCmd(command: string, answer: (CmdAnswer: CmdAnswer) => voi
     })
 
     // 2 回应请求者 :子进程创建成功
-    const Encoding = 'latin1' // 默认 utf8 latin1/binary
-    SubProcess.stdout.setEncoding(SubProcess.stdout.readableEncoding)
+    const Encoding = 'latin1' // 默认 utf8 latin1/binary SubProcess.stdout.readableEncoding
+    SubProcess.stdout.setEncoding(Encoding)
     const Decoding = 'utf8' // cp936 utf8
     const Title = `@Node(${process.pid}) Cmd(${SubProcess.pid}) Task start：${Encoding}=>${Decoding}`
     const IconvLite = require('iconv-lite')

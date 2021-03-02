@@ -1,5 +1,5 @@
 import WsHandler from '@/web/apps/Alfred/module/WsHandler.js'
-import Cmd from '@/web/apps/Alfred/module/Cmd.js'
+import WsCmd from '@/web/apps/Alfred/module/WsCmd.js'
 //
 export default class ReactDevOps {
     constructor() {
@@ -7,7 +7,7 @@ export default class ReactDevOps {
         this.initReact() // ASYNC
     }
 
-    @Cmd
+    @WsCmd
     @WsHandler
     async initReact() {
         try {

@@ -22,7 +22,6 @@ export default function Vuetify(target, name, descriptor) {
         // *
         sourceFunction.apply(this, arguments)
     }
-    return descriptor
 }
 function vuetifyLoadShow() {
     this.loadding = true

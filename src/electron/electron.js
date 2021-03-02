@@ -1,18 +1,21 @@
+const PATH = require('path')
 const SQUIRREL = require('./build/squirrel.js')
+const AppPre = PATH.join(__dirname, `./electron-preload.js`)
+const AppSDK = PATH.join(__dirname, `./apps/Solomon/main.js`)
 try {
     // 1.渲染进程API
-    const PATH = require('path')
-    const { app, BrowserWindow, Menu } = require('electron')
+    global['$electron'] = require('electron')
+    const { app, BrowserWindow, Menu } = global['$electron']
 
     // 2.检测更新
-    if (app.isPackaged) {
-        if (require('electron-squirrel-startup')) throw new Error('electron-squirrel-startup')
-        if (SQUIRREL.handleSquirrelEvent() !== false) throw new Error('handleSquirrelEvent break')
-        require('update-electron-app')()
-    }
+    // if (app.isPackaged) {
+    //     if (require('electron-squirrel-startup')) throw new Error('electron-squirrel-startup')
+    //     if (SQUIRREL.handleSquirrelEvent() !== false) throw new Error('handleSquirrelEvent break')
+    //     require('update-electron-app')()
+    // }
 
     // 2.APP启动
-    require(PATH.join(__dirname, `./dist/Solomon.js`))
+    require(AppSDK)
     app.on('ready', () => {
         // 实例化窗口
         let MAIN_WINDOW = new BrowserWindow({
@@ -21,11 +24,12 @@ try {
             // resizable: false,
             webPreferences: {
                 // nodeIntegration: true, // 为了让Vue app在浏览器内核中能够使用到Electron的API
-                preload: require('path').join(__dirname, `./preload.js`), // 渲染进程预加载
+                preload: AppPre, // 渲染进程预加载
             },
         })
         MAIN_WINDOW.openDevTools()
-        MAIN_WINDOW.loadURL(`http://wqao.top:7003/Solomon/#/`)
+        MAIN_WINDOW.loadURL(`http://10.52.2.35:8080`)
+        // MAIN_WINDOW.loadURL(`http://wqao.top/solomon/#/`)
 
         // 关闭顶部窗口
         Menu.setApplicationMenu(null)

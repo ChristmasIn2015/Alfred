@@ -17,7 +17,6 @@ export default function Login(target, name, descriptor) {
         // *
         sourceFunction.apply(this, arguments)
     }
-    return descriptor
 }
 
 // 判断是否登录，如果没有登录则唤起登录框

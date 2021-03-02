@@ -16,7 +16,12 @@ let routes = [
     },
     {
         component: () => import('@/web/apps/Alfred/views/devops/DevOps.vue'),
-        path: '/devops/LIST',
+        path: '/cmd/remote/list',
+        name: 'devops',
+    },
+    {
+        component: () => import('@/web/apps/Alfred/views/cmd/Cmd.vue'),
+        path: '/cmd/local/list',
         name: 'devops',
     },
 ]

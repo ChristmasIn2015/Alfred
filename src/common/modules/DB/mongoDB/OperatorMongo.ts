@@ -7,6 +7,7 @@
 import { ObjectId } from 'mongodb'
 
 export default class OperatorMongo implements DBOperatable {
+    // MongoDB
     TableName = null
     TableStruct = null
     TableCaller = null
@@ -21,13 +22,13 @@ export default class OperatorMongo implements DBOperatable {
     async init(TableName: string, newStruct: object): Promise<any> {
         this.TableName = TableName
         this.TableStruct = Object.assign({}, newStruct)
+        // 这里把定义的表字段全部清空 方便 model2TableStruct
         for (let key in this.TableStruct) this.TableStruct[key] = null
 
-        // 初始化某表操作员：获取当前表结构
+        // 获取当前表结构
         const oldStruct = await this.getOldStruct()
-        // 初始化某表操作员：如果 newStruct 补充了新字段，则全量补充这个新字段
+        // 如果 newStruct 补充了新字段，则全量补充这个新字段
         for (let column_new in newStruct) {
-            if (column_new === 'id') continue
             if (column_new === '_id') continue
             if (column_new === 'timeCreate') continue
             if (column_new === 'timeUpdate') continue
@@ -37,9 +38,8 @@ export default class OperatorMongo implements DBOperatable {
             // console.log('create', column_new)
             await this.TableCaller.updateMany({}, { $set: DTO })
         }
-        // 初始化某表操作员：如果 newStruct 删除了旧字段，则全量删除这个旧字段
+        // 如果 newStruct 删除了旧字段，则全量删除这个旧字段
         for (let column_old in oldStruct) {
-            if (column_old === 'id') continue
             if (column_old === '_id') continue
             if (column_old === 'timeCreate') continue
             if (column_old === 'timeUpdate') continue
@@ -49,7 +49,6 @@ export default class OperatorMongo implements DBOperatable {
             // console.log('delete', column_old)
             await this.TableCaller.updateMany({}, { $unset: DELETE })
         }
-        // 初始化某表操作员：NoSQL不需要预定义表结构
     }
     // ============================================================================
     // ============================================================================
@@ -96,9 +95,9 @@ export default class OperatorMongo implements DBOperatable {
         let result = await this.TableCaller.updateMany(query, { $set: doc })
         return result
     }
-    async delete(id): Promise<boolean> {
-        let result = await this.TableCaller.deleteOne({ _id: id })
-        if (result.deletedCount !== 1) throw new Error(`${id} 不存在`)
+    async delete(_id): Promise<boolean> {
+        let result = await this.TableCaller.deleteOne({ _id })
+        if (result.deletedCount !== 1) throw new Error(`${_id} 不存在`)
         return true
     }
     // ============================================================================

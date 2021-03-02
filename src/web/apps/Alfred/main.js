@@ -17,8 +17,11 @@ const myRoutes = new VueRouter({
     routes,
 })
 myRoutes.beforeEach((to, from, next) => {
-    if (to.path !== '/' && !localStorage['token-qqlx']) next({ path: '/' })
-    else next()
+    if (to.path !== '/' && !localStorage['token-qqlx']) {
+        next({ path: '/' })
+    } else {
+        next()
+    }
 })
 window.$router = myRoutes
 

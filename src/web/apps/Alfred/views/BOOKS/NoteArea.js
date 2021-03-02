@@ -1,4 +1,4 @@
-import { commitArea, getAreaList, areaDelete } from './api.js'
+import { commitArea, getAreaList, areaDelete } from '../../../../appsOld/Solomon/modules/api.js'
 export default function NoteArea(target, name, descriptor) {
     let sourceFunction = descriptor.value
     descriptor.value = function() {

@@ -10,45 +10,28 @@
  * 4.可变长度的字符串 varchar(size)
  * 5.日期 date(yyyymmdd)
  ******************************************************************* */
-import { DBOperatable, TableCaller, TableStruct } from '../Type'
-
+///<reference path='../../../../../type.d.ts' />
 export default class OperatorSqlite3 implements DBOperatable {
     // Sqlite3
     TableName = null
     TableStruct = null
     TableCaller = null
-    constructor(caller: TableCaller) {
+    constructor(caller: object) {
         this.TableCaller = caller
     }
 
     // 初始化某表操作员
-    async init(TableName: string, newStruct: object): Promise<boolean> {
+    // 初始化某表操作员
+    // 初始化某表操作员
+    // 初始化某表操作员
+    async init(TableName: string, newStruct: object): Promise<any> {
         this.TableName = TableName
-        this.TableStruct = newStruct
+        this.TableStruct = Object.assign({}, newStruct)
+        // 在表字段操作结束后, 把定义的表字段全部清空 方便 model2TableStruct
+        for (let key in this.TableStruct) this.TableStruct[key] = null
 
-        // 获取当前表结构
-        const OldStruct = await this.getOldStruct()
-        if (!OldStruct) return true
-        // 如果 newStruct 补充了新字段，则全量补充这个数据
-        for (let columnName in newStruct) {
-            if (columnName === 'id') continue
-            if (columnName === 'timeCreate') continue
-            if (columnName === 'timeUpdate') continue
-            if (OldStruct[columnName] === undefined) {
-                await this._createColumn(columnName, newStruct[columnName])
-            }
-        }
-        // 如果 newStruct 删除了旧字段，则全量删除这个数据
-        for (let columnName in OldStruct) {
-            if (columnName === 'id') continue
-            if (columnName === 'timeCreate') continue
-            if (columnName === 'timeUpdate') continue
-            if (newStruct[columnName] === undefined) {
-                await this._deleteColumn(columnName)
-            }
-        }
-        // SQL需要预定义数据库表结构
         return new Promise((resolve, reject) => {
+            // SQLite3开始预定义数据库表结构
             let columns = 'id INTEGER PRIMARY KEY AUTOINCREMENT, '
             for (let key in newStruct) {
                 if (newStruct[key] === 'number') columns += `${key} INT, `
@@ -58,8 +41,30 @@ export default class OperatorSqlite3 implements DBOperatable {
             columns += 'timeUpdate INT, '
             columns = columns.substring(0, columns.length - 2)
             const SQL = `CREATE TABLE IF NOT EXISTS ${TableName} (${columns});`
-            this.TableCaller.run(SQL, function(error) {
-                error ? reject(new Error(`${error.message}, SQL: ${SQL}`)) : resolve(this)
+            this.TableCaller.run(SQL, async (error) => {
+                if (error) {
+                    reject(new Error(`${error.message}, SQL: ${SQL}`))
+                    return
+                }
+                // 获取当前表结构
+                const oldStruct = await this.getOldStruct()
+                // 如果 newStruct 补充了新字段，则全量补充这个数据
+                for (let column_new in newStruct) {
+                    if (column_new === 'id') continue
+                    if (column_new === 'timeCreate') continue
+                    if (column_new === 'timeUpdate') continue
+                    if (oldStruct[column_new]) continue
+                    await this._createColumn(column_new, newStruct[column_new])
+                }
+                // 如果 newStruct 删除了旧字段，则全量删除这个数据
+                for (let column_old in oldStruct) {
+                    if (column_old === 'id') continue
+                    if (column_old === 'timeCreate') continue
+                    if (column_old === 'timeUpdate') continue
+                    if (newStruct[column_old]) continue
+                    await this._deleteColumn(column_old)
+                }
+                resolve(true)
             })
         })
     }
@@ -125,6 +130,13 @@ export default class OperatorSqlite3 implements DBOperatable {
         })
     }
     update(query: object, doc: object): Promise<object> {
+        // 0.更新的字段一定要是预定义字段
+        let struct = this.getStruct()
+        for (let key in doc) {
+            if (key === 'id' || key === 'timeCreate' || key === 'timeUpdate') continue
+            if (struct[key] === undefined) delete doc[key]
+        }
+
         // 1.更新 timeUpdate
         doc = Object.assign(doc, { timeUpdate: Date.now() })
 
@@ -162,7 +174,7 @@ export default class OperatorSqlite3 implements DBOperatable {
     // ============================================================================
     // ============================================================================
     // ============================================================================
-    getOldStruct(): Promise<TableStruct> {
+    getOldStruct(): Promise<object> {
         return new Promise((resolve, reject) => {
             let OldStruct = {}
             const sql = `SELECT * FROM SQLITE_MASTER WHERE TYPE='table' AND NAME='${this.TableName}';`
@@ -184,15 +196,17 @@ export default class OperatorSqlite3 implements DBOperatable {
             })
         })
     }
-    getStruct(): TableStruct {
+    getStruct(): object {
         return Object.assign({}, this.TableStruct)
     }
-    model2TableStruct(newModel): TableStruct {
-        let struct = this.getStruct()
-        for (let key in struct) newModel[key] !== undefined ? (struct[key] = newModel[key]) : ''
-        return struct
+    model2TableStruct(newModel): object {
+        let create = this.getStruct()
+        for (let key in create) {
+            newModel[key] ? (create[key] = newModel[key]) : ''
+        }
+        return create
     }
-    _createColumn(columnName, type): Promise<any> {
+    private _createColumn(columnName, type): Promise<any> {
         if (type === 'number') type = 'INT'
         if (type === 'string') type = 'VARCHAR'
         return new Promise((resolve, reject) => {
@@ -202,7 +216,7 @@ export default class OperatorSqlite3 implements DBOperatable {
             })
         })
     }
-    async _deleteColumn(columnName): Promise<any> {
+    private async _deleteColumn(columnName): Promise<any> {
         let OldStruct = await this.getOldStruct()
         let oldStruct_str = ''
         for (let key in OldStruct) key !== columnName ? (oldStruct_str += `${key}, `) : ''

@@ -1,7 +1,6 @@
-//
 import ServerMongo from '../modules/DB/mongoDB/ServerMongo'
 import OperatorMongo from '../modules/DB/mongoDB/OperatorMongo'
-
+//
 export default class CabinExpress implements ClassBindable {
     //
     VUE_PATH = require('path').join(process.cwd(), './src/web/dist')
@@ -31,7 +30,7 @@ export default class CabinExpress implements ClassBindable {
     // 数据库
     // 数据库：和本地数据库服务进行链接
     async dbLink(DBAddress: string): Promise<any> {
-        // mongodb://127.0.0.1:27017/dbName
+        // filePath/MyDB.db
         this.cabinDB = new ServerMongo(DBAddress)
         await this.cabinDB.start()
     }
