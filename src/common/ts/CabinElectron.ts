@@ -36,6 +36,11 @@ export default class CabinElectron implements ClassBindable {
     // Electron
     // Electron
     // Electron
+    // ***************************************************************************************
+    // 注意由于 require('electron') 和 TypeScript 的冲突
+    // 这里在 electron.js 中已经手动在 global 上挂载了 global['$electron'] = require('electron')
+    // Cabin.electronRoute 使用的是 global['$electron']
+    // ***************************************************************************************
     // Electron：数据接口分配
     electronRoute(route: string, next: (...args) => any) {
         global['$electron'].ipcMain.handle(route, (...args) => next(...args))

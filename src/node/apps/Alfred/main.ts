@@ -50,8 +50,6 @@ async function go() {
         // 5.绑定Html
         // 提供HTML服务给 Web*Alfred
         Cabin.expressHtml('/alfred', require('path').join(process.cwd(), './src/web/dist/Alfred.html'))
-        // 提供HTML服务给 Electron*Solomon
-        Cabin.expressHtml('/solomon', require('path').join(process.cwd(), './src/web/dist/Solomon.html'))
 
         // * End
         console.log(Cabin.cabinInfo)

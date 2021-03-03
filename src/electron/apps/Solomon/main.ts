@@ -38,6 +38,11 @@ async function go() {
         // 4.使用Electron暴漏调度方法给传输层
         global['Cabin'] = null
         global['Cabin'] = Cabin // ts 找不到 bindClass 后的方法
+        // ***************************************************************************************
+        // 注意由于 require('electron') 和 TypeScript 的冲突
+        // 这里在 electron.js 中已经手动在 global 上挂载了 global['$electron'] = require('electron')
+        // Cabin.electronRoute 使用的是 global['$electron']
+        // ***************************************************************************************
         // @Native
         Cabin.electronRoute('openDevTool', global['Cabin'].openDevTool)
         // @Note

@@ -1,5 +1,8 @@
 const PATH = require('path')
+//
 const InstallerName = 'Solomon'
+const packageJson = require(PATH.join(__dirname, '../../../package.json'))
+//
 require('electron-winstaller')
     .createWindowsInstaller({
         name: InstallerName,

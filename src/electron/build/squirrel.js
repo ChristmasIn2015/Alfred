@@ -1,17 +1,20 @@
-const axios = require('axios')
-function handleSquirrelEvent() {
-    const path = require('path')
-    const app = require('electron').app
-    const childProcess = require('child_process')
+// ***********************************************************************
+// 这个文件里的代码是从 https://github.com/electron/windows-installer 复制的
+// 用于检测Electron自动更新时候的一些Squirrel事件，从而判断Electron是否继续打开
+// ***********************************************************************
+//
+const path = require('path')
+const app = require('electron').app
+const childProcess = require('child_process')
+//
+const appFolder = path.resolve(process.execPath, '..')
+const rootAtomFolder = path.resolve(appFolder, '..')
+const updateDotExe = path.resolve(path.join(rootAtomFolder, 'Update.exe'))
+const exeName = path.basename(process.execPath)
 
-    if (process.argv.length === 1) {
-        return false
-    }
-
-    const appFolder = path.resolve(process.execPath, '..')
-    const rootAtomFolder = path.resolve(appFolder, '..')
-    const updateDotExe = path.resolve(path.join(rootAtomFolder, 'Update.exe'))
-    const exeName = path.basename(process.execPath)
+//
+function handleSquirrelEvent(yjyLog) {
+    if (process.argv.length === 1) return false
 
     const spawn = function(command, args) {
         let spawnedProcess, error
@@ -19,7 +22,7 @@ function handleSquirrelEvent() {
         try {
             spawnedProcess = childProcess.spawn(command, args, { detached: true })
         } catch (error) {
-            log('spawn error', error.message)
+            yjyLog('squirrel spawn error', error.message)
         }
 
         return spawnedProcess
@@ -30,7 +33,7 @@ function handleSquirrelEvent() {
     }
 
     const squirrelEvent = process.argv[1]
-    log('1.squirrelEvent', squirrelEvent)
+    yjyLog('*.squirrelEvent', squirrelEvent)
     switch (squirrelEvent) {
         case '--squirrel-install':
         case '--squirrel-updated':
@@ -64,15 +67,6 @@ function handleSquirrelEvent() {
             return true
     }
 }
-function yjyLog(...message) {
-    axios({
-        method: 'POST',
-        url: 'http://wqao.top:7001/yjy-log/create',
-        data: { message },
-        headers: {},
-    })
-}
 module.exports = {
     handleSquirrelEvent,
-    yjyLog,
 }

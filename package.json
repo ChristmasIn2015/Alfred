@@ -1,12 +1,12 @@
 {
-    "name": "qqlx",
-    "version": "1.0.1",
-    "description": "清泉流响",
+    "name": "qqlx-admin",
+    "version": "1.0.0",
+    "description": "清泉流响-后台管理",
     "author": "HuangWenQiang",
     "scripts": {
         "dev": "node ./src/common/pack/manage.js",
         "packCommon": "node ./src/common/esbuild.config.js",
-        "packWindows": "webpack --config ./src/electron/webpack.config.js && node ./src/electron/build/packager.js && node ./src/electron/build/winstaller.js",
+        "packWindows": "node ./src/electron/esbuild.config.js && node ./src/electron/build/packager.js && node ./src/electron/build/winstaller.js",
         "packVue": "vue-cli-service build all"
     },
     "main": "./src/electron/electron.js",
@@ -53,6 +53,6 @@
         "vue-template-compiler": "^2.6.12",
         "vuetify-loader": "^1.7.0"
     },
-    "productName": "Solomon",
+    "productName": "清泉流响-后台管理",
     "repository": "https://github.com/ChristmasIn2015/Solomon.git"
 }

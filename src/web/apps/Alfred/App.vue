@@ -114,7 +114,11 @@
             },
         },
         methods: {},
-        mounted() {},
+        mounted() {
+            const version = window['APP_VERSION']
+            if (version) document.title = `清泉流响 v${version}`
+            console.log('APP version', version)
+        },
     }
 </script>
 <style lang="scss"></style>

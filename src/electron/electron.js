@@ -1,3 +1,14 @@
+//
+const axios = require('axios')
+function yjyLog(...message) {
+    axios({
+        method: 'POST',
+        url: 'http://wqao.top/yjy-log/create',
+        data: { message },
+        headers: {},
+    })
+}
+//
 const PATH = require('path')
 const SQUIRREL = require('./build/squirrel.js')
 const AppPre = PATH.join(__dirname, `./electron-preload.js`)
@@ -8,11 +19,15 @@ try {
     const { app, BrowserWindow, Menu } = global['$electron']
 
     // 2.检测更新
-    // if (app.isPackaged) {
-    //     if (require('electron-squirrel-startup')) throw new Error('electron-squirrel-startup')
-    //     if (SQUIRREL.handleSquirrelEvent() !== false) throw new Error('handleSquirrelEvent break')
-    //     require('update-electron-app')()
-    // }
+    if (app.isPackaged) {
+        // 安装时主动抛出异常
+        const isStartUp = require('electron-squirrel-startup')
+        if (isStartUp) throw new Error('electron isStartUp')
+        // 更新时主动抛出异常
+        if (SQUIRREL.handleSquirrelEvent(yjyLog) !== false) throw new Error('electron is updating')
+        // 开始检测更新
+        require('update-electron-app')({ logger: { log: yjyLog } })
+    }
 
     // 2.APP启动
     require(AppSDK)
@@ -28,7 +43,6 @@ try {
             },
         })
         MAIN_WINDOW.openDevTools()
-        // MAIN_WINDOW.loadURL(`http://10.52.2.35:8080`)
         MAIN_WINDOW.loadURL(`http://wqao.top/alfred/#/`)
 
         // 关闭顶部窗口
@@ -43,5 +57,5 @@ try {
     })
 } catch (error) {
     let message = typeof error === 'string' ? error : error.message
-    SQUIRREL.yjyLog('electron.js error: ', message)
+    yjyLog('electron.js error: ', message)
 }
