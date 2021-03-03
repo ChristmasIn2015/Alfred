@@ -1,6 +1,6 @@
 {
     "name": "qqlx-admin",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "description": "清泉流响-后台管理",
     "author": "HuangWenQiang",
     "scripts": {
@@ -53,6 +53,6 @@
         "vue-template-compiler": "^2.6.12",
         "vuetify-loader": "^1.7.0"
     },
-    "productName": "清泉流响-后台管理",
+    "productName": "Solomon",
     "repository": "https://github.com/ChristmasIn2015/Solomon.git"
 }
