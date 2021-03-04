@@ -1,5 +1,16 @@
 <template>
     <div>
+        <!-- Nav -->
+        <!-- Nav -->
+        <!-- Nav -->
+        <!-- Nav -->
+        <div>
+            <v-btn class="mr-2" color="orange" @click.stop="renderLogs">刷新</v-btn>
+        </div>
+        <!-- List -->
+        <!-- List -->
+        <!-- List -->
+        <!-- List -->
         <v-simple-table fixed-header height="700px">
             <thead>
                 <tr>
@@ -45,6 +56,7 @@
                     $load.show()
                     let logs = await getYjyLogs()
                     this.list = Object.assign([], logs)
+                    $tip('获取日志成功')
                     $load.hide()
                 } catch (error) {
                     $common.loadOff(error)

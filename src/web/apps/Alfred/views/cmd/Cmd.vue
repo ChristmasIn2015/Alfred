@@ -6,6 +6,7 @@
         <!-- Nav -->
         <div>
             <v-btn class="mr-2" color="orange" @click.stop="react.toggleCmdModal($event)">新增CMD</v-btn>
+            <v-btn class="mr-2" color="orange" @click.stop="react.renderCmdList">清空日志/刷新</v-btn>
             <v-btn color="green" @click.stop="react.openLocalDevTool">打开控制台</v-btn>
         </div>
         <!-- List -->

@@ -26,7 +26,8 @@ try {
         // 更新时主动抛出异常
         if (SQUIRREL.handleSquirrelEvent(yjyLog) !== false) throw new Error('electron is updating')
         // 开始检测更新
-        require('update-electron-app')({ logger: { log: yjyLog } })
+        require('update-electron-app')({ logger: { log: yjyLog } }) // 开发时
+        // require('update-electron-app')() // 上线后
     }
 
     // 2.APP启动
@@ -44,6 +45,7 @@ try {
         })
         MAIN_WINDOW.openDevTools()
         MAIN_WINDOW.loadURL(`http://wqao.top/alfred/#/`)
+        // MAIN_WINDOW.loadURL(`http://10.52.2.35:8080/#/`)
 
         // 关闭顶部窗口
         Menu.setApplicationMenu(null)

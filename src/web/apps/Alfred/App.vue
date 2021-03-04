@@ -6,9 +6,9 @@
         <!-- 全局UI -->
         <!-- 全局UI -->
         <!-- 全局UI：成功提示 -->
-        <v-snackbar top right timeout="1200" color="green" v-model="react.success">{{ react.successTip }}</v-snackbar>
+        <v-snackbar top right timeout="2000" color="green" v-model="react.success">{{ react.successTip }}</v-snackbar>
         <!-- 全局UI：警告提示 -->
-        <v-snackbar top timeout="1500" color="red" v-model="react.warn">{{ react.warnTip }}</v-snackbar>
+        <v-snackbar top timeout="2000" color="red" v-model="react.warn">{{ react.warnTip }}</v-snackbar>
         <!-- 全局UI：Loadding -->
         <v-dialog v-model="react.loadding" persistent width="300">
             <v-card color="primary" dark>

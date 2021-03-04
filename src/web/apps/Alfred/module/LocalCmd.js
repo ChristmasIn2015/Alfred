@@ -73,6 +73,7 @@ async function renderCmdList() {
             return { _id: e.id, name: e.name, command: e.cmdString }
         })
     )
+    $tip('获取本地命令列表成功')
 }
 // 新增/编辑本地CMD
 async function cmdModalAction() {
