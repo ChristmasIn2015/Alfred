@@ -1,6 +1,6 @@
 const Response = global['$common'].Response
 const AlfredLogin = global['$common'].AlfredLogin
-export default class Yjy_Log {
+export default class YjyLog_Log {
     constructor() {}
 
     @Response('添加日志成功')
@@ -17,8 +17,10 @@ export default class Yjy_Log {
         let list = await global['$db'].Log.query({})
         list = list.reverse().slice(0, 50)
         list.forEach((e) => {
-            e['timeCreateChinese'] = new Date(e.timeCreate).toLocaleString()
-            e['timeUpdateChinese'] = new Date(e.timeUpdate).toLocaleString()
+            e['timeCreateChinese'] = global['$common'].getFullTime(e.timeCreate).full
+            e['timeUpdateChinese'] = global['$common'].getFullTime(e.timeUpdate).full
+            // e['timeCreateChinese'] = new Date(e.timeCreate).toLocaleString()
+            // e['timeUpdateChinese'] = new Date(e.timeUpdate).toLocaleString()
         })
         return list
     }

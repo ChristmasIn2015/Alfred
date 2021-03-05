@@ -64,7 +64,7 @@ export default class UtilsTime {
 
     // 获取某个时间戳的全字段
     getFullTime(mills: number = Date.now()): TimeDTO {
-        let DTO = this.getHHMMSS()
+        let DTO = this.getHHMMSS(mills)
         DTO.year = new Date(mills).getFullYear().toString()
         DTO.full = `${this.getYYMMDD(mills)} ${DTO.full}`
         return DTO

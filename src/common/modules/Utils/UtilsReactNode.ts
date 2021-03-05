@@ -20,6 +20,7 @@ export default class UtilsNodeReact {
                         authorization: request.header('authorization'),
                     })
                     if (data.code !== 200) throw new Error(`${data.message}(code:${data.code})`)
+                    args.push(data.data)
                     await sourceFunction.apply(this, args)
                 } catch (error) {
                     response.send({
@@ -44,6 +45,7 @@ export default class UtilsNodeReact {
                     data: null,
                     message: '',
                 }
+                const now = Date.now()
                 try {
                     let data = await sourceFunction.apply(this, args)
                     result.code = 200

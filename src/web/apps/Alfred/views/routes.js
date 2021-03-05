@@ -10,7 +10,7 @@ let routes = [
         name: 'userList',
     },
     {
-        component: () => import('@/web/apps/Alfred/views/log/Log.vue'),
+        component: () => import('@/web/apps/Alfred/views/yjyLog/yjyLog.vue'),
         path: '/log/list',
         name: 'logList',
     },

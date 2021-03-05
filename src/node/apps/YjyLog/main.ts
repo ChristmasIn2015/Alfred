@@ -1,7 +1,7 @@
 import '../../../common/ts/common-node'
 import CabinExpress from '../../../common/ts/CabinExpress'
 //
-import Yjy_Log from './dispatchers/Yjy_Log'
+import YjyLog_Log from './dispatchers/YjyLog_Log'
 
 async function go() {
     try {
@@ -19,13 +19,13 @@ async function go() {
         ])
 
         // 3.绑定业务的调度员
-        global['$common'].bindClass(Cabin, 'Yjy_Log', Yjy_Log)
+        global['$common'].bindClass(Cabin, 'YjyLog_Log', YjyLog_Log)
         // ....
 
         // 4.使用express暴漏调度方法给传输层
         Cabin.express(SOCKET_NUMBER, 'YjyLog')
         global['Cabin'] = Cabin // ts 找不到 bindClass 后的方法
-        // @Yjy_Log
+        // @YjyLog_Log
         Cabin.expressRoute('POST', '/yjy-log/create', global['Cabin'].createLog)
         Cabin.expressRoute('GET', '/yjy-log/list', global['Cabin'].getLogs)
         // ....

@@ -71,13 +71,15 @@ export default class Dispatcher_User {
     @Response('获取用户列表成功')
     async getUserList(request, response) {
         let list = await global['$db'].User.query({})
-        return list.map((e) => {
-            return {
-                nickname: e.nickname,
-                account: e.account,
-                timeCreateChinese: new Date(e.timeCreate).toLocaleString(),
-                timeUpdateChinese: new Date(e.timeUpdate).toLocaleString()
-            }
-        }).reverse()
+        return list
+            .map((e) => {
+                return {
+                    nickname: e.nickname,
+                    account: e.account,
+                    timeCreateChinese: global['$common'].getFullTime(e.timeCreate).full,
+                    timeUpdateChinese: global['$common'].getFullTime(e.timeUpdate).full,
+                }
+            })
+            .reverse()
     }
 }

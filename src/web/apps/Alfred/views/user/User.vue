@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-simple-table fixed-header height="70rem">
+        <v-simple-table fixed-header dense height="700px">
             <thead>
                 <tr>
                     <th>账号</th>

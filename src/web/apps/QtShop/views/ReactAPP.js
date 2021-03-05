@@ -4,10 +4,10 @@ import Login from '@/web/apps/Alfred/module/Login.js'
 export default class ReactAPP {
     // admin
     menus = [
-        { name: '用户列表', icon: 'fa-users', color: 'red', path: '/user/list' },
-        { name: '一机游日志', icon: 'fa-bell', color: 'indigo', path: '/log/list' },
-        { name: '远程运维', icon: 'fa-cogs', color: 'purple', path: '/cmd/remote/list' },
-        { name: '本地CMD', icon: 'fa-cubes', color: 'purple', path: '/cmd/local/list' },
+        { name: '仓廪', icon: 'fa-cubes', color: 'indigo', path: '/shop/center' },
+        { name: '吏部', icon: 'fa-users', color: 'red', path: '/' },
+        { name: '销售中心', icon: 'fa-phone-square', color: 'purple', path: '/' },
+        { name: '发货中心', icon: 'fa-plane', color: 'purple', path: '/' },
     ]
     nowMenuIndex = -1
     constructor() {
@@ -15,8 +15,8 @@ export default class ReactAPP {
         this.initReact() // ASYNC
     }
 
-    @Vuetify
-    @Login
+    @Vuetify // Alfred ！！
+    @Login // Alfred ！！
     async initReact() {
         try {
             // @Vuetify
@@ -48,12 +48,6 @@ export default class ReactAPP {
         }
         const target = this.menus[index]
         if (target) {
-            if (target.path === '/cmd/local/list' && !window['$electron']) {
-                $warn('请在清泉流响客户端中打开')
-                this.nowMenuIndex = -1
-                $router.push({ path: '/' })
-                return
-            }
             if ($router.app._route.path === target.path) return
             this.nowMenuIndex = index
             $router.push({ path: target.path })

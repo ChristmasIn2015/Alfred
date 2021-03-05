@@ -70,7 +70,7 @@ async function renderCmdList() {
     this.cmds = Object.assign(
         [],
         list.map((e) => {
-            return { _id: e.id, name: e.name, command: e.cmdString }
+            return { _id: e.id, name: e.name, command: e.cmdString, log: '', logModal: false, pid: null }
         })
     )
     $tip('获取本地命令列表成功')
@@ -95,6 +95,7 @@ function deleteCmd(cmd) {
 }
 function excuteCmd(logListIndex, cmd) {
     this.cmds[logListIndex].log = '<div color="red">发送执行命令中</div>'
+    this.cmds[logListIndex].logModal = true
 
     // 1.清空接收器
     $electron.ipcRenderer.removeAllListeners('excuteLocalCmd')

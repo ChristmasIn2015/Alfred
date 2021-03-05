@@ -22,7 +22,7 @@ export default class UtilsWebReact {
     }
 
     // 修饰器
-    Loadding(): (target: any, propertyKey: string, descriptor: PropertyDescriptor) => void {
+    Loadding() {
         return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
             const sourceFunction = descriptor.value
             descriptor.value = async function() {

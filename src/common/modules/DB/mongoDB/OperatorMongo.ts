@@ -116,7 +116,7 @@ export default class OperatorMongo implements DBOperatable {
     model2TableStruct(newModel): object {
         let create = this.getStruct() || {}
         for (let key in create) {
-            newModel[key] ? (create[key] = newModel[key]) : ''
+            newModel[key] !== undefined ? (create[key] = newModel[key]) : ''
         }
         return create
     }

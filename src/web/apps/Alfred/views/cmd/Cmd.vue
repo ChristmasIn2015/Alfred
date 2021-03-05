@@ -9,41 +9,13 @@
             <v-btn class="mr-2" color="orange" @click.stop="react.renderCmdList">清空日志/刷新</v-btn>
             <v-btn color="green" @click.stop="react.openLocalDevTool">打开控制台</v-btn>
         </div>
-        <!-- List -->
-        <!-- List -->
-        <!-- List -->
-        <!-- List -->
-        <draggable v-model="react.cmds" class="mt-2 d-flex flex-wrap" @end.stop="react.sortCmds">
-            <v-card
-                class="ma-1"
-                width="256"
-                v-for="(cmd, i) in react.cmds"
-                :key="i"
-                @contextmenu.prevent="react.deleteCmd(cmd)"
-                @dblclick="react.toggleCmdModal($event, cmd)"
-            >
-                <v-card-title>{{ cmd.name }}</v-card-title>
-
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn v-if="cmd.pid" dark color="red" @click.stop="react.killCmd(i, cmd.pid)">终止{{ cmd.pid }}</v-btn>
-                    <v-btn v-else dark color="orange" @click.stop="react.excuteCmd(i, cmd)">执行</v-btn>
-                    <v-tooltip right>
-                        <template v-slot:activator="{ on, attrs }">
-                            <v-btn class="ml-1" color="primary" v-show="cmd.log" v-bind="attrs" v-on="on">查看日志</v-btn>
-                        </template>
-                        <span style="height: 500px; overflow: scroll;" v-html="cmd.log"></span>
-                    </v-tooltip>
-                </v-card-actions>
-            </v-card>
-        </draggable>
         <!-- 新增/编辑远程命令的弹窗 -->
         <!-- 新增/编辑远程命令的弹窗 -->
         <!-- 新增/编辑远程命令的弹窗 -->
         <!-- 新增/编辑远程命令的弹窗 -->
         <v-dialog v-model="react.cmdModal" persistent width="500">
             <v-card>
-                <v-card-title>远程命令</v-card-title>
+                <v-card-title>本地命令</v-card-title>
                 <v-card-text>
                     <v-form ref="form">
                         <v-text-field v-model="react.cmdModel.name" label="本地命令名称" hint="请输入命令名称" />
@@ -57,6 +29,31 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
+        <!-- List -->
+        <!-- List -->
+        <!-- List -->
+        <!-- List -->
+        <draggable v-model="react.cmds" @end.stop="react.sortCmds">
+            <v-card
+                class="mt-1 py-1 px-2 d-flex align-center"
+                v-for="(cmd, i) in react.cmds"
+                :key="i"
+                @contextmenu.prevent="react.deleteCmd(cmd)"
+                @dblclick="react.toggleCmdModal($event, cmd)"
+            >
+                <div>{{ cmd.name }}</div>
+                <div class="ml-auto">
+                    <v-btn v-if="cmd.pid" dark color="red" small @click.stop="react.killCmd(i, cmd.pid)">终止{{ cmd.pid }}</v-btn>
+                    <v-btn v-else dark color="orange" small @click.stop="react.excuteCmd(i, cmd)">执行</v-btn>
+                    <v-bottom-sheet dark v-model="cmd.logModal">
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-btn v-show="cmd.log" class="ml-1" color="green" small v-bind="attrs" v-on="on">查看日志 </v-btn>
+                        </template>
+                        <v-sheet class="pa-4 overflow-y-auto" height="500px" v-html="cmd.log"></v-sheet>
+                    </v-bottom-sheet>
+                </div>
+            </v-card>
+        </draggable>
     </div>
 </template>
 <script>

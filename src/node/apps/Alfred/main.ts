@@ -46,6 +46,13 @@ async function go() {
         const YjyLog = `http://${Cabin.cabinInfo.IPv4}:7001`
         Cabin.expressProxy('/yjy-log/list', YjyLog)
         Cabin.expressProxy('/yjy-log/create', YjyLog)
+        // @QtShop
+        const QtShop = `http://${Cabin.cabinInfo.IPv4}:7002`
+        Cabin.expressProxy('/qt-shop/shop/create', QtShop)
+        Cabin.expressProxy('/qt-shop/shop/list', QtShop)
+        Cabin.expressProxy('/qt-shop/shop/delete', QtShop) //
+        Cabin.expressProxy('/qt-shop/house/create', QtShop)
+        Cabin.expressProxy('/qt-shop/house/list', QtShop) //
 
         // 5.绑定Html
         // 提供HTML服务给 Web*Alfred
