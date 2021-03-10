@@ -139,6 +139,8 @@ export default class UtilsNodeReact {
     // 获取本机Ipv4地址
     // 获取本机Ipv4地址
     getIPv4(): string {
+        if (this.IPv4) return this.IPv4
+        //
         let address = null
         if (global.process.platform === 'win32') {
             const interfaces = require('os').networkInterfaces()

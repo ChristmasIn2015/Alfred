@@ -61,16 +61,15 @@ const requester = $common.getRequester(
 //     return requester.request('POST', '/qt-shop/tag/delete', params, $common.getHeaders())
 // }
 // // ======================================================= 商品
-// // * 新增商品
-// export function createGood(byHouseId, name, plugList, countList, cost, tip) {
-//     let params = { byHouseId, name, plugList, countList, cost, tip }
-//     return requester.request('POST', '/qt-shop/good/create', params, $common.getHeaders())
-// }
-// // * 获取商品列表
-// export function getGoodList(byHouseId) {
-//     let params = { byHouseId }
-//     return requester.request('POST', '/qt-shop/good/list', params, $common.getHeaders())
-// }
+// * 新增商品
+export function createGoodInHouse(houseId, goodList) {
+    // goodList: { name, norm, count, countName, remark }
+    return requester.request('POST', '/qt-shop/good/create', { houseId, goodList }, $common.getHeaders())
+}
+// * 获取商品列表
+export function getGoodListInHouse(houseId) {
+    return requester.request('POST', '/qt-shop/good/list', { houseId }, $common.getHeaders())
+}
 // // * 删除商品
 // export function deleteGood(houseId, goodId) {
 //     let params = { houseId, goodId }
@@ -88,10 +87,9 @@ const requester = $common.getRequester(
 //     return requester.request('POST', '/qt-shop/employee/create', params, $common.getHeaders())
 // }
 // // * 店铺员工列表
-// export function getEmployeeList(shopId) {
-//     let params = { shopId }
-//     return requester.request('POST', '/qt-shop/employee/list', params, $common.getHeaders())
-// }
+export function getEmployeeList(shopId) {
+    return requester.request('POST', '/qt-shop/employee/list', { shopId }, $common.getHeaders())
+}
 // // * 店铺删除员工
 // export function deleteEmployee(employeeId) {
 //     let params = { employeeId }

@@ -31,24 +31,6 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
-        <!-- 全局UI：登录对话 -->
-        <v-dialog v-model="react.loginModal" persistent width="400">
-            <v-card>
-                <v-card-title>登录</v-card-title>
-                <v-card-text>
-                    <v-form ref="form">
-                        <v-text-field v-model="react.userModel.account" label="账号" hint="请输入账号，长度至少为5位" />
-                        <v-text-field v-model="react.userModel.password" label="密码" hint="请输入账号，长度至少为5位" type="password" />
-                        <v-text-field v-model="react.userModel.nickname" label="昵称 (可选)" />
-                    </v-form>
-                </v-card-text>
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn text @click.stop="react.loginModal = false">取消</v-btn>
-                    <v-btn color="green" dark @click.stop="react.postLogin">登录</v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
         <!-- 1.左侧菜单栏 -->
         <!-- 1.左侧菜单栏 -->
         <!-- 1.左侧菜单栏 -->
@@ -80,8 +62,7 @@
         <v-app-bar app>
             <v-toolbar-title>{{ react.menus[react.nowMenuIndex] ? react.menus[react.nowMenuIndex].name : '' }}</v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-btn color="green" outlined @click.stop="react.reLogin">{{ userAccount || '点击登录' }}</v-btn>
-            <v-btn v-show="shopName" class="ml-1" color="orange" outlined>{{ shopName }}{{ houseName ? `:${houseName}` : '' }}</v-btn>
+            <div v-html="globalMessage"></div>
         </v-app-bar>
         <!-- 3.内容区域 -->
         <!-- 3.内容区域 -->
@@ -109,18 +90,15 @@
                 react: new ReactAPP(),
             }
         },
+        methods: {},
         computed: {
-            userAccount() {
-                return $store.state.userInfo.account
-            },
-            shopName() {
-                return $store.state.shopInfo.name
-            },
-            houseName() {
-                return $store.state.houseInfo.name
+            globalMessage() {
+                let account = `用户 ${$store.state.userInfo.account || '尚未登录'}`
+                let shop = `<br>店铺 ${$store.state.shopInfo.name || '尚未选择'}`
+                let house = ` 仓库 ${$store.state.houseInfo.name || '尚未选择'}`
+                return account + shop + house
             },
         },
-        methods: {},
         mounted() {
             const version = window['APP_VERSION']
             if (version) document.title = `清泉流响 v${version}`

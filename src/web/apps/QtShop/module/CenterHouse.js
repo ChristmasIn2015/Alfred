@@ -1,5 +1,5 @@
 import { getHouseList, createHouse } from '@/web/apps/QtShop/module/api.js'
-export default function HouseCenter(target, name, descriptor) {
+export default function CenterHouse(target, name, descriptor) {
     let sourceFunction = descriptor.value
     descriptor.value = function() {
         // * 参数
@@ -25,7 +25,6 @@ function toggleHouseModal(event) {
 }
 // 渲染仓库列表
 async function renderHouseList() {
-    const now = Date.now()
     $load.show()
     let shopId = $store.state.shopInfo._id
     if (!shopId) throw new Error('请选择店铺')
@@ -33,7 +32,6 @@ async function renderHouseList() {
     this.houseList = Object.assign([], data)
     this.houseModal = false
     $load.hide()
-    console.log('renderHouseList time', Date.now() - now)
 }
 // * 创建仓库
 async function actionHouse() {

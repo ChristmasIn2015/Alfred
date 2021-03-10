@@ -37,6 +37,7 @@ async function go() {
         Cabin.expressRoute('POST', '/alfred/user/login', global['Cabin'].login)
         Cabin.expressRoute('POST', '/alfred/user/info', global['Cabin'].getUserInfo)
         Cabin.expressRoute('GET', '/alfred/user/list', global['Cabin'].getUserList)
+        Cabin.expressRoute('POST', '/alfred/user/listById', global['Cabin'].getUserListById)
 
         // 4.2 反向代理
         // @DevOps
@@ -53,6 +54,9 @@ async function go() {
         Cabin.expressProxy('/qt-shop/shop/delete', QtShop) //
         Cabin.expressProxy('/qt-shop/house/create', QtShop)
         Cabin.expressProxy('/qt-shop/house/list', QtShop) //
+        Cabin.expressProxy('/qt-shop/employee/list', QtShop) //
+        Cabin.expressProxy('/qt-shop/good/create', QtShop)
+        Cabin.expressProxy('/qt-shop/good/list', QtShop) //
 
         // 5.绑定Html
         // 提供HTML服务给 Web*Alfred

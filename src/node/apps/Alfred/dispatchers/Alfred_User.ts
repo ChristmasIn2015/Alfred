@@ -74,6 +74,7 @@ export default class Dispatcher_User {
         return list
             .map((e) => {
                 return {
+                    _id: e._id,
                     nickname: e.nickname,
                     account: e.account,
                     timeCreateChinese: global['$common'].getFullTime(e.timeCreate).full,
@@ -81,5 +82,22 @@ export default class Dispatcher_User {
                 }
             })
             .reverse()
+    }
+
+    // 某些服务需要批量获取用户信息
+    @AlfredLogin()
+    @Response('获取指定用户成功')
+    async getUserListById(request, response) {
+        const ids = request.body.ids
+        let userList = []
+        for (let i in ids) {
+            let user = await global['$db'].User.get({ _id: ids[i]._id })
+            if (user) {
+                ids[i]['nickname'] = user.nickname
+                ids[i]['account'] = user.account
+                userList.push(ids[i])
+            }
+        }
+        return userList
     }
 }

@@ -72,8 +72,10 @@ async function pickShop(event, target) {
         //
         this.shopList = Object.assign([], this.shopList)
         this.officeList = Object.assign([], this.officeList)
-        //
-        await this.renderHouseList(target._id) // @HouseCenter
+        // @CenterHouse
+        await this.renderHouseList(target._id)
+        // @CenterEmployee
+        await this.renderEmployeeList(target._id)
     } catch (error) {
         $common.loadOff(error)
         $store.commit('clearShopInfo', target)

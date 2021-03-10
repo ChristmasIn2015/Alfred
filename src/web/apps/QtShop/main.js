@@ -17,8 +17,11 @@ const myRoutes = new VueRouter({
     routes,
 })
 myRoutes.beforeEach((to, from, next) => {
-    if (to.path !== '/' && !localStorage['token-qqlx']) {
-        next({ path: '/' })
+    if (to.path === '/' || to.path === '/hall/center') {
+        next()
+    } else if (!localStorage['token-qqlx']) {
+        if ($warn) $warn('请先登录')
+        next({ path: '/hall/center' })
     } else {
         next()
     }
