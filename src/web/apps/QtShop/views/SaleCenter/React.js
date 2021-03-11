@@ -1,3 +1,4 @@
+import CenterOrder from '@/web/apps/QtShop/module/CenterOrder.js'
 import CenterCustomer from '@/web/apps/QtShop/module/CenterCustomer.js'
 //
 export default class ReactSaleCenter {
@@ -6,10 +7,12 @@ export default class ReactSaleCenter {
         this.initReact() // ASYNC
     }
 
+    @CenterCustomer
+    @CenterOrder
     async initReact() {
         try {
-            $load.show()
-            $load.hide()
+            // $load.show()
+            // $load.hide()
         } catch (error) {
             window['$common'].loadOff(error)
         }

@@ -29,12 +29,14 @@ export default class QtShop_Good {
             const count = Number(DTO.count || 0)
             const countName = DTO.countName || ''
             const remark = DTO.remark || ''
+            const cost = DTO.cost || ''
             await global['$db'].HouseGood.create({
                 houseId,
                 goodId: good._id,
                 count,
                 countName,
                 remark,
+                cost,
             })
         }
     }
@@ -53,6 +55,7 @@ export default class QtShop_Good {
             if (goodIdMap[goodId]) continue
             goodIdMap[goodId] = true
             let good = await global['$db'].Good.get({ _id: goodId })
+            inventory[i]['_id'] = goodId
             list.push(Object.assign(good, inventory[i]))
         }
         return list

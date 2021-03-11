@@ -13,6 +13,8 @@ export default function CenterCustomer(target, name, descriptor) {
         this.customerModelList = []
         this.customerList = []
         //
+        this.customerPicked = null
+        //
         // * 方法
         this.toggleCustomerList = toggleCustomerList
         this.renderCustomerList = renderCustomerList
@@ -21,6 +23,7 @@ export default function CenterCustomer(target, name, descriptor) {
         sourceFunction.apply(this, arguments)
     }
 }
+// 展开
 async function toggleCustomerList() {
     try {
         this.customerModal = !this.customerModal
@@ -40,14 +43,6 @@ async function toggleCustomerList() {
             }, 1000)
         }
     }
-}
-
-// 渲染
-async function renderCustomerList() {
-    const shopId = $store.state.shopInfo._id
-    if (!shopId) throw new Error('请选择店铺')
-    let list = await getCustomerList(shopId)
-    this.customerList = Object.assign([], list.reverse())
 }
 
 // 响应
@@ -71,4 +66,11 @@ async function actionCustomer() {
             }, 1000)
         }
     }
+}
+// 渲染
+async function renderCustomerList() {
+    const shopId = $store.state.shopInfo._id
+    if (!shopId) throw new Error('请选择店铺')
+    let list = await getCustomerList(shopId)
+    this.customerList = Object.assign([], list.reverse())
 }

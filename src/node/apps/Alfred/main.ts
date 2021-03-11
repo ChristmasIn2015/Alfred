@@ -65,6 +65,7 @@ async function go() {
         // 5.绑定Html
         // 提供HTML服务给 Web*Alfred
         Cabin.expressHtml('/alfred', require('path').join(process.cwd(), './src/web/dist/Alfred.html'))
+        Cabin.expressHtml('/qtShop', require('path').join(process.cwd(), './src/web/dist/QtShop.html'))
 
         // * End
         console.log(Cabin.cabinInfo)

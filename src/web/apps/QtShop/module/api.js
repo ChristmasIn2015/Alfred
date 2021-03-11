@@ -10,7 +10,7 @@ const requester = $common.getRequester(
 // // ======================================================= 订单
 // // * 新增订单
 export function createOrder(houseId, customerId, saleGoodList, remark) {
-    // saleGoodList { _id count countName remark }
+    // saleGoodList { _id count countName remark, retailPrice }
     return requester.request(
         //
         'POST',
@@ -67,7 +67,7 @@ export function getCustomerList(shopId) {
 // // ======================================================= 商品
 // * 新增商品
 export function createGoodInHouse(houseId, goodList) {
-    // goodList: { name, norm, count, countName, remark }
+    // goodList: { name, norm, count, countName, remark, cost }
     return requester.request('POST', '/qt-shop/good/create', { houseId, goodList }, $common.getHeaders())
 }
 // * 获取商品列表

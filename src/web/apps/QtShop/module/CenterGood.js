@@ -3,12 +3,7 @@ export default function CenterGood(target, name, descriptor) {
     let sourceFunction = descriptor.value
     descriptor.value = function() {
         // * 参数
-        this.goodList = []
-        this.goodListPicked = []
-        // this.goodSourceList = []
-        //
-        this.goodListModal = false
-        this.goodModelHeader = [
+        this.goodListHeader = [
             { text: '品名', value: 'name' },
             { text: '规格', value: 'norm' },
             { text: '数量', value: 'count' },
@@ -16,7 +11,13 @@ export default function CenterGood(target, name, descriptor) {
             { text: '备注', value: 'remark' },
             { text: '商品ID', value: '_id' },
         ]
+        this.goodList = []
+        this.goodListPicked = []
+        this.goodListModal = false
+        this.goodListSearchKey = ''
         //
+        //
+        this.goodModelListModal = false
         this.goodModel = {
             _id: null,
             name: '',
@@ -27,7 +28,6 @@ export default function CenterGood(target, name, descriptor) {
         }
         this.goodModelList = [] // 批量添加商品
         this.goodModelListPicked = []
-        this.goodModelListModal = false
         // * 方法
         this.toggleGoodList = toggleGoodList
         this.toggleGoodModelList = toggleGoodModelList
@@ -70,13 +70,7 @@ async function renderGoodList() {
     let houseId = $store.state.houseInfo._id
     if (!houseId) throw new Error('请选择仓库')
     let list = await getGoodListInHouse(houseId)
-    this.goodList = Object.assign(
-        [],
-        list.reverse().map((e) => {
-            e['picked'] = false
-            return e
-        })
-    )
+    this.goodList = Object.assign([], list.reverse())
 }
 // 响应
 async function actionGood() {

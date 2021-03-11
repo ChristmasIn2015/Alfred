@@ -13,16 +13,19 @@
                 <!-- 商品表格 -->
                 <!-- 商品表格 -->
                 <v-data-table
-                    :headers="react.goodModelHeader"
+                    :headers="react.goodListHeader"
                     :items="react.goodList"
                     item-key="_id"
                     v-model="react.goodListPicked"
                     show-select
+                    :search="react.goodListSearchKey"
                     height="500px"
                     dense
                     fixed-header
                 >
-                    <!-- 1 -->
+                    <template v-slot:top>
+                        <v-text-field v-model="react.goodListSearchKey" label="查找商品" class="mx-4"></v-text-field>
+                    </template>
                 </v-data-table>
             </v-sheet>
         </v-dialog>

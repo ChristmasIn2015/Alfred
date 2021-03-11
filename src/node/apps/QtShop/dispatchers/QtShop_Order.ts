@@ -26,6 +26,7 @@ export default class QtShop_Order {
             const count = Number(saleGoodList[i].count) || 0
             const countName = saleGoodList[i].countName
             const remark = saleGoodList[i].remark
+            const retailPrice = saleGoodList[i].retailPrice
 
             // 1.根据仓库找到下单的商品
             let houseGood = await global['$db'].HouseGood.get({ houseId, goodId })
@@ -40,6 +41,7 @@ export default class QtShop_Order {
                 countName,
                 remark,
                 transportStatus: 0,
+                retailPrice,
             })
 
             // 3.更新仓库下的商品入库信息
@@ -54,15 +56,16 @@ export default class QtShop_Order {
         if (!houseId) throw new Error('请选择仓库')
 
         // 根据仓库查询所有订单
-        let list = await global['$db'].Order.query({ houseId })
+        let orderList = await global['$db'].Order.query({ houseId })
 
         // 查询所有订单下的商品售出信息
-        let orderList = []
-        for (let i in list) {
-            const orderId = list[i]._id
-            let goodSaleInfo = await global['$db'].OrderGood.query({ orderId })
-            let goodInfo = await global['$db'].Good.get({ _id: goodSaleInfo.goodId })
-            orderList.push(goodInfo, goodSaleInfo)
+        for (let i in orderList) {
+            let saleGoodList = await global['$db'].OrderGood.query({ orderId: orderList[i]._id })
+            for (let ii in saleGoodList) {
+                let good = await global['$db'].Good.get({ _id: saleGoodList[ii].goodId })
+                if (good) saleGoodList[ii] = Object.assign(good, saleGoodList[ii])
+            }
+            orderList[i]['saleGoodList'] = saleGoodList
         }
         return orderList
     }

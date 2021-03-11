@@ -52,7 +52,7 @@ async function go() {
             {
                 // 仓库下的商品入库信息：商品在这个仓库的库存/库存单位/备注
                 name: 'HouseGood',
-                struct: { houseId: 'string', goodId: 'string', count: 'number', countName: 'string', remark: 'string' },
+                struct: { houseId: 'string', goodId: 'string', count: 'number', countName: 'string', remark: 'string', cost: 'number' },
             },
             {
                 // 客户
@@ -72,7 +72,15 @@ async function go() {
             {
                 // 订单下的商品售出信息：商品售出的库存/单位/备注 @transportStatus 0 未发货 1 已发货
                 name: 'OrderGood',
-                struct: { orderId: 'string', goodId: 'string', count: 'number', countName: 'string', remark: 'string', transportStatus: 'number' },
+                struct: {
+                    orderId: 'string',
+                    goodId: 'string',
+                    count: 'number',
+                    countName: 'string',
+                    remark: 'string',
+                    transportStatus: 'number',
+                    retailPrice: 'number',
+                },
             },
         ])
 
