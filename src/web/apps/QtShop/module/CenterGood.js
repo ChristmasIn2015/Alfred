@@ -4,9 +4,19 @@ export default function CenterGood(target, name, descriptor) {
     descriptor.value = function() {
         // * 参数
         this.goodList = []
+        this.goodListPicked = []
         // this.goodSourceList = []
         //
         this.goodListModal = false
+        this.goodModelHeader = [
+            { text: '品名', value: 'name' },
+            { text: '规格', value: 'norm' },
+            { text: '数量', value: 'count' },
+            { text: '单位', value: 'countName' },
+            { text: '备注', value: 'remark' },
+            { text: '商品ID', value: '_id' },
+        ]
+        //
         this.goodModel = {
             _id: null,
             name: '',
@@ -16,98 +26,86 @@ export default function CenterGood(target, name, descriptor) {
             remark: '',
         }
         this.goodModelList = [] // 批量添加商品
+        this.goodModelListPicked = []
+        this.goodModelListModal = false
         // * 方法
         this.toggleGoodList = toggleGoodList
+        this.toggleGoodModelList = toggleGoodModelList
         this.renderGoodList = renderGoodList
-        // this.initGoodModel = initGoodModel
-        // this.addGoodCount = addGoodCount
-        // this.deleteGoodCount = deleteGoodCount
-        // this.postGood = postGood
-        // this.deleteMyGood = deleteMyGood
+        this.actionGood = actionGood
+        //
+        this.deleteGoodModel = deleteGoodModel
+        this.createGoodModel = createGoodModel
         //
         sourceFunction.apply(this, arguments)
     }
 }
-//
-function toggleGoodList() {
-    this.goodListModal = !this.goodListModal
-    if (this.goodListModal) {
-        if (this.goodModelList.length === 0) this.goodModelList.push(this.goodModel)
-    } else {
-        //
+// 展开商品列表
+async function toggleGoodList() {
+    try {
+        this.goodListModal = !this.goodListModal
+        if (this.goodListModal) {
+            if (this.goodModelList.length === 0) {
+                this.goodModelList = [Object.assign({}, this.goodModel)]
+            }
+            await this.renderGoodList()
+        }
+    } catch (error) {
+        $common.loadOff(error)
+        if (error.message === '请选择仓库') {
+            $load.show()
+            setTimeout(() => {
+                $router.push({ path: '/hall/center' })
+                $load.hide()
+            }, 1000)
+        }
     }
 }
-// 渲染商品列表
+// 展开商品模板列表
+function toggleGoodModelList() {
+    this.goodModelListModal = !this.goodModelListModal
+}
+// 渲染
 async function renderGoodList() {
     let houseId = $store.state.houseInfo._id
     if (!houseId) throw new Error('请选择仓库')
     let list = await getGoodListInHouse(houseId)
-    this.goodList = Object.assign([], list)
-    // this.goodSourceList = Object.assign([], list)
+    this.goodList = Object.assign(
+        [],
+        list.reverse().map((e) => {
+            e['picked'] = false
+            return e
+        })
+    )
 }
-// 商品表单 初始化
-function initGoodModel(model) {
-    // model = model || {}
-    // let newCountList = [
-    //     {
-    //         name: '张',
-    //         value: 0,
-    //     },
-    // ]
-    // this.goodModel = {
-    //     _id: model._id || null,
-    //     name: model.name || '',
-    //     plugList: model.plugList || [],
-    //     countList: model.countList || newCountList,
-    //     cost: model.cost || '',
-    //     tip: model.tip || '',
-    // }
+// 响应
+async function actionGood() {
+    try {
+        $load.show()
+        const houseId = $store.state.houseInfo._id
+        if (!houseId) throw new Error('请选择仓库')
+        await createGoodInHouse(houseId, this.goodModelList)
+        await this.renderGoodList()
+        this.goodModelListModal = false
+        $tip('添加商品成功')
+        $load.hide()
+    } catch (error) {
+        $common.loadOff(error)
+        this.goodModelListModal = false
+        if (error.message === '请选择仓库') {
+            $load.show()
+            setTimeout(() => {
+                $router.push({ path: '/hall/center' })
+                $load.hide()
+            }, 1000)
+        }
+    }
 }
-// 添加/编辑商品
-async function postGood() {
-    // try {
-    //     // ** 1
-    //     this.goodModel.countList.forEach((count) => {
-    //         if (typeof count.value === '') throw new Error('请输入库存数量')
-    //         if (typeof count.name === '') throw new Error('请输入库存单位')
-    //     })
-    //     // ** 2
-    //     if (this.goodModel._id) {
-    //         await editGood(
-    //             $store.state.houseInfo._id,
-    //             this.goodModel._id,
-    //             this.goodModel.name,
-    //             this.goodModel.plugList,
-    //             this.goodModel.countList,
-    //             this.goodModel.cost,
-    //             this.goodModel.tip
-    //         )
-    //         $tip(`编辑 ${this.goodModel.name} 成功`)
-    //     } else {
-    //         await createGood(
-    //             $store.state.houseInfo._id,
-    //             this.goodModel.name,
-    //             this.goodModel.plugList,
-    //             this.goodModel.countList,
-    //             this.goodModel.cost,
-    //             this.goodModel.tip
-    //         )
-    //         $tip(`添加 ${this.goodModel.name} 成功`)
-    //     }
-    // } catch (error) {
-    //     return Promise.reject(error)
-    // }
+// 新增某个模板商品
+function createGoodModel() {
+    this.goodModelList.push(this.goodModel)
 }
-// 删除商品
-function deleteMyGood(good) {
-    // $confirm(`确定要删除 ${good.name} 吗`, async () => {
-    //     try {
-    //         await deleteGood($store.state.houseInfo._id, good._id)
-    //         $tip('删除成功')
-    //         await this.renderGoodList() // @Good
-    //         await this.renderGoodNameList() // @GoodFilter
-    //     } catch (error) {
-    //         $common.loadOff(error)
-    //     }
-    // })
+// 删除某个模板商品
+function deleteGoodModel(index) {
+    this.goodModelList.splice(index, 1)
 }

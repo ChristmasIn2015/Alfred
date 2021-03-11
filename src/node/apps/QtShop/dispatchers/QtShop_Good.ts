@@ -29,7 +29,7 @@ export default class QtShop_Good {
             const count = Number(DTO.count || 0)
             const countName = DTO.countName || ''
             const remark = DTO.remark || ''
-            await global['$db'].InventoryByHouse.create({
+            await global['$db'].HouseGood.create({
                 houseId,
                 goodId: good._id,
                 count,
@@ -45,7 +45,7 @@ export default class QtShop_Good {
         const houseId = request.body.houseId
         if (!houseId) throw new Error(`请选择仓库`)
         // 根据仓库id获取商品列表
-        let inventory = await global['$db'].InventoryByHouse.query({ houseId })
+        let inventory = await global['$db'].HouseGood.query({ houseId })
         let goodIdMap = {}
         let list = []
         for (let i in inventory) {

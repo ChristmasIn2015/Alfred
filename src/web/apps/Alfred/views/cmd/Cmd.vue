@@ -9,10 +9,10 @@
             <v-btn class="mr-2" color="orange" @click.stop="react.renderCmdList">清空日志/刷新</v-btn>
             <v-btn color="green" @click.stop="react.openLocalDevTool">打开控制台</v-btn>
         </div>
-        <!-- 新增/编辑远程命令的弹窗 -->
-        <!-- 新增/编辑远程命令的弹窗 -->
-        <!-- 新增/编辑远程命令的弹窗 -->
-        <!-- 新增/编辑远程命令的弹窗 -->
+        <!-- 新增/编辑本地命令的弹窗 -->
+        <!-- 新增/编辑本地命令的弹窗 -->
+        <!-- 新增/编辑本地命令的弹窗 -->
+        <!-- 新增/编辑本地命令的弹窗 -->
         <v-dialog v-model="react.cmdModal" persistent width="500">
             <v-card>
                 <v-card-title>本地命令</v-card-title>

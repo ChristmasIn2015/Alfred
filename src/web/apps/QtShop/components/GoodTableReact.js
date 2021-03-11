@@ -8,11 +8,9 @@ export default class GoodTableReact {
     @CenterGood
     async initReact() {
         try {
-            $load.show()
-            await this.renderGoodList() // @CenterGood
-            $load.hide()
+            //
         } catch (error) {
-            window['$common'].loadOff(error)
+            $common.loadOff(error)
         }
     }
 }

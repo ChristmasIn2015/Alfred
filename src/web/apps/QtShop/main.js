@@ -3,7 +3,7 @@ import Vue from 'vue'
 // * font-awesome
 import 'font-awesome/css/font-awesome.min.css'
 // * ui vuetify
-import Vuetify from 'vuetify/lib/framework'
+import Vuetify from 'vuetify'
 Vue.use(Vuetify)
 const myVuetify = new Vuetify({})
 // * common

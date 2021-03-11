@@ -46,7 +46,7 @@ export default class QtShop_Customer {
         let list2 = await global['$db'].CustomerByUser.query({ userId: masterId })
         let customerList = []
         for (let i in list2) {
-            let customer = await global['$db'].Customer.get({ _id: list2[i].userId })
+            let customer = await global['$db'].Customer.get({ _id: list2[i].customerId })
             if (customer) customerList.push(customer)
         }
         return customerList

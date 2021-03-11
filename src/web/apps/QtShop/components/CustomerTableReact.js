@@ -1,16 +1,14 @@
-import CenterGood from '@/web/apps/QtShop/module/CenterGood.js'
+import CenterCustomer from '@/web/apps/QtShop/module/CenterCustomer.js'
 //
 export default class GoodTableReact {
     constructor() {
         this.initReact() // ASYNC
     }
 
-    @CenterGood
+    @CenterCustomer
     async initReact() {
         try {
-            $load.show()
-            await this.renderGoodList() // @CenterGood
-            $load.hide()
+            //
         } catch (error) {
             window['$common'].loadOff(error)
         }
