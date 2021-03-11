@@ -6,20 +6,17 @@ export default class QtShop_Order {
     @AlfredLogin()
     @Response('创建订单成功')
     async addOrder(request, response, user) {
-        const customerId = request.body.customerId
-        if (!customerId) throw new Error('请选择客户')
-        const remark = request.body.remark
-        const saleGoodList = request.body.saleGoodList
-        if (!saleGoodList) throw new Error('请选择商品')
         const houseId = request.body.houseId
         if (!houseId) throw new Error('请选择仓库')
+        const customerId = request.body.customerId
+        if (!customerId) throw new Error('请选择客户')
+        const saleGoodList = request.body.saleGoodList
+        if (!saleGoodList) throw new Error('请选择商品')
+        const remark = request.body.remark
 
         // 添加订单
-        let order = await global['$db'].Order.create({ createrId: user._id, remark })
+        let order = await global['$db'].Order.create({ createrId: user._id, houseId, customerId, remark })
         const orderId = order._id
-
-        // 使得能根据客户找到订单
-        await global['$db'].OrderByCustomer.create({ orderId, customerId })
 
         // 使得能根据订单找到商品，及这个商品售出的库存/单位/备注
         // @transportStatus 0 未发货 1 已发货
@@ -31,11 +28,11 @@ export default class QtShop_Order {
             const remark = saleGoodList[i].remark
 
             // 1.根据仓库找到下单的商品
-            let rela = await global['$db'].GoodByHouse.get({ houseId, goodId })
-            if (!rela) continue
+            let houseGood = await global['$db'].HouseGood.get({ houseId, goodId })
+            if (!houseGood) continue
 
-            // 2.添加订单下，商品的销售记录
-            await global['$db'].GoodByOrder.create({
+            // 2.添加订单下的商品售出信息
+            await global['$db'].OrderGood.create({
                 //
                 orderId,
                 goodId,
@@ -45,8 +42,28 @@ export default class QtShop_Order {
                 transportStatus: 0,
             })
 
-            // 3.更新仓库下商品的库存
-            await global['$db'].GoodByHouse.update({ houseId, goodId }, { count: rela.count - count })
+            // 3.更新仓库下的商品入库信息
+            await global['$db'].HouseGood.update({ houseId, goodId }, { count: houseGood.count - count })
         }
+    }
+
+    @AlfredLogin()
+    @Response()
+    async getOrderListByHouseId(request, response) {
+        const houseId = request.body.houseId
+        if (!houseId) throw new Error('请选择仓库')
+
+        // 根据仓库查询所有订单
+        let list = await global['$db'].Order.query({ houseId })
+
+        // 查询所有订单下的商品售出信息
+        let orderList = []
+        for (let i in list) {
+            const orderId = list[i]._id
+            let goodSaleInfo = await global['$db'].OrderGood.query({ orderId })
+            let goodInfo = await global['$db'].Good.get({ _id: goodSaleInfo.goodId })
+            orderList.push(goodInfo, goodSaleInfo)
+        }
+        return orderList
     }
 }

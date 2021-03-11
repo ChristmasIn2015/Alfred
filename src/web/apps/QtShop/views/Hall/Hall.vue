@@ -5,8 +5,8 @@
         <!-- Nav -->
         <!-- Nav -->
         <div>
-            <v-btn class="ma-1 ml-0" color="green" @click.stop="react.reLogin">{{ userAccount || '点击登录' }}</v-btn>
-            <v-btn class="ma-1 ml-0" color="orange" @click.stop="react.initReact">重置</v-btn>
+            <v-btn class="ma-1 ml-0" color="green" small @click.stop="react.reLogin">{{ userAccount || '点击登录' }}</v-btn>
+            <v-btn class="ma-1 ml-0" color="orange" small @click.stop="react.initReact">重置</v-btn>
         </div>
         <v-divider></v-divider>
         <div class="d-flex py-2">
@@ -19,22 +19,24 @@
                 <v-card-subtitle>我的店铺 {{ react.shopList.length === 0 ? '(暂无)' : '' }}</v-card-subtitle>
                 <v-card-text class="d-flex flex-column">
                     <v-btn
+                        class="mb-1"
+                        small
                         v-for="(shop, i) in react.shopList"
                         :key="i"
-                        class="mb-1"
                         :color="shop.picked ? 'orange' : ''"
                         @click.stop="react.pickShop($event, shop)"
                     >
                         {{ shop.name }}
                     </v-btn>
-                    <v-btn class="mt-1" color="orange" outlined @click.stop="react.toggleShopModal($event)">创建新店铺</v-btn>
+                    <v-btn class="mt-1" color="orange" outlined small @click.stop="react.toggleShopModal($event)">创建新店铺</v-btn>
                 </v-card-text>
                 <v-card-subtitle>我加入的店铺 {{ react.officeList.length === 0 ? '(暂无)' : '' }}</v-card-subtitle>
                 <v-card-text class="d-flex flex-column">
                     <v-btn
+                        class="mb-1"
+                        small
                         v-for="(office, i) in react.officeList"
                         :key="i"
-                        class="mb-1"
                         :color="shop.picked ? 'orange' : ''"
                         @click.stop="react.pickShop($event, shop)"
                     >
@@ -51,15 +53,16 @@
                 <v-card-subtitle>我的仓库</v-card-subtitle>
                 <v-card-text class="d-flex flex-column">
                     <v-btn
+                        class="mb-1"
+                        small
                         v-for="(house, i) in react.houseList"
                         :key="i"
-                        class="mb-1"
                         :color="house.picked ? 'orange' : ''"
                         @click.stop="react.pickHouse($event, house)"
                     >
                         {{ house.name }}
                     </v-btn>
-                    <v-btn color="orange" outlined @click.stop="react.toggleHouseModal($event)">创建新仓库</v-btn>
+                    <v-btn color="orange" outlined small @click.stop="react.toggleHouseModal($event)">创建新仓库</v-btn>
                 </v-card-text>
             </v-card>
             <!-- Employee -->

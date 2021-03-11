@@ -57,6 +57,10 @@ async function go() {
         Cabin.expressProxy('/qt-shop/employee/list', QtShop) //
         Cabin.expressProxy('/qt-shop/good/create', QtShop)
         Cabin.expressProxy('/qt-shop/good/list', QtShop) //
+        Cabin.expressProxy('/qt-shop/customer/create', QtShop)
+        Cabin.expressProxy('/qt-shop/customer/list', QtShop) //
+        Cabin.expressProxy('/qt-shop/order/create', QtShop)
+        Cabin.expressProxy('/qt-shop/order/list', QtShop) //
 
         // 5.绑定Html
         // 提供HTML服务给 Web*Alfred

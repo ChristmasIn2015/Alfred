@@ -44,6 +44,7 @@ async function renderShopList() {
     )
     this.shopModal = false
     $store.commit('clearShopInfo')
+    $store.commit('clearHouseInfo')
     $load.hide()
 }
 // * 创建店铺

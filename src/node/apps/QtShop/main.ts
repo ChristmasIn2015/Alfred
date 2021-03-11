@@ -4,7 +4,9 @@ import CabinExpress from '../../../common/ts/CabinExpress'
 import QtShop_Shop from './dispatchers/QtShop_Shop'
 import QtShop_House from './dispatchers/QtShop_House'
 import QtShop_Employee from './dispatchers/QtShop_Employee'
+import QtShop_Good from './dispatchers/QtShop_Good'
 import QtShop_Customer from './dispatchers/QtShop_Customer'
+import QtShop_Order from './dispatchers/QtShop_Order'
 
 async function go() {
     try {
@@ -48,8 +50,8 @@ async function go() {
             //     struct: { goodId: 'string', userId: 'string' },
             // },
             {
-                // 根据仓库找到商品, 及这个商品在这个仓库的库存/库存单位/备注
-                name: 'GoodByHouse',
+                // 仓库下的商品入库信息：商品在这个仓库的库存/库存单位/备注
+                name: 'HouseGood',
                 struct: { houseId: 'string', goodId: 'string', count: 'number', countName: 'string', remark: 'string' },
             },
             {
@@ -65,16 +67,11 @@ async function go() {
             {
                 // 订单
                 name: 'Order',
-                struct: { createrId: 'string', remark: 'string' },
+                struct: { createrId: 'string', customerId: 'string', houseId: 'string', remark: 'string' },
             },
             {
-                // 根据客户找到订单
-                name: 'OrderByCustomer',
-                struct: { customerId: 'string', orderId: 'string' },
-            },
-            {
-                // 根据订单找到商品，及这个商品售出的库存/单位/备注 @transportStatus 0 未发货 1 已发货
-                name: 'GoodByOrder',
+                // 订单下的商品售出信息：商品售出的库存/单位/备注 @transportStatus 0 未发货 1 已发货
+                name: 'OrderGood',
                 struct: { orderId: 'string', goodId: 'string', count: 'number', countName: 'string', remark: 'string', transportStatus: 'number' },
             },
         ])
@@ -83,7 +80,10 @@ async function go() {
         global['$common'].bindClass(Cabin, 'QtShop_Shop', QtShop_Shop)
         global['$common'].bindClass(Cabin, 'QtShop_House', QtShop_House)
         global['$common'].bindClass(Cabin, 'QtShop_Employee', QtShop_Employee)
+        global['$common'].bindClass(Cabin, 'QtShop_Good', QtShop_Good)
         global['$common'].bindClass(Cabin, 'QtShop_Customer', QtShop_Customer)
+        global['$common'].bindClass(Cabin, 'QtShop_Order', QtShop_Order)
+        // QtShop_Order
         // ....
 
         // 4.使用express暴漏调度方法给传输层
@@ -104,6 +104,9 @@ async function go() {
         // @QtShop_Customer
         Cabin.expressRoute('POST', '/qt-shop/customer/create', global['Cabin'].addCustomer)
         Cabin.expressRoute('POST', '/qt-shop/customer/list', global['Cabin'].getCustomerList)
+        // @QtShop_Order
+        Cabin.expressRoute('POST', '/qt-shop/order/create', global['Cabin'].addOrder)
+        Cabin.expressRoute('POST', '/qt-shop/order/list', global['Cabin'].getOrderListByHouseId)
         // ....
 
         // * End

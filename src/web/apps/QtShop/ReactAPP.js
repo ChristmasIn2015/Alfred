@@ -4,9 +4,9 @@ import Login from '@/web/apps/Alfred/module/Login.js'
 export default class ReactAPP {
     // admin
     menus = [
-        { name: '店铺群', icon: 'fa-users', color: 'indigo', path: '/hall/center' },
-        // { name: '销售中心', icon: 'fa-phone-square', color: 'purple', path: '/' },
-        // { name: '发货中心', icon: 'fa-plane', color: 'purple', path: '/' },
+        { name: '控制台', icon: 'fa-users', color: 'indigo', path: '/hall/center' },
+        { name: '销售中心', icon: 'fa-phone-square', color: 'purple', path: '/sale/center' },
+        { name: '发货中心', icon: 'fa-plane', color: 'purple', path: '/order/center' },
     ]
     nowMenuIndex = -1
     constructor() {

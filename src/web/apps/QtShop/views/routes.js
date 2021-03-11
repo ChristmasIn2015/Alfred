@@ -1,6 +1,6 @@
 let routes = [
     {
-        component: () => import('@/web/apps/QtShop/views/welcome/Welcome.vue'),
+        component: () => import('@/web/apps/QtShop/views/Welcome/Welcome.vue'),
         path: '/',
         name: 'home',
     },
@@ -9,15 +9,15 @@ let routes = [
         path: '/hall/center',
         name: 'hall',
     },
-    // {
-    //     component: () => import('@/web/apps/QtShop/views/devops/DevOps.vue'),
-    //     path: '/cmd/remote/list',
-    //     name: 'devops',
-    // },
-    // {
-    //     component: () => import('@/web/apps/QtShop/views/cmd/Cmd.vue'),
-    //     path: '/cmd/local/list',
-    //     name: 'devops',
-    // },
+    {
+        component: () => import('@/web/apps/QtShop/views/SaleCenter/SaleCenter.vue'),
+        path: '/sale/center',
+        name: 'saleCenter',
+    },
+    {
+        component: () => import('@/web/apps/QtShop/views/OrderCenter/OrderCenter.vue'),
+        path: '/order/center',
+        name: 'OrderCenter',
+    },
 ]
 export default routes

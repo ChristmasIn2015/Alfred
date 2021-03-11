@@ -83,7 +83,7 @@
     </v-app>
 </template>
 <script>
-    import ReactAPP from '@/web/apps/QtShop/views/ReactAPP.js'
+    import ReactAPP from '@/web/apps/QtShop/ReactAPP.js'
     export default {
         data() {
             return {

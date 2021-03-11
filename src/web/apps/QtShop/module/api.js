@@ -7,28 +7,22 @@ const requester = $common.getRequester(
         return result.data
     }
 )
-// // ======================================================= 客户
-// // * 新增客户
-// export function createCustomer(companyName, companyAddress, contact) {
-//     let params = { companyName, companyAddress, contact }
-//     return requester.request('POST', '/qt-shop/customer/create', params, $common.getHeaders())
-// }
-// // * 获取客户列表
-// export function getCustomerList() {
-//     let params = {}
-//     return requester.request('POST', '/qt-shop/customer/list', params, $common.getHeaders())
-// }
 // // ======================================================= 订单
 // // * 新增订单
-// export function createOrder(houseId, goodList, customerPicked) {
-//     let params = { houseId, goodList, customerPicked }
-//     return requester.request('POST', '/qt-shop/order/create', params, $common.getHeaders())
-// }
-// // * 获取订单列表
-// export function getOrderList(houseId) {
-//     let params = { houseId }
-//     return requester.request('POST', '/qt-shop/order/list', params, $common.getHeaders())
-// }
+export function createOrder(houseId, customerId, saleGoodList, remark) {
+    // saleGoodList { _id count countName remark }
+    return requester.request(
+        //
+        'POST',
+        '/qt-shop/order/create',
+        { houseId, customerId, saleGoodList, remark },
+        $common.getHeaders()
+    )
+}
+// * 获取订单列表
+export function getOrderList(houseId) {
+    return requester.request('POST', '/qt-shop/order/list', { houseId }, $common.getHeaders())
+}
 // // * 修改订单状态
 // export function changeOrderStatus(orderId, goodStatus, priceStatus) {
 //     let params = { orderId, goodStatus, priceStatus }
@@ -44,6 +38,16 @@ const requester = $common.getRequester(
 //     let params = { orderId, goodList }
 //     return requester.request('POST', '/qt-shop/order/updateOrder', params, $common.getHeaders())
 // }
+// // ======================================================= 客户
+// * 新增客户
+export function createCustomer(DTO) {
+    // DTO { shopId name contact remark }
+    return requester.request('POST', '/qt-shop/customer/create', DTO, $common.getHeaders())
+}
+// * 获取客户列表
+export function getCustomerList(shopId) {
+    return requester.request('POST', '/qt-shop/customer/list', { shopId }, $common.getHeaders())
+}
 // // ======================================================= 标签
 // // * 新增标签
 // export function createTag(goodId, name, value) {

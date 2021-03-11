@@ -12,7 +12,7 @@ import '@/common/pack/common-web.js'
 // 1.使用Vue路由
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
-import routes from './views/routes'
+import routes from '../views/routes'
 const myRoutes = new VueRouter({
     routes,
 })
@@ -20,7 +20,7 @@ const myRoutes = new VueRouter({
 // 2.Vuex存储
 import Vuex from 'vuex'
 Vue.use(Vuex)
-import store from './views/store'
+import store from '../views/store'
 const myStore = new Vuex.Store(store)
 window.$store = myStore
 
