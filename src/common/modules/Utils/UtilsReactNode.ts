@@ -75,7 +75,7 @@ export default class UtilsNodeReact {
                         authorization: order.DTO.authorization,
                     })
                     if (info.code !== 200) throw new Error(`${info.message}`)
-                    if (info.data._id !== '603e28cd6b57e016b0bbb9b5') throw new Error('您不是管理员')
+                    if (!info.data.isSystemMaster) throw new Error('您不是管理员')
                     await sourceFunction.apply(this, args)
                 } catch (error) {
                     order.orderName = '/request/authorization'

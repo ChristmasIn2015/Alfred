@@ -4,6 +4,7 @@ export default class Dispatcher_User {
     JWT = null
     JWT_KEY = 'wqao'
     MD5 = null
+    MASTER_USER_ID = null
     constructor() {
         this.JWT = require('jsonwebtoken')
         this.MD5 = require('js-md5')
@@ -19,12 +20,15 @@ export default class Dispatcher_User {
         let userQuery = { account }
         let user = await global['$db'].User.get(userQuery)
         if (!user) {
-            // 2.如果用户不存在则新增用户
+            // 2.1 如果用户不存在则新增用户
             user = await global['$db'].User.create({
                 nickname: request.body.nickname,
                 account,
                 password,
             })
+            // 2.2 如果是第一个用户则设置为管理员
+            let userList = await global['$db'].User.query({})
+            if (userList.length === 1) this.MASTER_USER_ID = user._id
         } else {
             // 3.如果用户存在为则这个用户验证密码
             if (password !== user.password) throw new Error('您输入的密码不正确')
@@ -60,10 +64,12 @@ export default class Dispatcher_User {
         const account = this.JWT.verify(authorization, this.JWT_KEY).account
         let user = await global['$db'].User.get({ account })
         if (!user) throw new Error(`用户不存在:${account}`)
+        console.log(user._id, this.MASTER_USER_ID)
         return {
             _id: user._id,
             nickname: user.nickname,
             account: user.account,
+            isSystemMaster: user._id === this.MASTER_USER_ID,
         }
     }
 

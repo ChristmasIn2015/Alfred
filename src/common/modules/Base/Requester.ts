@@ -14,20 +14,16 @@ class Axios {
 
     // 发送网络请求
     async request(method: RequesterModel.GET | RequesterModel.POST, url: string, params: object, config: object): Promise<any> {
-        try {
-            // 发送请求
-            // $common.log({ server: requestParams })
-            const result = await axios({
-                method,
-                url: this.BASE_URL + (url || ''),
-                data: params,
-                headers: config || this.DEFAULT_HEADER || {},
-            })
-            const DATA = await this.COMPLETE(result.data)
-            return DATA
-        } catch (error) {
-            throw error // 这一步会被更外层的 try/catch
-        }
+        // 发送请求
+        // $common.log({ server: requestParams })
+        const result = await axios({
+            method,
+            url: this.BASE_URL + (url || ''),
+            data: params,
+            headers: config || this.DEFAULT_HEADER || {},
+        })
+        const DATA = await this.COMPLETE(result.data)
+        return DATA
     }
 }
 export default class Requester {
